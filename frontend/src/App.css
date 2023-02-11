@@ -3,6 +3,11 @@
   text-align: center;
 }
 
+.App-header {
+  pointer-events:none;
+  z-index: 0;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -16,6 +21,9 @@ body {
 
 .title {
   margin-top: 2rem;
+  position: relative;
+  pointer-events:auto;
+  
 }
 
 .primary-button {
