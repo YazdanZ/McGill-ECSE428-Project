@@ -6,11 +6,19 @@ import '../../App.css'
 
 const drivers = ['Driver 1', 'Driver 2', 'Driver 3', 'Driver 4', 'Driver 5'];
 
-const DriverList = ({ drivers }) => {
-  return drivers.map((driver) => <li key={driver}>{driver}</li>);
-};
+const DriverList = ({ drivers, handleClick }) => {
+    return drivers.map((driver) => (
+      <li key={driver}>
+        {driver}
+        <button onClick={() => handleClick(driver)}>Pick Driver</button>
+      </li>
+    ));
+  };
 
 export default function AvailableDrivers() {
+    const handleClick = (driver) => {
+        console.log(`Driver ${driver} selected`);
+      };
 
     return (
         <div className='App-header'>
