@@ -1,12 +1,13 @@
 import React from 'react'
 import Signup from './components/pages/Signup'
+import Login from './components/pages/Login'
 
 import './App.css'
 
 export default function App() {
     return (
       <div className='App'>
-        <Signup/>
+        <Login/>
         <Footer/>
       </div>
     )
