@@ -1,20 +1,22 @@
 import React from 'react'
 import Signup from './components/pages/Signup'
+import Logout from './components/button/Logout'
 
 import './App.css'
 
 export default function App() {
-    return (
-      <div className='App'>
-        <Signup/>
-        <Footer/>
-      </div>
-    )
+  return (
+    <div className='App'>
+      <Signup />
+      <Logout />
+      <Footer />
+    </div>
+  )
 }
 
 const Footer = () => {
   return (
-      <p className="text-center" style={ FooterStyle }>Made by McGillians, for McGillians</p>
+    <p className="text-center" style={FooterStyle}>Made by McGillians, for McGillians</p>
   )
 }
 
