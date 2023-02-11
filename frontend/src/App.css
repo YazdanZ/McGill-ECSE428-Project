@@ -26,6 +26,14 @@ body {
   
 }
 
+.centered {
+  margin-top: 2rem;
+  position: relative;
+  padding-top: 10%;
+  pointer-events:auto;
+  
+}
+
 .primary-button {
   margin-top: 5rem;
   margin-right: 1rem;
