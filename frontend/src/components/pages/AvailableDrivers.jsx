@@ -28,7 +28,7 @@ export default function AvailableDrivers() {
                 <form className='form'>
                   <div id="listDrivers">
                       <ul style={{listStyleType: 'none'}}>
-                        <DriverList drivers={drivers} />
+                        <DriverList drivers={drivers} handleClick={handleClick} />
                       </ul>
 
                     </div> 
