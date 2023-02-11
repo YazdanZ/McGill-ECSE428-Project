@@ -1,5 +1,5 @@
 import React from 'react'
-import Signup from './components/pages/Signup'
+import Signup from './components/pages/TripDisplay'
 
 import './App.css'
 

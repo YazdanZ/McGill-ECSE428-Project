@@ -1,6 +1,6 @@
 body {
     background-color: rgb(249, 249, 249);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -8,7 +8,7 @@ body {
 .trip-display {
     background-color: rgb(250, 87, 87);
     border: 1px solid black;
-    bottom: 0px;
+    bottom: 47px;
     left: 0;
     padding: 20px;
     position: absolute;
@@ -23,6 +23,7 @@ body {
 .trip-details {
     background-color: rgb(255, 255, 255);
     border: 1px solid black;
+    text-align: justify;
     left: 0;
     margin-top: auto;
     padding: 10px;
