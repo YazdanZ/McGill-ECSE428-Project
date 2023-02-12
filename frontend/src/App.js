@@ -1,4 +1,6 @@
 import React from 'react'
+import EditUserInfo from './components/pages/EditUserInfo'
+import UserInfo from './components/pages/UserInfo'
 import Signup from './components/pages/Signup'
 import Login from './components/pages/Login'
 
@@ -7,7 +9,7 @@ import './App.css'
 export default function App() {
     return (
       <div className='App'>
-        <Login/>
+        <EditUserInfo/>
         <Footer/>
       </div>
     )
