@@ -1,6 +1,8 @@
 import React from 'react'
 import Signup from './components/pages/Signup'
 import Logout from './components/button/Logout'
+import Login from './components/pages/Login'
+import Create_Trip from './components/pages/Create_Trip'
 
 import './App.css'
 
