@@ -12,29 +12,30 @@ export default function Signup() {
                 <form className='form'>
                     <p>
                         <label>Name</label><br/>
-                        <input type="text" name="name" required /><br/>
+                        <input type="text" name="name" required/><br/>
                         <label></label><br/>
                     </p>
+                    <br/>
                     <p>
                         <label>Email address</label><br/>
-                        <input type="email" name="email" required /><br/>
+                        <input type="email" name="email" required/><br/>
                         <label></label><br/>
                     </p>
                     <p>
                         <label>McGill ID</label><br/>
-                        <input type='text' name="id" required /><br/>
+                        <input type='text' name="id" required/><br/>
                         <label></label><br/>
                     </p>
                     <p>
                         <label>Password</label><br/>
-                        <input type="password" name="password" required /><br/>
+                        <input type="password" name="password" required/><br/>
                         <label></label><br/>
                     </p>
                     <p>
                         <input type="checkbox" name="checkbox" id="checkbox" /> <span>I am a driver</span><br/>
                         <label></label><br/>
                     </p>
-                    <p>
+                    <p> 
                         <button id="sub_btn" type="submit">Register</button>
                     </p>
                 </form>

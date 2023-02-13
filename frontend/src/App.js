@@ -1,4 +1,6 @@
 import React from 'react'
+import EditUserInfo from './components/pages/EditUserInfo'
+import UserInfo from './components/pages/UserInfo'
 import Signup from './components/pages/Signup'
 import Logout from './components/button/Logout'
 import Login from './components/pages/Login'
