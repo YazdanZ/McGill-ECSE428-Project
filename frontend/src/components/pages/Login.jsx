@@ -1,28 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import ParticlesComponent from '../Particles'
+
 import '../../App.css'
 
-export default function Signup() {
+export default function Login() {
 
     return (
         <div className='App-header'>
             <ParticlesComponent/>
             <div className="title">
-                <h1>Create an account</h1>
+                <h1>Login to McPool</h1>
                 <form className='form'>
-                    <p>
-                        <label>Name</label><br/>
-                        <input type="text" name="name" required /><br/>
-                        <label></label><br/>
-                    </p>
                     <p>
                         <label>Email address</label><br/>
                         <input type="email" name="email" required /><br/>
-                        <label></label><br/>
-                    </p>
-                    <p>
-                        <label>McGill ID</label><br/>
-                        <input type='text' name="id" required /><br/>
                         <label></label><br/>
                     </p>
                     <p>
@@ -31,15 +23,11 @@ export default function Signup() {
                         <label></label><br/>
                     </p>
                     <p>
-                        <input type="checkbox" name="checkbox" id="checkbox" /> <span>I am a driver</span><br/>
-                        <label></label><br/>
-                    </p>
-                    <p>
-                        <button id="sub_btn" type="submit">Register</button>
+                        <button id="sub_btn" type="submit">Login</button>
                     </p>
                 </form>
                 <footer>
-                    <p>Already have an account?</p>
+                    <p>Don't have an account?</p>
                 </footer>
             </div>
         </div>
