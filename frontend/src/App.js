@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import EditUserInfo from './components/pages/EditUserInfo'
 import UserInfo from './components/pages/UserInfo'
 import Signup from './components/pages/Signup'
@@ -10,10 +11,19 @@ import './App.css'
 
 export default function App() {
   return (
-    <div className='App'>
-      <Logout />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className='App'>
+        <Routes>
+          <Route path="/" element={<Signup />} />
+          <Route path='/edit-user' element={<EditUserInfo />} />
+          <Route path='/user-info' element={<UserInfo />} />
+          <Route path='/logout' element={<Logout />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/create-trip' element={<Create_Trip />} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter >
   )
 }
 
