@@ -1,6 +1,7 @@
 import React from 'react'
 import ParticlesComponent from '../Particles'
-import '../../App.css'
+import '../../styles.scss'
+import ButtonCustom from '../button/Button'
 
 export default function Signup() {
 
@@ -15,7 +16,6 @@ export default function Signup() {
                         <input type="text" name="name" required/><br/>
                         <label></label><br/>
                     </p>
-                    <br/>
                     <p>
                         <label>Email address</label><br/>
                         <input type="email" name="email" required/><br/>
@@ -36,7 +36,7 @@ export default function Signup() {
                         <label></label><br/>
                     </p>
                     <p> 
-                        <button id="sub_btn" type="submit">Register</button>
+                        <ButtonCustom style={{height:"39px", width:"156px", fontSize:"20px"}} title="Submit" id="sub_btn" type="submit"></ButtonCustom>
                     </p>
                 </form>
                 <footer>
