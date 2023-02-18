@@ -52,7 +52,8 @@ function post() {
 
     let form = document.querySelector("form");
 
- 
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
         let formdata = new FormData(this);
         let name = formdata.get("name");
@@ -65,7 +66,7 @@ function post() {
         } else {
             checkbox = "True"
         }
-
+        e.preventDefault();
         fetch('http://localhost:5000/createUser', {
             method: 'POST',
             headers: {
@@ -75,6 +76,7 @@ function post() {
             body: JSON.stringify({ "name": name, "email": email, "mcgill_id": mcgill_id, "password": password, "checkbox": checkbox })
         })
             .then(response => alert("New user created"))
-
+        e.preventDefault();
+    });
 }
 
