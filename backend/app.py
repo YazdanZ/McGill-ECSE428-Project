@@ -23,6 +23,8 @@ class Trip(db.Model):
     available_seats = db.Column(db.Integer)
     fuel_consumption = db.Column(db.Integer) #km per gallon or smth
     distance_km = db.Column(db.Integer)
+    pickup_location = db.Column(db.String(100))
+    dropoff_location = db.Column(db.String(100))
 
 with app.app_context():
     db.create_all()
@@ -52,13 +54,39 @@ def createTrip():
         passengers = data['passengers'],
         available_seats = data['available_seats'],
         fuel_consumption = data['fuel_consumption'],
-        distance_km = data['distance_km'])
+        distance_km = data['distance_km'],
+        pickup_location = data['pickup_location'],
+        dropoff_location = data['dropoff_location'])
     
     db.session.add(trip)
     db.session.commit()
     return 200
 
-    
+#include passenger id parameter
 @app.route("/getTrip", methods = ['GET'])
 def getTrip():
-    pass
+    trip_id = request.args.get('trip_id')
+    trip = Trip.query.filter_by(trip_id=trip_id).first()
+
+    if trip:
+        driver = User.query.filter_by(id=trip.driver_id).first() #not sure if we should have driver and passenger classes
+        driver_name = driver.name
+        driver_vehicle = driver.vehicle
+
+        pickup_location = trip.pickup_location
+        dropoff_location = trip.dropoff_location
+        distance = trip.distance_km
+        #duration = calculate_duration(trip.distance_km) #find a way to calculate duration
+        #cost = calculate_cost(trip.distance_km, trip.fuel_consumption) #find a way to calculate cost
+
+        return {
+            'driver_name': driver_name,
+            'driver_vehicle': driver_vehicle,
+            'pickup_location': pickup_location,
+            'dropoff_location': dropoff_location,
+            'distance': distance,
+            #'duration': duration,
+            #'cost': cost
+        }
+    else:
+        return 'You are not signed in to any trip'
