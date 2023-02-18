@@ -32,4 +32,4 @@ def createUser():
     
     db.session.add(user)
     db.session.commit()
-    return "success"
+    return 200
