@@ -21,6 +21,7 @@ export default function App() {
           <Route path='/logout' element={<Logout />} />
           <Route path='/login' element={<Login />} />
           <Route path='/create-trip' element={<Create_Trip />} />
+          <Route path='/display-trip' element={<TripDisplay />} />
         </Routes>
         <Footer />
       </div>
