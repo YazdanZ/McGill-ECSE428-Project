@@ -32,6 +32,9 @@ export default function DisplayTripCost() {
                 <br></br>
                 <label  id="emissions_saved">Estimated C02 emission saved (kg of CO2): XX.XX</label>
             </div>
+            <script>
+                const { state } = this.props.location
+            </script>
         </div>
     )
 
