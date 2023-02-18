@@ -6,6 +6,7 @@ import Signup from './components/pages/Signup'
 import Logout from './components/button/Logout'
 import Login from './components/pages/Login'
 import Create_Trip from './components/pages/Create_Trip'
+import AvailableDrivers from './components/pages/AvailableDrivers'
 
 import './App.css'
 
@@ -20,6 +21,7 @@ export default function App() {
           <Route path='/logout' element={<Logout />} />
           <Route path='/login' element={<Login />} />
           <Route path='/create-trip' element={<Create_Trip />} />
+          <Route path='/AvailableDrivers' element={<AvailableDrivers />} />
         </Routes>
         <Footer />
       </div>
