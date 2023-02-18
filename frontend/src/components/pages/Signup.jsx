@@ -2,6 +2,7 @@ import React from 'react'
 import ParticlesComponent from '../Particles'
 import '../../styles.scss'
 import ButtonCustom from '../button/Button'
+import { Link } from 'react-router-dom'
 
 export default function Signup() {
 
@@ -40,7 +41,7 @@ export default function Signup() {
                     </p>
                 </form>
                 <footer>
-                    <p>Already have an account?</p>
+                    <button style={{backgroundColor: 'transparent', border: 'none', cursor: 'pointer'}}><Link to="/login"><p>Already have an account?</p></Link></button>
                 </footer>
             </div>
         </div>
