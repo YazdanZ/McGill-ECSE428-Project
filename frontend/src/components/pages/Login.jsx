@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ParticlesComponent from '../Particles'
+import ButtonCustom from '../button/Button'
 
 import '../../App.css'
 
@@ -23,7 +24,7 @@ export default function Login() {
                         <label></label><br/>
                     </p>
                     <p>
-                        <button id="sub_btn" type="submit">Login</button>
+                    <ButtonCustom style={{height:"39px", width:"156px", fontSize:"20px"}} title="Login" id="sub_btn" type="submit"></ButtonCustom>
                     </p>
                 </form>
                 <footer>
