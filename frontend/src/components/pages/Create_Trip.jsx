@@ -1,6 +1,8 @@
 import React from 'react'
 import ParticlesComponent from '../Particles'
 //import '../../App.css'
+import ButtonCustom from '../button/Button'
+
 
 export default function Create_Trip()  {
 
@@ -11,33 +13,33 @@ export default function Create_Trip()  {
                 <h1>Create Trip</h1>
                 <form className='form'>
                     <p>
-                        <label>Vehicle Name</label><br/>
-                        <input type="text" name="vehicle_name" required /><br/>
+                        <label>Available Seats</label><br/>
+                        <input type="text" name="available_seats" required /><br/>
                         <label></label><br/>
                     </p>
                     <p>
-                        <label>Vehicle Number</label><br/>
-                        <input type="text" name="vehicle_number" required /><br/>
+                        <label>Total Trip Fuel Consumption (KM/Liter)</label><br/>
+                        <input type="text" name="fuel_consumption" required /><br/>
                         <label></label><br/>
                     </p>
                     <p>
-                        <label>Initial Location</label><br/>
-                        <input type="text" name="initial" required /><br/>
+                        <label>Total Trip Distance Covered</label><br/>
+                        <input type="text" name="distance_km" required /><br/>
                         <label></label><br/>
                     </p>
                     <p>
-                        <label>Final Location</label><br/>
-                        <input type='text' name="final" required /><br/>
+                        <label>Pickup Location</label><br/>
+                        <input type='text' name="pickup_location" required /><br/>
                         <label></label><br/>
                     </p>
                     <p>
-                        <label>Maximum Number of Passengers</label><br/>
-                        <input type="text" name="passengers" required /><br/>
+                        <label>Drop-Off Location</label><br/>
+                        <input type="text" name="dropoff_location" required /><br/>
                         <label></label><br/>
                     </p>
 
                     <p>
-                        <button id="sub_btn" type="submit">Submit</button>
+                        <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
                     </p>
                 </form>
 
@@ -48,8 +50,33 @@ export default function Create_Trip()  {
         </div>
     )
 
-
-
-
-
 }
+
+function post1() {
+
+    let form = document.querySelector("form");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let formdata = new FormData(this);
+        let available_seats = formdata.get("available_seats");
+        let fuel_consumption = formdata.get("fuel_consumption");
+        let distance_km = formdata.get("distance_km");
+        let pickup_location = formdata.get("pickup_location");
+        let dropoff_location = formdata.get("dropoff_location");
+
+        e.preventDefault();
+        fetch('http://localhost:5000/createUser', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "available_seats": available_seats, "fuel_consumption": fuel_consumption, "distance_km": distance_km, "pickup_location": pickup_location, "dropoff_location": dropoff_location })
+        })
+            .then(response => alert("New Driver Trip created"))
+        e.preventDefault();
+    });
+}
+

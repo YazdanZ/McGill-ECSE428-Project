@@ -18,8 +18,8 @@ class User(db.Model):
 
 class Trip(db.Model):
     trip_id = db.Column(db.Integer, primary_key=True)
-    driver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    #passengers = db.relationship('Passenger', backref='trip', lazy=True)
+    driver_id = db.Column(db.Integer)
+    ##passengers = db.relationship('Passenger', backref='trip', lazy=True)
     available_seats = db.Column(db.Integer)
     fuel_consumption = db.Column(db.Integer) #km per gallon or smth
     distance_km = db.Column(db.Integer)
@@ -49,9 +49,9 @@ def createTrip():
     data = request.get_json()
 
     trip = Trip(
-        trip_id = data['trip_id'], 
+       # trip_id = data['trip_id'],
         driver_id = data['driver_id'],
-        passengers = data['passengers'],
+       # passengers = data['passengers'],
         available_seats = data['available_seats'],
         fuel_consumption = data['fuel_consumption'],
         distance_km = data['distance_km'],
@@ -90,3 +90,4 @@ def getTrip():
         }
     else:
         return 'You are currently not signed up in any trip'
+
