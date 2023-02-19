@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const notifySuccess = (text) => toast.success(text, {
+export const notifySuccess = (text) => toast.success(text, {
     position: "bottom-right",
     autoClose: 2000,
     hideProgressBar: false,
@@ -18,7 +18,7 @@ const notifySuccess = (text) => toast.success(text, {
     theme: "light",
 });
 
-const notifyError = (text) => toast.error(text, {
+export const notifyError = (text) => toast.error(text, {
     position: "bottom-right",
     autoClose: 2000,
     hideProgressBar: false,
