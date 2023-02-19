@@ -24,6 +24,23 @@ with app.app_context():
 def createUser():
     data = request.get_json()
 
+    user = User.query.filter_by(
+        email=data['email']
+    ).first()
+
+    if user:
+        # email already exists
+        return jsonify({"message": "Email already exists"}), 401
+
+    user = User.query.filter_by(
+        mcgill_id=data['mcgill_id']
+    ).first()
+
+    if user:
+        # mcgill_id already exists
+        return jsonify({"message": "McGill ID already exists"}), 401
+
+
     user = User(
         name = data['name'], 
         email = data['email'],
@@ -34,5 +51,5 @@ def createUser():
     
     db.session.add(user)
     db.session.commit()
-    data = {'message': 'Done', 'code': 'SUCCESS'}
+    data = {'message': 'User successfully created', 'code': 'SUCCESS'}
     return make_response(jsonify(data), 201)

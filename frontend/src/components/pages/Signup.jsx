@@ -7,7 +7,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const notify = () => toast.success('New user created', {
+const notifySuccess = (text) => toast.success(text, {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    progress: undefined,
+    theme: "light",
+});
+
+const notifyError = (text) => toast.error(text, {
     position: "bottom-right",
     autoClose: 2000,
     hideProgressBar: false,
@@ -87,7 +98,7 @@ export default function Signup() {
 }
 async function post(event) {
     event.preventDefault();
-    await fetch('http://localhost:5000/createUser', {
+    let response = await fetch('http://localhost:5000/createUser', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -95,5 +106,10 @@ async function post(event) {
         },
         body: JSON.stringify({ "name": name.current.value, "email": email.current.value, "address": address.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value, "checkbox": checkbox.current.checked })
     })
-        .then(response => notify())
+    let result = await response.json();
+    if(response.ok) {
+        notifySuccess(result.message);
+    } else {
+        notifyError(result.message);
+    }
 }
