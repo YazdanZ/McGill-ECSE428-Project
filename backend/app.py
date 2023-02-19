@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
@@ -12,6 +12,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     email = db.Column(db.String(50))
+    address = db.Column(db.String(50))
     mcgill_id = db.Column(db.Integer)
     password = db.Column(db.String(50))
     isDriver = db.Column(db.String(50))
@@ -26,10 +27,12 @@ def createUser():
     user = User(
         name = data['name'], 
         email = data['email'],
+        address = data['address'],
         mcgill_id = data['mcgill_id'],
         password = data['password'],
         isDriver = data['checkbox'])
     
     db.session.add(user)
     db.session.commit()
-    return 200
+    data = {'message': 'Done', 'code': 'SUCCESS'}
+    return make_response(jsonify(data), 201)

@@ -38,11 +38,11 @@ const FooterStyle = {
   background: "#222",
   fontSize: ".8rem",
   color: "#fff",
-  position: "absolute",
+  position: "relative",
   bottom: 0,
   padding: "1rem",
-  margin: 0,
+  marginTop: "5rem",
   width: "100%",
-  opacity: ".5"
+  opacity: ".5",
 }
 
