@@ -11,7 +11,7 @@ export default function Logout() {
 
         <p>
             <Link to="/">
-                <ButtonCustom style={{ height: "39px", width: "156px", fontSize: "20px", float: 'right', position: 'relative' }} title="Log Out" id="logout_btn" type="submit"></ButtonCustom>
+                <ButtonCustom style={{ height: "39px", width: "156px", fontSize: "20px", top: '0', right: '0', position: 'absolute' }} title="Log Out" id="logout_btn" type="submit"></ButtonCustom>
             </Link>
         </p >
     )

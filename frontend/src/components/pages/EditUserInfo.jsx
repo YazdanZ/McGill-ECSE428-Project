@@ -10,6 +10,7 @@ export default function EditUserInfo() {
         <div className='App-header'>
             <ParticlesComponent />
             <div className="title">
+                <Logout />
                 <h1>Edit User Info</h1>
                 <form className='form'>
                     <p>

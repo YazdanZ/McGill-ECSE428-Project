@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ParticlesComponent from '../Particles'
+import Logout from '../button/Logout'
 
 import '../../App.css'
 
@@ -24,6 +25,7 @@ export default function AvailableDrivers() {
     <div className='App-header'>
       <ParticlesComponent />
       <div className="title">
+        <Logout />
         <h2>Available Drivers</h2>
         <form className='form'>
           <div id="listDrivers">
