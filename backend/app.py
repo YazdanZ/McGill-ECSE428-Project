@@ -60,13 +60,13 @@ def createTrip():
     
     db.session.add(trip)
     db.session.commit()
-    return 200
+    return "200"
 
 #include passenger id parameter
 @app.route("/getTrip", methods = ['GET'])
 def getTrip():
-    trip_id = request.args.get('trip_id')
-    trip = Trip.query.filter_by(trip_id=trip_id).first()
+    passenger_id = request.args.get('passengerId')
+    trip = Trip.query.filter(Trip.passengers.any(id=passenger_id)).first()
 
     if trip:
         driver = User.query.filter_by(id=trip.driver_id).first() #not sure if we should have driver and passenger classes

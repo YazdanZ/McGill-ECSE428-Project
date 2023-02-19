@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ParticlesComponent from '../Particles'
 import { Link } from 'react-router-dom';
 import '../../App.css'
 
 export default function TripDisplay() {
+  const trip_id = 1; //hardcoded value until create trip and user sessions are implemented
+  const [tripDetails, setTripDetails] = useState({});
+
+  useEffect(() => {
+    const fetchTripDetails = async () => {
+      const response = await fetch(`/getTrip?trip_id=${trip_id}`);
+      const data = await response.json();
+      setTripDetails(data);
+    }
+    fetchTripDetails();
+  }, []);
+
   return (
     <html>
       <head>
@@ -16,13 +28,20 @@ export default function TripDisplay() {
           <h1 style={{ paddingTop: "510px" }}>Trip Details</h1>
           <div className="trip-details">
             <form style={{width: "500px"}} className='form'>
-              <p><strong>Driver:</strong> Andrew Chirita</p>
-              <p><strong>Vehicle:</strong> Toyota Corolla</p>
-              <p><strong>Pickup Location:</strong> 542 Sherbrooke Street</p>
-              <p><strong>Dropoff Location:</strong> 341 University Street</p>
-              <p><strong>Distance:</strong> 5 kilometers</p>
-              <p><strong>Duration:</strong> 5 minutes</p>
-              <p><strong>Cost:</strong> $20.00 <button style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}><Link to="/trip-cost"><p>View Details</p></Link></button></p>
+              <p><strong>Driver:</strong> {tripDetails.driver_name}</p>
+              <p><strong>Vehicle:</strong> {tripDetails.driver_vehicle}</p>
+              <p><strong>Pickup Location:</strong> {tripDetails.pickup_location}</p>
+              <p><strong>Dropoff Location:</strong> {tripDetails.dropoff_location}</p>
+              <p><strong>Distance:</strong> {tripDetails.distance} kilometers</p>
+              <p><strong>Duration:</strong> {tripDetails.duration} minutes</p>
+              <p>
+                <strong>Cost:</strong> {tripDetails.cost} 
+                <button style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
+                  <Link to={`/trip-cost?trip_id=${tripDetails.id}`}>
+                    <p>View Details</p>
+                  </Link>
+                </button>
+              </p>
             </form>
           </div>
         </div>
