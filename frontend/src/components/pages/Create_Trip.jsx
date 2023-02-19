@@ -60,6 +60,7 @@ function post1() {
         e.preventDefault();
 
         let formdata = new FormData(this);
+        let driver_id = 1;
         let available_seats = formdata.get("available_seats");
         let fuel_consumption = formdata.get("fuel_consumption");
         let distance_km = formdata.get("distance_km");
@@ -67,13 +68,13 @@ function post1() {
         let dropoff_location = formdata.get("dropoff_location");
 
         e.preventDefault();
-        fetch('http://localhost:5000/createUser', {
+        fetch('http://localhost:5000/createTrip', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "available_seats": available_seats, "fuel_consumption": fuel_consumption, "distance_km": distance_km, "pickup_location": pickup_location, "dropoff_location": dropoff_location })
+            body: JSON.stringify({ "driver_id": driver_id, "available_seats": available_seats, "fuel_consumption": fuel_consumption, "distance_km": distance_km, "pickup_location": pickup_location, "dropoff_location": dropoff_location })
         })
             .then(response => alert("New Driver Trip created"))
         e.preventDefault();
