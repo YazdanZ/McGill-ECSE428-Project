@@ -72,10 +72,10 @@ def getTrip():
         driver = User.query.filter_by(id=trip.driver_id).first() #not sure if we should have driver and passenger classes
         driver_name = driver.name
         driver_vehicle = driver.vehicle
-
         pickup_location = trip.pickup_location
         dropoff_location = trip.dropoff_location
         distance = trip.distance_km
+        tripId = trip.trip_id
         #duration = calculate_duration(trip.distance_km) #find a way to calculate duration
         #cost = calculate_cost(trip.distance_km, trip.fuel_consumption) #find a way to calculate cost
 
@@ -85,8 +85,9 @@ def getTrip():
             'pickup_location': pickup_location,
             'dropoff_location': dropoff_location,
             'distance': distance,
+            'tripId': tripId
             #'duration': duration,
             #'cost': cost
         }
     else:
-        return 'You are currently not signed up in any trip'
+        return 'You are currently not signed up for any trip'
