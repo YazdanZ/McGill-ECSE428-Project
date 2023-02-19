@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, make_response
+from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 
@@ -12,6 +13,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     email = db.Column(db.String(50))
+    address = db.Column(db.String(50))
     mcgill_id = db.Column(db.Integer)
     password = db.Column(db.String(50))
     isDriver = db.Column(db.String(50))
@@ -24,18 +26,36 @@ with app.app_context():
 @app.route("/createUser/", methods=["POST"])
 def createUser():
     data = request.get_json()
-    print(data)
-    user = User(
-        name=data["name"],
-        email=data["email"],
-        mcgill_id=data["mcgill_id"],
-        password=data["password"],
-        isDriver=data["checkbox"],
-    )
 
+    user = User.query.filter_by(
+        email=data['email']
+    ).first()
+
+    if user:
+        # email already exists
+        return jsonify({"message": "Email already exists"}), 401
+
+    user = User.query.filter_by(
+        mcgill_id=data['mcgill_id']
+    ).first()
+
+    if user:
+        # mcgill_id already exists
+        return jsonify({"message": "McGill ID already exists"}), 401
+
+
+    user = User(
+        name = data['name'], 
+        email = data['email'],
+        address = data['address'],
+        mcgill_id = data['mcgill_id'],
+        password = data['password'],
+        isDriver = data['checkbox'])
+    
     db.session.add(user)
     db.session.commit()
-    return "200"
+    data = {'message': 'User successfully created', 'code': 'SUCCESS'}
+    return make_response(jsonify(data), 201)
 
 
 # getting everything in plain text! :(
