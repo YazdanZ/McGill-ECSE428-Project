@@ -37,7 +37,7 @@ export default function TripDisplay() {
               <p>
                 <strong>Cost:</strong> {tripDetails.cost} 
                 <button style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
-                  <Link to={`/trip-cost?trip_id=${tripDetails}`}>
+                  <Link to={`/trip-cost?trip_id=${tripDetails.trip_id}`}>
                     <p>View Details</p>
                   </Link>
                 </button>
