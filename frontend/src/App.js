@@ -7,6 +7,8 @@ import Logout from './components/button/Logout'
 import Login from './components/pages/Login'
 import Create_Trip from './components/pages/Create_Trip'
 import TripDisplay from './components/pages/TripDisplay'
+import AvailableDrivers from './components/pages/AvailableDrivers'
+import DisplayTripCost from './components/pages/DisplayTripCost'
 
 import './App.css'
 
@@ -18,9 +20,11 @@ export default function App() {
           <Route path="/" element={<Signup />} />
           <Route path='/edit-user' element={<EditUserInfo />} />
           <Route path='/user-info' element={<UserInfo />} />
-          <Route path='/logout' element={<Logout />} />
           <Route path='/login' element={<Login />} />
           <Route path='/create-trip' element={<Create_Trip />} />
+          <Route path='/available-drivers' element={<AvailableDrivers />} />
+          <Route path='/display-trip-cost' element={<DisplayTripCost />} />
+          <Route path='/display-trip' element={<TripDisplay />} />
         </Routes>
         <Footer />
       </div>
@@ -38,7 +42,7 @@ const FooterStyle = {
   background: "#222",
   fontSize: ".8rem",
   color: "#fff",
-  position: "relative",
+  position: "absolute",
   bottom: 0,
   padding: "1rem",
   marginTop: "5rem",

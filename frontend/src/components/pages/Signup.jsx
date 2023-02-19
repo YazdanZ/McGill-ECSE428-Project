@@ -93,7 +93,7 @@ export default function Signup() {
         </div>
     )
 
-    
+
 
 }
 async function post(event) {
@@ -107,7 +107,7 @@ async function post(event) {
         body: JSON.stringify({ "name": name.current.value, "email": email.current.value, "address": address.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value, "checkbox": checkbox.current.checked })
     })
     let result = await response.json();
-    if(response.ok) {
+    if (response.ok) {
         notifySuccess(result.message);
     } else {
         notifyError(result.message);

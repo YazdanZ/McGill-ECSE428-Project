@@ -199,6 +199,16 @@ input {
     border-radius: 3px;
 }
 
+#logout_btn {
+    display: block;
+    width: 100%;
+    padding: .3rem;
+    border: none;
+    background: #222;
+    color: #fff;
+    border-radius: 3px;
+}
+
 #info_btn {
     display: block;
     width: 100%;
@@ -311,7 +321,7 @@ form span {
     color: white;
     padding: 2px;
     font-family: $font;
-    font-size: 1px;
+    font-size: 15px;
     height: 56px;
     width: 285px;
     transition: 0.4s;

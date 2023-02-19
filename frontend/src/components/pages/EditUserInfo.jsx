@@ -1,34 +1,37 @@
 import React from 'react'
 import ParticlesComponent from '../Particles'
 import '../../App.css'
+import '../button/Logout'
+import Logout from '../button/Logout'
 
 export default function EditUserInfo() {
 
     return (
         <div className='App-header'>
-            <ParticlesComponent/>
+            <ParticlesComponent />
             <div className="title">
+                <Logout />
                 <h1>Edit User Info</h1>
                 <form className='form'>
                     <p>
-                        <label>Name:</label><br/>
-                        <input type="text" name="name" required/><br/>
-                        <label></label><br/>
+                        <label>Name:</label><br />
+                        <input type="text" name="name" required /><br />
+                        <label></label><br />
                     </p>
-                    <br/>
+                    <br />
                     <p id>
-                        <label>Email address:</label><br/>
-                        <input type="email" name="email" required/><br/>
-                        <label></label><br/>
+                        <label>Email address:</label><br />
+                        <input type="email" name="email" required /><br />
+                        <label></label><br />
                     </p>
-                    <br/>
+                    <br />
                     <p>
-                        <label>McGill ID:</label><br/>
-                        <input type='text' name="id" required/><br/>
-                        <label></label><br/>
+                        <label>McGill ID:</label><br />
+                        <input type='text' name="id" required /><br />
+                        <label></label><br />
                     </p>
-                    <br/>
-                    <p> 
+                    <br />
+                    <p>
                         <button id="sub_btn" type="submit">Submit Changes</button>
                     </p>
                 </form>
