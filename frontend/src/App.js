@@ -7,6 +7,7 @@ import Logout from './components/button/Logout'
 import Login from './components/pages/Login'
 import Create_Trip from './components/pages/Create_Trip'
 import TripDisplay from './components/pages/TripDisplay'
+import DisplayTripCost from './components/pages/DisplayTripCost'
 
 import './App.css'
 
@@ -22,6 +23,7 @@ export default function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/create-trip' element={<Create_Trip />} />
           <Route path='/display-trip' element={<TripDisplay />} />
+          <Route path='/trip-cost' element={<DisplayTripCost />} />
         </Routes>
         <Footer />
       </div>

@@ -19,7 +19,7 @@ class User(db.Model):
 class Trip(db.Model):
     trip_id = db.Column(db.Integer, primary_key=True)
     driver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    passengers = db.relationship('Passenger', backref='trip', lazy=True)
+    #passengers = db.relationship('Passenger', backref='trip', lazy=True)
     available_seats = db.Column(db.Integer)
     fuel_consumption = db.Column(db.Integer) #km per gallon or smth
     distance_km = db.Column(db.Integer)
@@ -42,7 +42,7 @@ def createUser():
     
     db.session.add(user)
     db.session.commit()
-    return 200
+    return "200"
 
 @app.route("/createTrip", methods = ['POST'])
 def createTrip():
@@ -89,4 +89,4 @@ def getTrip():
             #'cost': cost
         }
     else:
-        return 'You are not signed in to any trip'
+        return 'You are currently not signed up in any trip'

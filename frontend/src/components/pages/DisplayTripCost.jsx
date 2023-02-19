@@ -4,13 +4,12 @@ import ParticlesComponent from '../Particles'
 
 import '../../App.css'
 
-export default function DisplayTripCost() {
-    
+export default function DisplayTripCost() {  
     return (
         <div className='App-header'>
             <ParticlesComponent/>
             <div className="centered">
-                <a href="#">Return to trip information</a>
+                <Link to="/display-trip"><p>Return to trip information</p></Link>
                 <br></br>
                 <br></br>
                 <br></br>
@@ -33,9 +32,8 @@ export default function DisplayTripCost() {
                 <label  id="emissions_saved">Estimated C02 emission saved (kg of CO2): XX.XX</label>
             </div>
             <script>
-                const { state } = this.props.location
+                {/* const { state } = this.props.location */}
             </script>
         </div>
     )
-
 }
