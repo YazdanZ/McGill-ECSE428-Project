@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@userfront/core": "^0.4.7"
+    "@userfront/core": "^0.4.7",
+    "sass": "^1.58.3"
   }
 }

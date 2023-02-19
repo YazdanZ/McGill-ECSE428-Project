@@ -1,0 +1,333 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@1&display=swap');
+$font: 'Open Sans', sans-serif;
+$text-color: white;
+$highlighted-text: linear-gradient(112.27deg, #99c8f0 0%, #8877dc 100%);
+$linear2: linear-gradient(112.27deg, #99C8F0 0%, #8877DC 100%);
+$linear1: linear-gradient(114.26deg, #473A88 0%, #D0EAFF 100%);
+$linear_background: linear-gradient(180deg, #181237 0%, #094679 100%);
+$linear_blobs: linear-gradient(114.26deg, rgba(71, 58, 136, 0.1) 0%, #5F8FB7 100%);
+$black: #000000;
+$white: #FFFFFF;
+$purple-blue: #00176A;
+$blue: #094679;
+$purple: #473A88;
+$translucent-white: rgba(255, 255, 255, 0.1);
+$navbar: rgba(255, 255, 255, 0.05);
+$grey: #ADB5BD;
+
+
+//
+.App-header {
+    pointer-events: none;
+    z-index: 0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif
+}
+
+.title {
+    margin-top: 2rem;
+    position: relative;
+    pointer-events: auto;
+
+}
+
+//
+
+
+.App {
+    text-align: center;
+}
+
+
+body {
+    margin: 0 auto
+}
+
+
+
+.centered {
+    margin-top: 2rem;
+    position: relative;
+    padding-top: 10%;
+    pointer-events: auto;
+
+}
+
+.primary-button {
+    margin-top: 5rem;
+    margin-right: 1rem;
+    padding: .6rem;
+    width: 10rem;
+    background: #222;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    transition: all .5s;
+    cursor: pointer;
+    text-transform: capitalize
+}
+
+.main-title,
+.main-para {
+    color: #f1f1f1
+}
+
+
+p {
+    font-family: $font
+}
+
+.main-title {
+    padding-top: 10rem;
+    font-size: 5rem;
+    font-family: 'Fascinate', cursive;
+    text-transform: uppercase
+}
+
+.main-para {
+    font-size: 2.5rem;
+    text-Transform: capitalize
+}
+
+#reg_btn span {
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+#logout_btn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 0.4rem;
+    border: 0;
+    background: #222;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+#logout_btn:hover {
+    background: #333;
+    transition: all .5s
+}
+
+#reg_btn span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+#reg_btn:hover span {
+    padding-right: 25px;
+}
+
+#reg_btn:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+h1 {
+    font-family: $font
+}
+
+h2 {
+    font-weight: 300;
+    font-family: $font
+}
+
+form {
+    display: inline-block;
+    background: #f3f3f3;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 2rem;
+    margin: 2rem 0 1rem 0
+}
+
+#user_info_form {
+    display: inline-block;
+    background: #ffffff;
+    border: 4px solid #000000;
+    border-radius: 2px;
+    padding: 2rem;
+    margin: 2rem 0 1rem 0
+}
+
+#info {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+}
+
+form label {
+    float: left;
+    font-size: .9rem;
+    margin: 0;
+    padding: 0;
+    font-family: $font
+}
+
+.right-label {
+    float: right;
+    cursor: pointer
+}
+
+input {
+    width: 15rem;
+    padding: .3rem;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    font-family: $font
+}
+
+#sub_btn {
+    display: block;
+    width: 100%;
+    padding: .3rem;
+    border: none;
+    background: #222;
+    color: #fff;
+    border-radius: 3px;
+}
+
+#info_btn {
+    display: block;
+    width: 100%;
+    padding: .3rem;
+    border: none;
+    background: #222;
+    color: #fff;
+    border-radius: 3px;
+}
+
+.edit_button_holder {
+    display: inline-block;
+    text-align: center;
+    width: 50%
+}
+
+#sub_btn:hover {
+    background: #333;
+    transition: all .5s
+}
+
+footer p {
+    margin: 0;
+    font-size: .9rem
+}
+
+#checkbox {
+    width: 1rem
+}
+
+form span {
+    font-size: .8rem;
+    font-family: $font
+}
+
+#reset_pass_lbl {
+    float: left
+}
+
+.home-page-title {
+    color: #222
+}
+
+
+.header {
+    font-family: $font;
+    font-weight: 700;
+    font-size: 56px;
+    color: $text-color;
+}
+
+.body-header {
+    font-family: $font;
+    font-weight: 700;
+    font-size: 24px;
+    color: $text-color;
+}
+
+.body {
+    font-family: $font;
+    font-weight: 400;
+    font-size: 16px;
+
+    .link {
+        color: $white;
+    }
+}
+
+.small-body {
+    font-family: $font;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.highlight-text {
+    background: linear-gradient(112.27deg, #99c8f0 0%, #8877dc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+
+@media screen and (min-width: 768px) {
+    .header {
+        font-family: $font;
+        font-weight: 700;
+        font-size: 112px;
+        color: $text-color;
+    }
+
+    .body-header {
+        font-family: $font;
+        font-weight: 700;
+        font-size: 56px;
+        color: $text-color;
+    }
+
+    .body {
+        font-family: $font;
+        font-weight: 400;
+        font-size: 24px;
+    }
+
+}
+
+.button-container {
+    border-width: 0;
+    background-image: linear-gradient(112.27deg, #dd6e57, #cc4023, #d3553b);
+    border-radius: 8px;
+    color: white;
+    padding: 2px;
+    font-family: $font;
+    font-size: 1px;
+    height: 56px;
+    width: 285px;
+    transition: 0.4s;
+    background-size: 200%;
+    background-position: left;
+    cursor: pointer;
+
+    &:hover {
+        background-position: right;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .button-container {
+        width: 367px;
+        height: 96px;
+        font-size: 32px;
+    }
+}
