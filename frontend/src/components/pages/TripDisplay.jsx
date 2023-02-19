@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import '../../App.css'
 
 export default function TripDisplay() {
-  const trip_id = 1; //hardcoded value until create trip and user sessions are implemented
+  const passengerId = 1; //hardcoded value until create trip and user sessions are implemented
   const [tripDetails, setTripDetails] = useState({});
 
   useEffect(() => {
     const fetchTripDetails = async () => {
-      const response = await fetch(`/getTrip?trip_id=${trip_id}`);
+      const response = await fetch(`/getTrip?passengerId=${passengerId}`);
       const data = await response.json();
       setTripDetails(data);
     }
@@ -37,7 +37,7 @@ export default function TripDisplay() {
               <p>
                 <strong>Cost:</strong> {tripDetails.cost} 
                 <button style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
-                  <Link to={`/trip-cost?trip_id=${tripDetails.id}`}>
+                  <Link to={`/trip-cost?trip_id=${tripDetails.trip_id}`}>
                     <p>View Details</p>
                   </Link>
                 </button>
