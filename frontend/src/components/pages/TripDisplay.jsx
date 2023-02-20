@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import '../../App.css'
 
 export default function TripDisplay() {
-  const userEmail = "abc@gmail.com"; //hardcoded value until create trip and user sessions are implemented
+  const passenger_id = "mihiranshul@gmail.com"; //hardcoded value until create trip and user sessions are implemented
   const [tripDetails, setTripDetails] = useState({});
 
   useEffect(() => {
     const fetchTripDetails = async () => {
-      const response = await fetch(`/getTrip?userEmail=${userEmail}`);
+      const response = await fetch(`http://localhost:5000/getTrip?passenger_id=${passenger_id}`);
       const data = await response.json();
+      console.log(data)
       setTripDetails(data);
     }
     fetchTripDetails();

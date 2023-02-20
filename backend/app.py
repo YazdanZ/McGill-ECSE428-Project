@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 
@@ -49,7 +50,7 @@ class Address(db.Model):
     address_line_1 = db.Column(db.String(200))
     postal_code = db.Column(db.String(50))
     address_id = db.Column(db.Integer, primary_key=True)
-    # drop_off_trip = db.Column(db.Integer, db.ForeignKey("trip_table.trip_id"))
+    #drop_off_trip = db.Column(db.Integer, db.ForeignKey("trip_table.trip_id"))
     drop_off = db.relationship("Trip", back_populates="drop_off_address")
     trip = db.Column(db.Integer, db.ForeignKey("trip_table.trip_id"))
     pick_up = db.relationship("Trip", back_populates="pick_up_address")
@@ -89,16 +90,19 @@ def createTrip():
     db.session.commit()
     return "200"
 
-@app.route("/getTrip", methods = ['GET'])
+@app.route("/getTrip", methods=['GET'])
 def getTrip():
-    if 'userEmail' in request.args:
-        user_email = request.args.get('userEmail')
-        trip = Trip.query.filter(Trip.passengers.any(email=user_email)).first()
+    if 'passenger_id' in request.args:
+        user_email = request.args.get('passenger_id')
+        trip = Trip.query.get(user_email)
     elif 'trip_id' in request.args:
         trip_id = request.args.get('trip_id')
         trip = Trip.query.get(trip_id)
     else:
-        return 'Invalid request. Must include at least one of "userEmail" or "trip_id" arguments.'
+        return {
+            "error": "Invalid request",
+            "message": "Must include at least one of 'userEmail' or 'trip_id' arguments"
+        }
 
     if trip:
         driver = User.query.filter_by(email=trip.vehicle.driver).first()
@@ -112,7 +116,7 @@ def getTrip():
         num_seats = trip.vehicle.seats
         num_passengers = len(trip.passengers)
 
-        return {
+        return jsonify({
             'driver_name': driver_name,
             'driver_vehicle': driver_vehicle,
             'pickup_location': pickup_location,
@@ -123,6 +127,6 @@ def getTrip():
             'num_passengers': num_passengers,
             'num_seats': num_seats,
             'cost': 123
-        }
+        })
     else:
-        return 'Could not find trip for arguments {}'.format(request.args.items())
+        return {"error": "Could not find trip for arguments {}".format(request.args.items())}
