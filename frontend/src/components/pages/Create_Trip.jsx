@@ -6,6 +6,7 @@ import ButtonCustom from '../button/Button'
 
 export default function Create_Trip()  {
 
+
     return (
         <div className='App-header'>
             <ParticlesComponent/>
@@ -60,21 +61,19 @@ function post1() {
         e.preventDefault();
 
         let formdata = new FormData(this);
-        let driver_id = 1;
-        let available_seats = formdata.get("available_seats");
-        let fuel_consumption = formdata.get("fuel_consumption");
+        let vehicle_id =1;
+        let passenger_id="mihiranshul@gmail.com";
         let distance_km = formdata.get("distance_km");
-        let pickup_location = formdata.get("pickup_location");
-        let dropoff_location = formdata.get("dropoff_location");
+
 
         e.preventDefault();
-        fetch('http://localhost:5000/createTrip', {
+        fetch('http://localhost:5000/createTip', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "driver_id": driver_id, "available_seats": available_seats, "fuel_consumption": fuel_consumption, "distance_km": distance_km, "pickup_location": pickup_location, "dropoff_location": dropoff_location })
+            body: JSON.stringify({"vehicle_id":vehicle_id, "passenger_id": passenger_id,  "distance_km": distance_km})
         })
             .then(response => alert("New Driver Trip created"))
         e.preventDefault();
