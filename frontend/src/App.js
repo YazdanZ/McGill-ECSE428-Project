@@ -7,6 +7,7 @@ import Logout from './components/button/Logout'
 import Login from './components/pages/Login'
 import Create_Trip from './components/pages/Create_Trip'
 import TripDisplay from './components/pages/TripDisplay'
+import DisplayTripCost from './components/pages/DisplayTripCost'
 import AvailableDrivers from './components/pages/AvailableDrivers'
 import DisplayTripCost from './components/pages/DisplayTripCost'
 
@@ -20,11 +21,12 @@ export default function App() {
           <Route path="/" element={<Signup />} />
           <Route path='/edit-user' element={<EditUserInfo />} />
           <Route path='/user-info' element={<UserInfo />} />
+          <Route path='/logout' element={<Logout />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/create-trip' element={<Create_Trip />} />
-          <Route path='/available-drivers' element={<AvailableDrivers />} />
-          <Route path='/display-trip-cost' element={<DisplayTripCost />} />
+          <Route path='/createTrip' element={<Create_Trip />} />
           <Route path='/display-trip' element={<TripDisplay />} />
+          <Route path='/display-trip-cost' element={<DisplayTripCost />} />
+          <Route path='/trip-cost' element={<DisplayTripCost />} />
         </Routes>
         <Footer />
       </div>
@@ -47,6 +49,6 @@ const FooterStyle = {
   padding: "1rem",
   marginTop: "5rem",
   width: "100%",
-  opacity: ".5",
+  opacity: ".5"
 }
 

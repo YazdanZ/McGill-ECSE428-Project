@@ -1,40 +1,46 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ParticlesComponent from '../Particles'
-import Logout from '../button/Logout'
 
 import '../../App.css'
 
 export default function DisplayTripCost() {
-
+    const fetchTripDetails = async (trip_id) => {
+        const response = await fetch(`/getTrip?trip_id=${trip_id}`);
+        const data = await response.json();
+        return data;
+      }
+    const urlParams = new URLSearchParams(window.location.search);
+    const trip_id = urlParams.get('trip_id');
+    const tripDetails = fetchTripDetails(trip_id);
+    
     return (
         <div className='App-header'>
-            <ParticlesComponent />
+            <ParticlesComponent/>
             <div className="centered">
-                <Logout />
-                <a href="#">Return to trip information</a>
+                <Link to="/display-trip"><p>Return to trip information</p></Link>
                 <br></br>
                 <br></br>
                 <br></br>
                 <br></br>
-                <h2>Trip Cost</h2>
-                <h3 id="trip-id">Trip ID: XXXXXX</h3>
+                <h2>Detailed Trip Cost</h2>
+                <h3>Trip ID: {trip_id}</h3>
                 <br></br>
                 <br></br>
-                <label id="price">Total cost (CAD): XX.XX</label>
+                <label>Total cost (CAD): {tripDetails.cost}</label>
                 <br></br>
-                <label id="num_passengers">Num passengers: XX</label>
+                <label>Num passengers: {tripDetails.num_passengers}</label>
                 <br></br>
-                <label id="price_pp">Cost per passenger (CAD): XX.XX</label>
+                <label>Available Seats: {tripDetails.num_seats-tripDetails.num_passengers}</label>
                 <br></br>
+                <label>Cost per passenger (CAD): {tripDetails.cost/(tripDetails.num_passengers+1)}</label>
                 <br></br>
-                <label id="trip_length">Trip length (km): XX.XX</label>
+                <label>Trip length (km): {tripDetails.distance}</label>
                 <br></br>
-                <label id="fuel_cons">Estimated fuel consumption (L): XX.XX</label>
+                <label>Estimated fuel consumption (L/km): {tripDetails.fuel_consumption}</label>
                 <br></br>
-                <label id="emissions_saved">Estimated C02 emission saved (kg of CO2): XX.XX</label>
+                <label>Estimated C02 emission saved (approx. kg of CO2): {2.5*tripDetails.distance*tripDetails.fuel_consumption*tripDetails.num_passengers}</label>
             </div>
         </div>
     )
-
 }
