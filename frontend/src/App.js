@@ -8,6 +8,8 @@ import Login from './components/pages/Login'
 import Create_Trip from './components/pages/Create_Trip'
 import TripDisplay from './components/pages/TripDisplay'
 import DisplayTripCost from './components/pages/DisplayTripCost'
+import AvailableDrivers from './components/pages/AvailableDrivers'
+import DisplayTripCost from './components/pages/DisplayTripCost'
 
 import './App.css'
 
@@ -23,6 +25,7 @@ export default function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/createTrip' element={<Create_Trip />} />
           <Route path='/display-trip' element={<TripDisplay />} />
+          <Route path='/display-trip-cost' element={<DisplayTripCost />} />
           <Route path='/trip-cost' element={<DisplayTripCost />} />
         </Routes>
         <Footer />
@@ -44,7 +47,7 @@ const FooterStyle = {
   position: "absolute",
   bottom: 0,
   padding: "1rem",
-  margin: 0,
+  marginTop: "5rem",
   width: "100%",
   opacity: ".5"
 }
