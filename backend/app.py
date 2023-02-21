@@ -8,6 +8,7 @@ CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcpool.db"
 db = SQLAlchemy(app)
 
+
 class User(db.Model):
     __tablename__ = "user_table"
     name = db.Column(db.String(50))
@@ -78,14 +79,13 @@ def createUser():
         # mcgill_id already exists
         return jsonify({"message": "McGill ID already exists"}), 401
 
-
     user = User(
-        name = data['name'],
-        email = data['email'],
-        address = data['address'],
-        mcgill_id = data['mcgill_id'],
-        password = data['password'],
-        isDriver = data['checkbox'])
+        name=data['name'],
+        email=data['email'],
+        address=data['address'],
+        mcgill_id=data['mcgill_id'],
+        password=data['password'],
+        isDriver=data['checkbox'])
 
     db.session.add(user)
     db.session.commit()
@@ -106,7 +106,8 @@ def createTrip():
     db.session.commit()
     return "200"
 
-@app.route("/getTrip", methods = ['GET'])
+
+@app.route("/getTrip", methods=['GET'])
 def getTrip():
     user_email = request.args.get('userEmail')
     trip = Trip.query.filter(Trip.passengers.any(email=user_email)).first()
@@ -134,7 +135,6 @@ def login():
 
 @app.route("/getAvailableDrivers/", methods=["GET"])
 def getAvailableDrivers():
-
     users = User.query.filter_by(isDriver="True").all()
 
     user_list = []
