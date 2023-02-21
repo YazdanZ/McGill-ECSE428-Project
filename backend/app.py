@@ -114,6 +114,31 @@ def getTrip():
     data = {'message': 'User successfully created', 'code': 'SUCCESS'}
     return make_response(jsonify(data), 201)
 
+    if trip:
+        driver = User.query.filter_by(email=trip.vehicle.driver).first()
+        driver_name = driver.name
+        driver_vehicle = trip.vehicle.car_id
+        pickup_location = trip.pickup_address.address_line_1 + ", " + trip.pickup_address.city
+        dropoff_location = trip.dropoff_address.address_line_1 + ", " + trip.dropoff_address.city
+        distance = trip.distance_km
+        trip_id = trip.trip_id
+        fuel_consumption = trip.vehicle.fuel_consumption
+        available_seats = trip.vehicle.seats - len(trip.passengers)
+
+        return {
+            'driver_name': driver_name,
+            'driver_vehicle': driver_vehicle,
+            'pickup_location': pickup_location,
+            'dropoff_location': dropoff_location,
+            'distance': distance,
+            'trip_id': trip_id,
+            'fuel_consumption': fuel_consumption,
+            'available_seats': available_seats
+        }
+    else:
+        return 'You are currently not signed up for any trip'
+
+
 
 # getting everything in plain text! :(
 @app.route("/login/", methods=["POST"])
