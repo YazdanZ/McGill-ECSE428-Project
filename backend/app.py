@@ -74,3 +74,21 @@ def login():
     else:
         # User does not exist or password is incorrect
         return jsonify({"message": "Invalid email or password"}), 401
+
+
+@app.route("/getAvailableDrivers/", methods=["GET"])
+def getAvailableDrivers():
+
+    users = User.query.filter_by(isDriver="True").all()
+
+    user_list = []
+    for user in users:
+        user_dict = {
+            'name': user.name,
+            'email': user.email,
+            'address': user.address,
+            'mcgill_id': user.mcgill_id,
+            'isDriver': user.isDriver,
+        }
+        user_list.append(user_dict)
+    return jsonify(user_list), 200
