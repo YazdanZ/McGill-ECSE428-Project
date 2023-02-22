@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mcpool.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcpool.db"
 db = SQLAlchemy(app)
 
 
@@ -59,13 +59,30 @@ with app.app_context():
     db.create_all()
 
 
-@app.route("/createUser", methods=['POST'])
+@app.route("/createUser/", methods=["POST"])
 def createUser():
     data = request.get_json()
+
+    user = User.query.filter_by(
+        email=data['email']
+    ).first()
+
+    if user:
+        # email already exists
+        return jsonify({"message": "Email already exists"}), 401
+
+    user = User.query.filter_by(
+        mcgill_id=data['mcgill_id']
+    ).first()
+
+    if user:
+        # mcgill_id already exists
+        return jsonify({"message": "McGill ID already exists"}), 401
 
     user = User(
         name=data['name'],
         email=data['email'],
+        address=data['address'],
         mcgill_id=data['mcgill_id'],
         password=data['password'],
         isDriver=data['checkbox'])
@@ -89,10 +106,13 @@ def createTrip():
     db.session.commit()
     return "200"
 
-@app.route("/getTrip", methods = ['GET'])
+
+@app.route("/getTrip", methods=['GET'])
 def getTrip():
     user_email = request.args.get('userEmail')
     trip = Trip.query.filter(Trip.passengers.any(email=user_email)).first()
+    data = {'message': 'User successfully created', 'code': 'SUCCESS'}
+    return make_response(jsonify(data), 201)
 
     if trip:
         driver = User.query.filter_by(email=trip.vehicle.driver).first()
@@ -117,3 +137,40 @@ def getTrip():
         }
     else:
         return 'You are currently not signed up for any trip'
+
+
+
+# getting everything in plain text! :(
+@app.route("/login/", methods=["POST"])
+def login():
+    data = request.get_json()
+
+    # make sure checkbox is "true" or "false" as strings
+    user = User.query.filter_by(
+        email=data["email"], password=data["password"], isDriver=data["checkbox"]
+    ).first()
+
+    if user:
+        # User exists and password is correct
+        return jsonify({"message": "Login successful!"}), 200
+    else:
+        # User does not exist or password is incorrect
+        return jsonify({"message": "Invalid email or password"}), 401
+
+
+@app.route("/getAvailableDrivers/", methods=["GET"])
+def getAvailableDrivers():
+    users = User.query.filter_by(isDriver="True").all()
+
+    user_list = []
+    for user in users:
+        user_dict = {
+            'name': user.name,
+            'email': user.email,
+            'address': user.address,
+            'mcgill_id': user.mcgill_id,
+            'isDriver': user.isDriver,
+        }
+        user_list.append(user_dict)
+    return jsonify(user_list), 200
+
