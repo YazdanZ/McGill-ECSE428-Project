@@ -3,8 +3,36 @@ import ParticlesComponent from '../Particles'
 //import '../../App.css'
 import ButtonCustom from '../button/Button'
 
+export const notifySuccess = (text) => toast.success(text, {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    progress: undefined,
+    theme: "light",
+});
+
+export const notifyError = (text) => toast.error(text, {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    progress: undefined,
+    theme: "light",
+});
+
 
 export default function Create_Trip()  {
+
+    available_seats = React.useRef();
+    fuel_consumption = React.useRef();
+    distance_km = React.useRef();
+    pickup_location = React.useRef();
+    dropoff_location = React.useRef();
 
 
     return (
@@ -73,7 +101,7 @@ function post1() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"vehicle_id":vehicle_id, "passenger_id": passenger_id,  "distance_km": distance_km})
+            body: JSON.stringify({"vehicle_id":vehicle_id.current.value, "passenger_id": passenger_id,  "distance_km": distance_km})
         })
             .then(response => alert("New Driver Trip created"))
         e.preventDefault();
