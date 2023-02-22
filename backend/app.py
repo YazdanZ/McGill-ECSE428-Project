@@ -161,7 +161,7 @@ def login():
 @app.route("/getAvailableDrivers/", methods=["GET"])
 def getAvailableDrivers():
     users = User.query.filter_by(isDriver="True").all()
-
+ 
     user_list = []
     for user in users:
         user_dict = {
@@ -174,47 +174,60 @@ def getAvailableDrivers():
         user_list.append(user_dict)
     return jsonify(user_list), 200
 
-    # if trip:
-    #     driver = User.query.filter_by(email=trip.vehicle.driver).first()
-    #     driver_name = driver.name
-    #     driver_vehicle = trip.vehicle.car_id
-    #     pickup_location = trip.pickup_address.address_line_1 + ", " + trip.pickup_address.city
-    #     dropoff_location = trip.dropoff_address.address_line_1 + ", " + trip.dropoff_address.city
-    #     distance = trip.distance_km
-    #     trip_id = trip.trip_id
-    #     fuel_consumption = trip.vehicle.fuel_consumption
-    #     available_seats = trip.vehicle.seats - len(trip.passengers)
+    
 
-    #     return {
-    #         'driver_name': driver_name,
-    #         'driver_vehicle': driver_vehicle,
-    #         'pickup_location': pickup_location,
-    #         'dropoff_location': dropoff_location,
-    #         'distance': distance,
-    #         'trip_id': trip_id,
-    #         'fuel_consumption': fuel_consumption,
-    #         'available_seats': available_seats
-    #     }
-    # else:
-    #     return 'You are currently not signed up for any trip'
+# @app.route("/getAvailableTrips/", methods=["GET"])
+# def getAvailableTrips():
+#     trips = Trip.query.all()
+     
+#     trip_list = []
+#     for trip in trips:
+#         driver = User.query.filter_by(email=trip.vehicle.driver_id).first()
+#         driver_name = driver.name
+#         driver_vehicle = trip.vehicle.car_id
+#         pickup_location = trip.pickup_address.address_line_1 + ", " + trip.pickup_address.city
+#         dropoff_location = trip.dropoff_address.address_line_1 + ", " + trip.dropoff_address.city
+#         fuel_consumption = trip.vehicle.fuel_consumption
+#         available_seats = trip.vehicle.seats - len(trip.passengers)
+#         trip_dict = {
+#             'trip_id' : trip.trip_id,
+#             'distance_km' : trip.distance_km,
+#             'passenger_id' : trip.passenger_id,
+#              'passenger' : trip.passenger,
+#              'vehicle_id' : trip.vehicle_id,
+#               'vehicle' : trip.vehicle,
+#               'driver_name': driver_name,
+#               'driver_vehicle': driver_vehicle,
+#             'drop_off_address' : dropoff_location,
+#             'pick_up_address' : pickup_location,
+#             'fuel_consumption': fuel_consumption,
+#             'available_seats': available_seats
 
-@app.route("/getAvailableTrips/", methods=["GET"])
-def getAvailableTrips():
-    trips = Trip.query.all()
-    trip_list = []
-    for trip in trips:
-        trip_dict = {
-            'trip_id' : trip.trip_id,
-            'distance_km' : trip.distance_km,
-            'passenger_id' : trip.passenger_id,
-             'passenger' : trip.passenger,
-             'vehicle_id' : trip.vehicle_id,
-              'vehicle' : trip.vehicle,
-            'drop_off_address' : trip.drop_off_address,
-            'pick_up_address' : trip.pick_up_address
+#         }
+#         trip_list.append(trip_dict)
+#         return jsonify(trip_list), 200
 
+@app.route("/assignPassenger/", methods=["POST"])
+def assignPassenger():
+    data = request.get_json()
+    # user = User.query.filter_by(
+    #     email=data['email']
+    # ).first()
+    db.session.query(Trip).filter(
+        Trip.trip_id == data['trip_id']
+    ).update(
+        {
+            Trip.passenger_id: data['email']
         }
-        trip_list.append(trip_dict)
-        return jsonify(trip_list), 200
-# if __name__ == "__main__":
-#     app.run(debug=True)
+    )
+    
+    try:
+      
+        db.session.commit()
+        return jsonify({"message": "Passenger added successfully!"}), 200
+    except:
+        return jsonify({"message": "Unable to add passenger."})
+
+
+if __name__ == "__main__":
+     app.run(debug=True)
