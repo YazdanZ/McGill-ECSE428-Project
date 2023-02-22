@@ -226,7 +226,7 @@ def getAvailableTrips():
 
         }
         trip_list.append(trip_dict)
-        return jsonify(trip_list), 200
+    return jsonify(trip_list), 200
 
 @app.route("/assignPassenger/", methods=["POST"])
 def assignPassenger():
