@@ -183,24 +183,24 @@ def getAvailableTrips():
     trip_list = []
     for trip in trips:
       
-        user = User(
-                name='Anandamoyi',
-                email='anandamoyisaha17@gmail.com',
-                mcgill_id=260924135,
-                password='password',
-                isDriver='True'
-           )
-        db.session.add(user)
-        db.session.commit()
+        # user = User(
+        #         name='Anandamoyi',
+        #         email='anandamoyisaha17@gmail.com',
+        #         mcgill_id=260924135,
+        #         password='password',
+        #         isDriver='True'
+        #    )
+        # db.session.add(user)
+        # db.session.commit()
 
-        car = Car(
-            car_id=trip.vehicle_id,
-            fuel_consumption=10,
-            seats=5,
-            driver=user
-        )
-        db.session.add(car)
-        db.session.commit()
+        # car = Car(
+        #     car_id=trip.vehicle_id,
+        #     fuel_consumption=10,
+        #     seats=5,
+        #     driver=user
+        # )
+        # db.session.add(car)
+        # db.session.commit()
          
 
         
@@ -208,19 +208,17 @@ def getAvailableTrips():
         driver = User.query.filter_by(email=car.driver_id).first()
         driver_name = driver.name
         driver_vehicle = trip.vehicle
-        pickup_location = trip.pickup_address.address_line_1 + ", " + trip.pickup_address.city
-        dropoff_location = trip.dropoff_address.address_line_1 + ", " + trip.dropoff_address.city
+        pickup_location = trip.pick_up_address
+        dropoff_location = trip.drop_off_address
         fuel_consumption = trip.vehicle.fuel_consumption
-        available_seats = trip.vehicle.seats - len(trip.passengers)
+        available_seats = trip.vehicle.seats 
         trip_dict = {
             'trip_id' : trip.trip_id,
             'distance_km' : trip.distance_km,
             'passenger_id' : trip.passenger_id,
              'passenger' : trip.passenger,
              'vehicle_id' : trip.vehicle_id,
-              'vehicle' : trip.vehicle,
               'driver_name': driver_name,
-              'driver_vehicle': driver_vehicle,
             'drop_off_address' : dropoff_location,
             'pick_up_address' : pickup_location,
             'fuel_consumption': fuel_consumption,
