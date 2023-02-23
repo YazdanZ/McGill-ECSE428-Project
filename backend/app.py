@@ -107,12 +107,16 @@ def createTrip():
     return "200"
 
 
-@app.route("/getTrip", methods=['GET'])
+@app.route("/getTrip", methods = ['GET'])
 def getTrip():
-    user_email = request.args.get('userEmail')
-    trip = Trip.query.filter(Trip.passengers.any(email=user_email)).first()
-    data = {'message': 'User successfully created', 'code': 'SUCCESS'}
-    return make_response(jsonify(data), 201)
+    if 'userEmail' in request.args:
+        user_email = request.args.get('userEmail')
+        trip = Trip.query.filter(Trip.passengers.any(email=user_email)).first()
+    elif 'trip_id' in request.args:
+        trip_id = request.args.get('trip_id')
+        trip = Trip.query.get(trip_id)
+    else:
+        return 'Invalid request. Must include at least one of "userEmail" or "trip_id" arguments.'
 
     if trip:
         driver = User.query.filter_by(email=trip.vehicle.driver).first()
@@ -123,7 +127,8 @@ def getTrip():
         distance = trip.distance_km
         trip_id = trip.trip_id
         fuel_consumption = trip.vehicle.fuel_consumption
-        available_seats = trip.vehicle.seats - len(trip.passengers)
+        num_seats = trip.vehicle.seats
+        num_passengers = len(trip.passengers)
 
         return {
             'driver_name': driver_name,
@@ -133,10 +138,12 @@ def getTrip():
             'distance': distance,
             'trip_id': trip_id,
             'fuel_consumption': fuel_consumption,
-            'available_seats': available_seats
+            'num_passengers': num_passengers,
+            'num_seats': num_seats,
+            'cost': 123
         }
     else:
-        return 'You are currently not signed up for any trip'
+        return 'Could not find trip for arguments {}'.format(request.args.items())
 
 
 
