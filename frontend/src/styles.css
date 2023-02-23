@@ -1,0 +1,319 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital@1&display=swap");
+.App-header {
+  pointer-events: none;
+  z-index: 0;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.title {
+  margin-top: 2rem;
+  position: relative;
+  pointer-events: auto;
+}
+
+.App {
+  text-align: center;
+}
+
+body {
+  margin: 0 auto;
+}
+
+.centered {
+  margin-top: 2rem;
+  position: relative;
+  padding-top: 10%;
+  pointer-events: auto;
+}
+
+.primary-button {
+  margin-top: 5rem;
+  margin-right: 1rem;
+  padding: .6rem;
+  width: 10rem;
+  background: #222;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.main-title,
+.main-para {
+  color: #f1f1f1;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+}
+
+.main-title {
+  padding-top: 10rem;
+  font-size: 5rem;
+  font-family: 'Fascinate', cursive;
+  text-transform: uppercase;
+}
+
+.main-para {
+  font-size: 2.5rem;
+  text-Transform: capitalize;
+}
+
+#reg_btn span {
+  display: inline-block;
+  position: relative;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+#logout_btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 0.4rem;
+  border: 0;
+  background: #222;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+#logout_btn:hover {
+  background: #333;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+#reg_btn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+#reg_btn:hover span {
+  padding-right: 25px;
+}
+
+#reg_btn:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+h1 {
+  font-family: "Open Sans", sans-serif;
+}
+
+h2 {
+  font-weight: 300;
+  font-family: "Open Sans", sans-serif;
+}
+
+form {
+  display: inline-block;
+  background: #f3f3f3;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 2rem;
+  margin: 2rem 0 1rem 0;
+}
+
+#user_info_form {
+  display: inline-block;
+  background: #ffffff;
+  border: 4px solid #000000;
+  border-radius: 2px;
+  padding: 2rem;
+  margin: 2rem 0 1rem 0;
+}
+
+#info {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+
+form label {
+  float: left;
+  font-size: .9rem;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+.right-label {
+  float: right;
+  cursor: pointer;
+}
+
+input {
+  width: 15rem;
+  padding: .3rem;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  font-family: "Open Sans", sans-serif;
+}
+
+#sub_btn {
+  display: block;
+  width: 100%;
+  padding: .3rem;
+  border: none;
+  background: #222;
+  color: #fff;
+  border-radius: 3px;
+}
+
+#logout_btn {
+  display: block;
+  width: 100%;
+  padding: .3rem;
+  border: none;
+  background: #222;
+  color: #fff;
+  border-radius: 3px;
+}
+
+#info_btn {
+  display: block;
+  width: 100%;
+  padding: .3rem;
+  border: none;
+  background: #222;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.edit_button_holder {
+  display: inline-block;
+  text-align: center;
+  width: 50%;
+}
+
+#sub_btn:hover {
+  background: #333;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+footer p {
+  margin: 0;
+  font-size: .9rem;
+}
+
+#checkbox {
+  width: 1rem;
+}
+
+form span {
+  font-size: .8rem;
+  font-family: "Open Sans", sans-serif;
+}
+
+#reset_pass_lbl {
+  float: left;
+}
+
+.home-page-title {
+  color: #222;
+}
+
+.header {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 56px;
+  color: white;
+}
+
+.body-header {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: white;
+}
+
+.body {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.body .link {
+  color: #FFFFFF;
+}
+
+.small-body {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.highlight-text {
+  background: linear-gradient(112.27deg, #99c8f0 0%, #8877dc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 112px;
+    color: white;
+  }
+  .body-header {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 56px;
+    color: white;
+  }
+  .body {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+  }
+}
+
+.button-container {
+  border-width: 0;
+  background-image: linear-gradient(112.27deg, #dd6e57, #cc4023, #d3553b);
+  border-radius: 8px;
+  color: white;
+  padding: 2px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  height: 56px;
+  width: 285px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  background-size: 200%;
+  background-position: left;
+  cursor: pointer;
+}
+
+.button-container:hover {
+  background-position: right;
+}
+
+@media screen and (min-width: 768px) {
+  .button-container {
+    width: 367px;
+    height: 96px;
+    font-size: 32px;
+  }
+}
+/*# sourceMappingURL=styles.css.map */
