@@ -211,19 +211,19 @@ def getAvailableTrips():
         
         car = Car.query.filter_by(car_id=trip.vehicle_id).first()
         driver = User.query.filter_by(email=car.driver_id).first()
-        user = User.query.filter_by(email="mihiranshul@gmail.com").first()
-        if trip.passenger_id == "mihiranshul@gmail.com":
-            trip.passenger = user
+        pick_up_address = Address.query.filter_by(address_id=trip.pick_up_address_id).first()
+        drop_off_address = Address.query.filter_by(address_id=trip.drop_off_address_id).first()
+        #user = User.query.filter_by(email="mihiranshul@gmail.com").first()
         driver_name = driver.name
         driver_vehicle = trip.vehicle
-        pickup_location = trip.pick_up_address
-        dropoff_location = trip.drop_off_address
+        pickup_location = pick_up_address.address_line_1 + ", " + pick_up_address.city + ", " + pick_up_address.postal_code
+        dropoff_location = drop_off_address.address_line_1 + ", " + drop_off_address.city + ", " + drop_off_address.postal_code
         fuel_consumption = trip.vehicle.fuel_consumption
         available_seats = trip.vehicle.seats 
         trip_dict = {
             'trip_id' : trip.trip_id,
             'distance_km' : trip.distance_km,
-            'passenger_id' : trip.passenger_id,
+            #'passenger_id' : trip.passenger_id,
              #'passenger' : trip.passenger,
              'vehicle_id' : trip.vehicle_id,
               'driver_name': driver_name,
