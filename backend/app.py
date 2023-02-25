@@ -17,7 +17,6 @@ class User(db.Model):
     __tablename__ = "user_table"
     name = db.Column(db.String(50))
     email = db.Column(db.String(50), primary_key=True)
-    #address = db.Column(db.String(50))
     mcgill_id = db.Column(db.Integer)
     password = db.Column(db.String(50))
     isDriver = db.Column(db.String(50))
@@ -58,21 +57,21 @@ class Car(db.Model):
 with app.app_context():
     db.create_all()
 
-@app.route("/createUser/", methods=["POST"])
-def createUser():
+@app.route("/signup/", methods=["POST"])
+def signup():
     data = request.get_json()
 
-    user = User.query.filter_by(
+    user = bool(User.query.filter_by(
         email=data['email']
-    ).first()
+    ).first())
 
     if user:
         # email already exists
         return jsonify({"message": "Email already exists"}), 401
 
-    user = User.query.filter_by(
+    user = bool(User.query.filter_by(
         mcgill_id=data['mcgill_id']
-    ).first()
+    ).first())
 
     if user:
         # mcgill_id already exists
@@ -81,14 +80,13 @@ def createUser():
     user = User(
         name=data['name'],
         email=data['email'],
-        address=data['address'],
         mcgill_id=data['mcgill_id'],
         password=data['password'],
-        isDriver=data['checkbox'])
+        isDriver=data['isDriver'])
 
     db.session.add(user)
     db.session.commit()
-    return "200"
+    return jsonify({"message": "User successfully created"}), 200
 
 
 @app.route("/createTrip", methods=['POST'])
