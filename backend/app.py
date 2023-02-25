@@ -10,24 +10,25 @@ CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcpool.db"
 db = SQLAlchemy(app)
 
+#association table between User and Trip to store passengers on a given trip
+passengers_per_trip = db.Table('association', db.Column('user_id', db.String(50), db.ForeignKey('user_table.email')), db.Column('trip_id', db.Integer, db.ForeignKey('trip_table.trip_id')))
 
 class User(db.Model):
     __tablename__ = "user_table"
     name = db.Column(db.String(50))
     email = db.Column(db.String(50), primary_key=True)
-    # address = db.Column(db.String(50))
+    #address = db.Column(db.String(50))
     mcgill_id = db.Column(db.Integer)
     password = db.Column(db.String(50))
     isDriver = db.Column(db.String(50))
-    passenger_trip = db.relationship("Trip", back_populates="passenger")
+    passenger_trip = db.relationship("Trip", secondary=passengers_per_trip, back_populates="passengers")
     driver_car = db.relationship("Car", back_populates="driver")
 
 class Trip(db.Model):
     __tablename__ = "trip_table"
     trip_id = db.Column(db.Integer, primary_key=True)
     distance_km = db.Column(db.Integer)
-    passenger_id = db.Column(db.Integer, db.ForeignKey("user_table.email"))
-    passenger = db.relationship("User", back_populates="passenger_trip")
+    passengers = db.relationship("User", secondary=passengers_per_trip, back_populates="passenger_trip")
     vehicle_id = db.Column(db.Integer, db.ForeignKey("car_table.car_id"))
     vehicle = db.relationship("Car", back_populates="vehicle_trip")
     drop_off_address_id = db.Column(db.Integer, db.ForeignKey("address_table.address_id"))
@@ -109,7 +110,7 @@ def createTrip():
 def getTrip():
     if 'passenger_id' in request.args:
         passenger_id = request.args.get('passenger_id')
-        trip = Trip.query.filter(Trip.passenger.has(email=passenger_id)).first()
+        trip = Trip.query.filter(Trip.passengers.any(email=passenger_id)).first()
     elif 'trip_id' in request.args:
         trip_id = request.args.get('trip_id')
         trip = Trip.query.get(trip_id)
@@ -125,6 +126,7 @@ def getTrip():
         trip_id = trip.trip_id
         fuel_consumption = trip.vehicle.fuel_consumption
         num_seats = trip.vehicle.seats
+        num_passengers = len(trip.passengers)
 
         return {
             'driver_name': driver_email,
@@ -135,7 +137,9 @@ def getTrip():
             'trip_id': trip_id,
             'fuel_consumption': fuel_consumption,
             'num_seats': num_seats,
-            'cost': 123
+            'num_passengers': num_passengers,
+            'cost': 123, #cost will be calculated in a later sprint
+            'duration' : 20 #duration will be calculated in a later sprint
         }
         
     else:
@@ -174,3 +178,28 @@ def getAvailableDrivers():
         }
         user_list.append(user_dict)
     return jsonify(user_list), 200
+
+#adds a passenger to a trip, for the time being used it to test Trip Display
+@app.route("/addPassengerToTrip", methods=['POST'])
+def addPassengerToTrip():
+    data = request.get_json()
+    user_email = data['user_email']
+    trip_id = data['trip_id']
+
+    user = User.query.filter_by(email=user_email).first()
+    if not user:
+        return jsonify({"message": f"User with email {user_email} does not exist"}), 404
+
+    trip = Trip.query.filter_by(trip_id=trip_id).first()
+    if not trip:
+        return jsonify({"message": f"Trip with ID {trip_id} does not exist"}), 404
+
+    # Check if user is already a passenger on this trip
+    if user in trip.passengers:
+        return jsonify({"message": f"{user_email} is already a passenger on this trip"}), 400
+
+    # Add user to trip's passengers
+    trip.passengers.append(user)
+    db.session.commit()
+
+    return jsonify({"message": f"{user_email} added as a passenger to trip {trip_id}"}), 200

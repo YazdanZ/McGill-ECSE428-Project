@@ -10,8 +10,8 @@ export default function TripDisplay() {
 
   useEffect(() => {
     const fetchTripDetails = async () => {
-      // const response = await fetch(`http://localhost:5000/getTrip?passenger_id=${passenger_id}`);
-      const response = await fetch(`http://localhost:5000/getTrip?trip_id=${trip_id}`);
+      const response = await fetch(`http://localhost:5000/getTrip?passenger_id=${passenger_id}`); //searches for the first trip assigned to the passenger
+      //const response = await fetch(`http://localhost:5000/getTrip?trip_id=${trip_id}`); //passes a trip id to retrieve the trip
       const data = await response.json();
       console.log(data)
       setTripDetails(data);
@@ -34,7 +34,7 @@ export default function TripDisplay() {
             <p><strong>Distance:</strong> {tripDetails.distance} kilometers</p>
             <p><strong>Duration:</strong> {tripDetails.duration} minutes</p>
             <p>
-              <strong>Cost:</strong> {tripDetails.cost} 
+              <strong>Cost:</strong> {tripDetails.cost}$
               <button style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
                 <Link to={`/trip-cost?trip_id=${tripDetails.trip_id}`}>
                   <p>View Details</p>
