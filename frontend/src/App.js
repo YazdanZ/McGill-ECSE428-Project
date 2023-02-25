@@ -26,6 +26,7 @@ export default function App() {
           <Route path='/display-trip' element={<TripDisplay />} />
           <Route path='/display-trip-cost' element={<DisplayTripCost />} />
           <Route path='/trip-cost' element={<DisplayTripCost />} />
+          <Route path='/display-trips' element={<AvailableDrivers />} />
         </Routes>
         <Footer />
       </div>
