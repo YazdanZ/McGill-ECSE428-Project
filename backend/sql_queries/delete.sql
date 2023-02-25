@@ -1,3 +1,3 @@
 -- SQLite
 DELETE FROM address_table
-WHERE address_id = 1
+WHERE address_id = 32

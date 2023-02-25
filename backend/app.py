@@ -30,20 +30,20 @@ class Trip(db.Model):
     passenger = db.relationship("User", back_populates="passenger_trip")
     vehicle_id = db.Column(db.Integer, db.ForeignKey("car_table.car_id"))
     vehicle = db.relationship("Car", back_populates="vehicle_trip")
-    drop_off_address = db.relationship("Address", back_populates="drop_off")
-    pick_up_address = db.relationship("Address", back_populates="pick_up")
-    
+    drop_off_address_id = db.Column(db.Integer, db.ForeignKey("address_table.address_id"))
+    drop_off_address = db.relationship("Address", back_populates="drop_off_trips", foreign_keys=[drop_off_address_id])
+    pick_up_address_id = db.Column(db.Integer, db.ForeignKey("address_table.address_id"))
+    pick_up_address = db.relationship("Address", back_populates="pick_up_trips", foreign_keys=[pick_up_address_id])
+
 class Address(db.Model):
     __tablename__ = "address_table"
+    address_id = db.Column(db.Integer, primary_key=True)
     city = db.Column(db.String(100))
     address_line_1 = db.Column(db.String(200))
     postal_code = db.Column(db.String(50))
-    address_id = db.Column(db.Integer, primary_key=True)
-    # drop_off_trip = db.Column(db.Integer, db.ForeignKey("trip_table.trip_id"))
-    drop_off = db.relationship("Trip", back_populates="drop_off_address")
-    trip = db.Column(db.Integer, db.ForeignKey("trip_table.trip_id"))
-    pick_up = db.relationship("Trip", back_populates="pick_up_address")
-
+    drop_off_trips = db.relationship("Trip", back_populates="drop_off_address", foreign_keys=[Trip.drop_off_address_id])
+    pick_up_trips = db.relationship("Trip", back_populates="pick_up_address", foreign_keys=[Trip.pick_up_address_id])
+    
 class Car(db.Model):
     __tablename__ = "car_table"
     car_id = db.Column(db.Integer, primary_key=True)
@@ -119,30 +119,27 @@ def getTrip():
     if trip:
         driver_email = trip.vehicle.driver.name
         driver_vehicle = trip.vehicle.vehicle_description
-        #pickup_location = trip.
-        #dropoff_location = trip.
+        pickup_location = trip.pick_up_address.address_line_1 + ', ' + trip.pick_up_address.city + ', ' + trip.pick_up_address.postal_code
+        dropoff_location = trip.drop_off_address.address_line_1 + ', ' + trip.drop_off_address.city + ', ' + trip.drop_off_address.postal_code
         distance = trip.distance_km
         trip_id = trip.trip_id
         fuel_consumption = trip.vehicle.fuel_consumption
         num_seats = trip.vehicle.seats
-        # num_passengers = len(trip.passenger)
 
         return {
             'driver_name': driver_email,
             'driver_vehicle': driver_vehicle,
-            #'pickup_location': pickup_location,
-            #'dropoff_location': dropoff_location,
+            'pickup_location': pickup_location,
+            'dropoff_location': dropoff_location,
             'distance': distance,
             'trip_id': trip_id,
             'fuel_consumption': fuel_consumption,
-            # 'num_passengers': num_passengers,
             'num_seats': num_seats,
             'cost': 123
         }
+        
     else:
         return jsonify({'error': 'Could not find trip for arguments {}'.format(request.args.items())})
-
-
 
 # getting everything in plain text! :(
 @app.route("/login/", methods=["POST"])

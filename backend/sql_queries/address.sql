@@ -1,4 +1,6 @@
 -- SQLite
-INSERT INTO address_table (address_id, city, address_line_1, postal_code, trip) 
-VALUES (1, 'Montreal', '19 Sherbrooke St', 'H64 383', 1);
-VALUES (2, 'Montreal', '5th Avenue', 'H75 342', 1);
+INSERT INTO address_table (city, address_line_1, postal_code)
+VALUES ('Montreal', '59 Sherbooke St', 'H56 3A7');
+
+INSERT INTO address_table (city, address_line_1, postal_code)
+VALUES ('Laval', '49 Boul Chomedey', 'J5Z 5E1');
