@@ -184,11 +184,11 @@ def getAvailableTrips():
     for trip in trips:
       
         # user = User(
-        #         name='Anandamoyi',
-        #         email='anandamoyisaha17@gmail.com',
-        #         mcgill_id=260924135,
-        #         password='password',
-        #         isDriver='True'
+        #         name='Mihir',
+        #         email='mihiranshul@gmail.com',
+        #         mcgill_id=260812345,
+        #         password='password12',
+        #         isDriver='False'
         #    )
         # db.session.add(user)
         # db.session.commit()
@@ -206,6 +206,9 @@ def getAvailableTrips():
         
         car = Car.query.filter_by(car_id=trip.vehicle_id).first()
         driver = User.query.filter_by(email=car.driver_id).first()
+        user = User.query.filter_by(email="mihiranshul@gmail.com").first()
+        if trip.passenger_id == "mihiranshul@gmail.com":
+            trip.passenger = user
         driver_name = driver.name
         driver_vehicle = trip.vehicle
         pickup_location = trip.pick_up_address
@@ -216,7 +219,7 @@ def getAvailableTrips():
             'trip_id' : trip.trip_id,
             'distance_km' : trip.distance_km,
             'passenger_id' : trip.passenger_id,
-             'passenger' : trip.passenger,
+             #'passenger' : trip.passenger,
              'vehicle_id' : trip.vehicle_id,
               'driver_name': driver_name,
             'drop_off_address' : dropoff_location,

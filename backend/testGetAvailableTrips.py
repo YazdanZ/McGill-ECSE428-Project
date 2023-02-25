@@ -22,7 +22,7 @@ class testGetAvailableTrips:
         if response.ok:
             with app.app_context():
                 data = response.json()
-                print(data[0]['driver_name'])
+                #print(data[0]['driver_name'])
                 assert data[0]['trip_id'] == 2
                 assert data[0]['distance_km'] == 30
                 assert data[0]['passenger_id'] == "mihiranshul@gmail.com"
@@ -30,6 +30,7 @@ class testGetAvailableTrips:
                 assert data[0]['driver_name'] == "Anandamoyi"
                 assert data[0]['fuel_consumption'] == 10
                 assert data[0]['available_seats'] == 5
+                print(" Acceptance Test getAvailableTrips passed")
 
 
                 
