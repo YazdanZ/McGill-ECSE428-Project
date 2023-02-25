@@ -2,10 +2,17 @@ from behave import *
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 import behave_webdriver
-from selenium.webdriver.common.by import by
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import requests
+
+def before_all(context):
+    context.behave_driver = behave_webdriver.Chrome(ChromeDriverManager().install())
+
+def after_all(context):
+    # cleanup after tests run
+    context.behave_driver.quit()
 
 @given("A trip with trip_id 12345 exists in the database")
 def step_impl(context):
@@ -20,7 +27,6 @@ def step_impl(context):
 
 @when("The displayTripCost page is opened with trip_id 12345 parameter passed through the URL")
 def step_impl(context):
-    context.behave_driver = behave_webdriver.Chrome(ChromeDriverManager().install())
     context.behave_driver.get("http://localhost:3000/trip-cost?trip_id=12345")
 
 @then("The trip_id, total cost in CAD, number of passengers, available seats, cost per passenger, trip length, estimated fuel consumption, and estimated C02 saved for the trip with ID 12345 is displayed")
@@ -83,4 +89,3 @@ def step_impl(context):
 @then("The trip display page is displayed")
 def step_impl(context):
     assert context.behave_driver.current_url == "http://localhost:3000/display-trip"
-    context.behave_driver.quit()
