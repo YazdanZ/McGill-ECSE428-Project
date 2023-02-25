@@ -9,7 +9,14 @@ import requests
 
 @given("A trip with trip_id 12345 exists in the database")
 def step_impl(context):
-    r = requests.post("http://localhost:5000/createTrip", data={"trip_id":12345,"vehicle_id":12345,"passenger_id":'e@mail.com',"distance_km":10})
+    #COMPLETE WHEN BACKEND IS DONE
+    #user = 
+    #car = 
+    #address1 = 
+    #address2 = 
+    #trip = {"trip_id":12345,"vehicle_id":12345,"passenger_id":'e@mail.com',"distance_km":10}
+    #r = requests.post("http://localhost:5000/createTrip", data=trip)
+    pass
 
 @when("The displayTripCost page is opened with trip_id 12345 parameter passed through the URL")
 def step_impl(context):
