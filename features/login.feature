@@ -13,4 +13,4 @@ Feature: Login
         Given I am on the Login page
         When I enter a non-existing email address and password
         And I click the Submit button
-        Then An Error Message should be displayed
+        Then The user should remain on the Login page

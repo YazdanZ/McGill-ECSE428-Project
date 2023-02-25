@@ -38,9 +38,7 @@ export default function Login() {
                         <label></label><br />
                     </p>
                     <p>
-                        <Link to='/user-info'>
-                            <ButtonCustom name="submitter" type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
-                        </Link>
+                        <ButtonCustom name="submitter" type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
                     </p>
                     <ToastContainer />
                 </form>

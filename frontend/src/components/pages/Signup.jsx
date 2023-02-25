@@ -20,13 +20,13 @@ export const notifySuccess = (text) => toast.success(text, {
 
 export const notifyError = (text) => toast.error(text, {
     position: "bottom-right",
-    autoClose: 2000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: false,
     progress: undefined,
-    theme: "light",
+    theme: "light"
 });
 
 var name = null;
@@ -105,6 +105,5 @@ async function post(event) {
         window.location.href = '/login';
     } else {
         notifyError(result.message);
-        window.location.href = '/login';
     }
 }
