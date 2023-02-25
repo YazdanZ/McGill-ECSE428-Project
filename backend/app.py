@@ -220,12 +220,13 @@ def getAvailableTrips():
         dropoff_location = drop_off_address.address_line_1 + ", " + drop_off_address.city + ", " + drop_off_address.postal_code
         fuel_consumption = trip.vehicle.fuel_consumption
         available_seats = trip.vehicle.seats 
+        
         trip_dict = {
             'trip_id' : trip.trip_id,
             'distance_km' : trip.distance_km,
             #'passenger_id' : trip.passenger_id,
              #'passenger' : trip.passenger,
-             'vehicle_id' : trip.vehicle_id,
+             'vehicle_name' : car.vehicle_description,
               'driver_name': driver_name,
             'drop_off_address' : dropoff_location,
             'pick_up_address' : pickup_location,
