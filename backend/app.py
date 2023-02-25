@@ -2,6 +2,8 @@ from flask import Flask, jsonify, make_response
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
+import warnings
+warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
 CORS(app)
@@ -20,7 +22,6 @@ class User(db.Model):
     passenger_trip = db.relationship("Trip", back_populates="passenger")
     driver_car = db.relationship("Car", back_populates="driver")
 
-
 class Trip(db.Model):
     __tablename__ = "trip_table"
     trip_id = db.Column(db.Integer, primary_key=True)
@@ -31,20 +32,9 @@ class Trip(db.Model):
     vehicle = db.relationship("Car", back_populates="vehicle_trip")
     drop_off_address = db.relationship("Address", back_populates="drop_off")
     pick_up_address = db.relationship("Address", back_populates="pick_up")
-
-
-class Car(db.Model):
-    __tablename__ = "car_table"
-    car_id = db.Column(db.Integer, primary_key=True)
-    fuel_consumption = db.Column(db.Integer)  # km per gallon or smth
-    seats = db.Column(db.Integer)
-    driver_id = db.Column(db.Integer, db.ForeignKey("user_table.email"))
-    driver = db.relationship("User", back_populates="driver_car")
-    vehicle_trip = db.relationship("Trip", back_populates="vehicle")
-
-
+    
 class Address(db.Model):
-    db.__tablename__ = "address_table"
+    __tablename__ = "address_table"
     city = db.Column(db.String(100))
     address_line_1 = db.Column(db.String(200))
     postal_code = db.Column(db.String(50))
@@ -54,10 +44,18 @@ class Address(db.Model):
     trip = db.Column(db.Integer, db.ForeignKey("trip_table.trip_id"))
     pick_up = db.relationship("Trip", back_populates="pick_up_address")
 
+class Car(db.Model):
+    __tablename__ = "car_table"
+    car_id = db.Column(db.Integer, primary_key=True)
+    vehicle_description = db.Column(db.String(100))
+    fuel_consumption = db.Column(db.Integer)  # km per gallon or smth
+    seats = db.Column(db.Integer)
+    driver_id = db.Column(db.Integer, db.ForeignKey("user_table.email"))
+    driver = db.relationship("User", back_populates="driver_car")
+    vehicle_trip = db.relationship("Trip", back_populates="vehicle")
 
 with app.app_context():
     db.create_all()
-
 
 @app.route("/createUser/", methods=["POST"])
 def createUser():
@@ -107,43 +105,42 @@ def createTrip():
     return "200"
 
 
-@app.route("/getTrip", methods = ['GET'])
+@app.route("/getTrip", methods=['GET'])
 def getTrip():
-    if 'userEmail' in request.args:
-        user_email = request.args.get('userEmail')
-        trip = Trip.query.filter(Trip.passengers.any(email=user_email)).first()
+    if 'passenger_id' in request.args:
+        passenger_id = request.args.get('passenger_id')
+        trip = Trip.query.filter(Trip.passenger.has(email=passenger_id)).first()
     elif 'trip_id' in request.args:
         trip_id = request.args.get('trip_id')
         trip = Trip.query.get(trip_id)
     else:
-        return 'Invalid request. Must include at least one of "userEmail" or "trip_id" arguments.'
+        return jsonify({'error': 'Invalid request. Must include at least one of "userEmail" or "trip_id" arguments.'})
 
     if trip:
-        driver = User.query.filter_by(email=trip.vehicle.driver).first()
-        driver_name = driver.name
-        driver_vehicle = trip.vehicle.car_id
-        pickup_location = trip.pickup_address.address_line_1 + ", " + trip.pickup_address.city
-        dropoff_location = trip.dropoff_address.address_line_1 + ", " + trip.dropoff_address.city
+        driver_email = trip.vehicle.driver.name
+        driver_vehicle = trip.vehicle.vehicle_description
+        #pickup_location = trip.
+        #dropoff_location = trip.
         distance = trip.distance_km
         trip_id = trip.trip_id
         fuel_consumption = trip.vehicle.fuel_consumption
         num_seats = trip.vehicle.seats
-        num_passengers = len(trip.passengers)
+        # num_passengers = len(trip.passenger)
 
         return {
-            'driver_name': driver_name,
+            'driver_name': driver_email,
             'driver_vehicle': driver_vehicle,
-            'pickup_location': pickup_location,
-            'dropoff_location': dropoff_location,
+            #'pickup_location': pickup_location,
+            #'dropoff_location': dropoff_location,
             'distance': distance,
             'trip_id': trip_id,
             'fuel_consumption': fuel_consumption,
-            'num_passengers': num_passengers,
+            # 'num_passengers': num_passengers,
             'num_seats': num_seats,
             'cost': 123
         }
     else:
-        return 'Could not find trip for arguments {}'.format(request.args.items())
+        return jsonify({'error': 'Could not find trip for arguments {}'.format(request.args.items())})
 
 
 
@@ -180,4 +177,3 @@ def getAvailableDrivers():
         }
         user_list.append(user_dict)
     return jsonify(user_list), 200
-
