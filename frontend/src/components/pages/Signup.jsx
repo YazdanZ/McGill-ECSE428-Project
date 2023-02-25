@@ -84,7 +84,7 @@ export default function Signup() {
                     <p>
                         <ButtonCustom type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
                     </p>
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                 </form>
                 <footer>
                     <button style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}><Link to="/login"><p>Already have an account?</p></Link></button>

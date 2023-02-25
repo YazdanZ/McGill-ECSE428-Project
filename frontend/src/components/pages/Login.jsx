@@ -40,7 +40,7 @@ export default function Login() {
                     <p>
                         <ButtonCustom type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
                     </p>
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                 </form>
                 <footer>
                     <button style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}><Link to="/"><p>Don't have an account?</p></Link></button>
