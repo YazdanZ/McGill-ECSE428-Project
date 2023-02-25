@@ -59,8 +59,8 @@ with app.app_context():
     db.create_all()
 
 
-@app.route("/createUser/", methods=["POST"])
-def createUser():
+@app.route("/signup/", methods=["POST"])
+def signup():
     data = request.get_json()
 
     user = User.query.filter_by(
@@ -89,7 +89,7 @@ def createUser():
 
     db.session.add(user)
     db.session.commit()
-    return "200"
+    return jsonify({"message": "User created successfully"}), 200
 
 
 @app.route("/createTrip", methods=['POST'])

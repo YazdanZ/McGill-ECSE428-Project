@@ -98,7 +98,7 @@ export default function Signup() {
 }
 async function post(event) {
     event.preventDefault();
-    let response = await fetch('http://localhost:5000/createUser', {
+    let response = await fetch('http://localhost:5000/signup/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
