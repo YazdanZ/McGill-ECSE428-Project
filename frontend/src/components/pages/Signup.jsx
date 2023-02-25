@@ -109,7 +109,9 @@ async function post(event) {
     let result = await response.json();
     if (response.ok) {
         notifySuccess(result.message);
+        window.location.href = '/login';
     } else {
         notifyError(result.message);
+        window.location.href = '/login';
     }
 }

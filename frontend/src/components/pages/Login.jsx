@@ -25,12 +25,12 @@ export default function Login() {
                 <form className='form' onSubmit={post}>
                     <p>
                         <label>Email address</label><br />
-                        <input ref={email} type="email" name="email" required /><br />
+                        <input ref={email} type="email" name="email" id="email" required /><br />
                         <label></label><br />
                     </p>
                     <p>
                         <label>Password</label><br />
-                        <input ref={password} type="password" name="password" required /><br />
+                        <input ref={password} type="password" name="password" id="password" required /><br />
                         <label></label><br />
                     </p>
                     <p>
@@ -38,7 +38,9 @@ export default function Login() {
                         <label></label><br />
                     </p>
                     <p>
-                        <ButtonCustom type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
+                        <Link to='/user-info'>
+                            <ButtonCustom name="submitter" type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
+                        </Link>
                     </p>
                     <ToastContainer />
                 </form>
@@ -66,6 +68,8 @@ async function post(event) {
     let result = await response.json();
     if (response.ok) {
         notifySuccess(result.message);
+        window.location.href = '/user-info';
+
     } else {
         notifyError(result.message);
     }

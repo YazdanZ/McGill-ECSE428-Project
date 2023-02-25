@@ -63,17 +63,13 @@ with app.app_context():
 def createUser():
     data = request.get_json()
 
-    user = User.query.filter_by(
-        email=data['email']
-    ).first()
+    user = data.get('email', '')
 
     if user:
         # email already exists
         return jsonify({"message": "Email already exists"}), 401
 
-    user = User.query.filter_by(
-        mcgill_id=data['mcgill_id']
-    ).first()
+    user = data.get('mcgill_id', '')
 
     if user:
         # mcgill_id already exists
