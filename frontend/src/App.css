@@ -29,8 +29,8 @@ body {
   margin-top: 2rem;
   position: relative;
   padding-top: 10%;
-  pointer-events:auto;
-  
+  pointer-events: auto;
+
 }
 
 .primary-button {
@@ -202,4 +202,24 @@ form span {
 
 .home-page-title {
   color: #222
+}
+
+#listDrivers {
+  margin: 20px 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+#listDrivers ul {
+  margin: 10px 0;
+  list-style-type: none;
+}
+
+#listDrivers button {
+  margin-left: 10px;
+  padding: 5px 10px;
+}
+
+.driver-buttons {
+  width: 100px;
 }
