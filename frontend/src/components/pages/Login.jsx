@@ -25,12 +25,12 @@ export default function Login() {
                 <form className='form' onSubmit={post}>
                     <p>
                         <label>Email address</label><br />
-                        <input ref={email} type="email" name="email" id="email" required /><br />
+                        <input ref={email} type="email" name="email" required /><br />
                         <label></label><br />
                     </p>
                     <p>
                         <label>Password</label><br />
-                        <input ref={password} type="password" name="password" id="password" required /><br />
+                        <input ref={password} type="password" name="password" required /><br />
                         <label></label><br />
                     </p>
                     <p>
@@ -38,7 +38,7 @@ export default function Login() {
                         <label></label><br />
                     </p>
                     <p>
-                        <ButtonCustom name="submitter" type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
+                        <ButtonCustom type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
                     </p>
                     <ToastContainer />
                 </form>
@@ -55,7 +55,7 @@ export default function Login() {
 
 async function post(event) {
     event.preventDefault();
-    let response = await fetch('http://localhost:5000/login/', {
+    let response = await fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -65,12 +65,9 @@ async function post(event) {
     })
     let result = await response.json();
     if (response.ok) {
-        // Store the email in local storage
-        localStorage.setItem('email', email.current.value);
         notifySuccess(result.message);
-        window.location.href = '/user-info';
-
     } else {
         notifyError(result.message);
     }
 }
+

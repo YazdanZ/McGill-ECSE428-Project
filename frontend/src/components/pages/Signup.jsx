@@ -20,17 +20,18 @@ export const notifySuccess = (text) => toast.success(text, {
 
 export const notifyError = (text) => toast.error(text, {
     position: "bottom-right",
-    autoClose: 3000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: false,
     progress: undefined,
-    theme: "light"
+    theme: "light",
 });
 
 var name = null;
 var email = null;
+var address = null;
 var mcgill_id = null;
 var password = null;
 var checkbox = null;
@@ -39,6 +40,7 @@ export default function Signup() {
 
     name = React.useRef();
     email = React.useRef();
+    address = React.useRef();
     mcgill_id = React.useRef();
     password = React.useRef();
     checkbox = React.useRef();
@@ -58,6 +60,11 @@ export default function Signup() {
                     <p>
                         <label>Email address</label><br />
                         <input ref={email} type="email" name="email" required /><br />
+                        <label></label><br />
+                    </p>
+                    <p>
+                        <label>Address</label><br />
+                        <input ref={address} type="text" name="address" required /><br />
                         <label></label><br />
                     </p>
                     <p>
@@ -91,13 +98,13 @@ export default function Signup() {
 }
 async function post(event) {
     event.preventDefault();
-    let response = await fetch('http://localhost:5000/signup/', {
+    let response = await fetch('http://localhost:5000/createUser', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "name": name.current.value, "email": email.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value, "isDriver": checkbox.current.checked })
+        body: JSON.stringify({ "name": name.current.value, "email": email.current.value, "address": address.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value, "checkbox": checkbox.current.checked })
     })
     let result = await response.json();
     if (response.ok) {

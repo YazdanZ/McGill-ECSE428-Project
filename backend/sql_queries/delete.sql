@@ -1,3 +1,3 @@
 -- SQLite
-DELETE FROM association
-WHERE user_id = "jane@mail.com"
+DELETE FROM address_table
+WHERE address_id = 32
