@@ -9,7 +9,6 @@ import Create_Trip from './components/pages/Create_Trip'
 import TripDisplay from './components/pages/TripDisplay'
 import DisplayTripCost from './components/pages/DisplayTripCost'
 import AvailableDrivers from './components/pages/AvailableDrivers'
-import DisplayTripCost from './components/pages/DisplayTripCost'
 
 import './App.css'
 
