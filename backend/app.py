@@ -3,6 +3,7 @@ from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 import warnings
+
 warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
@@ -10,8 +11,10 @@ CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcpool.db"
 db = SQLAlchemy(app)
 
-#association table between User and Trip to store passengers on a given trip
-passengers_per_trip = db.Table('association', db.Column('user_id', db.String(50), db.ForeignKey('user_table.email')), db.Column('trip_id', db.Integer, db.ForeignKey('trip_table.trip_id')))
+# association table between User and Trip to store passengers on a given trip
+passengers_per_trip = db.Table('association', db.Column('user_id', db.String(50), db.ForeignKey('user_table.email')),
+                               db.Column('trip_id', db.Integer, db.ForeignKey('trip_table.trip_id')))
+
 
 class User(db.Model):
     __tablename__ = "user_table"
@@ -22,6 +25,7 @@ class User(db.Model):
     isDriver = db.Column(db.String(50))
     passenger_trip = db.relationship("Trip", secondary=passengers_per_trip, back_populates="passengers")
     driver_car = db.relationship("Car", back_populates="driver")
+
 
 class Trip(db.Model):
     __tablename__ = "trip_table"
@@ -35,6 +39,7 @@ class Trip(db.Model):
     pick_up_address_id = db.Column(db.Integer, db.ForeignKey("address_table.address_id"))
     pick_up_address = db.relationship("Address", back_populates="pick_up_trips", foreign_keys=[pick_up_address_id])
 
+
 class Address(db.Model):
     __tablename__ = "address_table"
     address_id = db.Column(db.Integer, primary_key=True)
@@ -43,6 +48,7 @@ class Address(db.Model):
     postal_code = db.Column(db.String(50))
     drop_off_trips = db.relationship("Trip", back_populates="drop_off_address", foreign_keys=[Trip.drop_off_address_id])
     pick_up_trips = db.relationship("Trip", back_populates="pick_up_address", foreign_keys=[Trip.pick_up_address_id])
+
 
 class Car(db.Model):
     __tablename__ = "car_table"
@@ -54,10 +60,12 @@ class Car(db.Model):
     driver = db.relationship("User", back_populates="driver_car", lazy="joined")
     vehicle_trip = db.relationship("Trip", back_populates="vehicle", lazy="joined")
 
+
 with app.app_context():
     db.create_all()
 
-@app.route("/signup/", methods=["POST"])
+
+@app.route("/signup", methods=["POST"])
 def signup():
     data = request.get_json()
 
@@ -77,7 +85,7 @@ def signup():
         # mcgill_id already exists
         return jsonify({"message": "McGill ID already exists"}), 401
 
-    if data['isDriver'] == True:
+    if data['checkbox'] == True:
         isDriver = "True"
     else:
         isDriver = "False"
@@ -99,8 +107,10 @@ def createTrip():
 
     trip = Trip(
         vehicle_id=data["vehicle_id"],
-        passenger_id=data["passenger_id"],
         distance_km=data['distance_km'],
+        drop_off_address_id=data['drop_off_address_id'],
+        pick_up_address_id=data['pick_up_address_id']
+
     )
 
     if trip.distance_km == "":
@@ -110,9 +120,6 @@ def createTrip():
         db.session.add(trip)
         db.session.commit()
         return jsonify({"message": "New Trip Created"}), 200
-
-
-
 
 
 @app.route("/getTrip", methods=['GET'])
@@ -147,12 +154,13 @@ def getTrip():
             'fuel_consumption': fuel_consumption,
             'num_seats': num_seats,
             'num_passengers': num_passengers,
-            'cost': 50, #cost will be calculated in a later sprint
-            'duration' : 30 #duration will be calculated in a later sprint
+            'cost': 50,  # cost will be calculated in a later sprint
+            'duration': 30  # duration will be calculated in a later sprint
         }
 
     else:
         return jsonify({'error': 'Could not find trip for arguments {}'.format(request.args.items())})
+
 
 # getting everything in plain text! :(
 @app.route("/login", methods=["POST"])
@@ -187,7 +195,8 @@ def getAvailableDrivers():
         user_list.append(user_dict)
     return jsonify(user_list), 200
 
-#adds a passenger to a trip, for the time being used it to test Trip Display
+
+# adds a passenger to a trip, for the time being used it to test Trip Display
 @app.route("/addPassengerToTrip", methods=['POST'])
 def addPassengerToTrip():
     data = request.get_json()
