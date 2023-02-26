@@ -38,7 +38,9 @@ def step_impl(context):
     assert context.behave_driver.current_url == 'http://localhost:3000/user-info'
     context.behave_driver.quit()
 
-@then('The user should remain on the Login page')
+@then('An error message should appear')
 def step_impl(context):
-    assert context.behave_driver.current_url == 'http://localhost:3000/login'
+    time.sleep(1)
+    response = context.behave_driver.find_element(By.CLASS_NAME, 'Toastify__toast')
+    assert response.text == 'Invalid email or password'
     context.behave_driver.quit()
