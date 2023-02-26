@@ -189,10 +189,10 @@ def getAvailableTrips():
     for trip in trips:
       
         # user = User(
-        #         name='Mihir',
-        #         email='mihiranshul@gmail.com',
-        #         mcgill_id=260812345,
-        #         password='password12',
+        #         name='Jessica',
+        #         email='jessica@gmail.com',
+        #         mcgill_id=260901234,
+        #         password='password1245',
         #         isDriver='False'
         #    )
         # db.session.add(user)
