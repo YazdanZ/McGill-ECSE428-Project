@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import '../../App.css'
 
 export default function TripDisplay() {
-  const passenger_id = "mark@mail.com"; //hardcoded value until create trip and user sessions are implemented
-  const trip_id = 1; //hardcoded trip_id
+  //const passenger_id = "mark@mail.com"; //hardcoded value until create trip and user sessions are implemented
+  //const trip_id = 1; //hardcoded trip_id
+  const passenger_id = localStorage.getItem('email');
+  console.log(passenger_id)
   const [tripDetails, setTripDetails] = useState({});
 
   useEffect(() => {
