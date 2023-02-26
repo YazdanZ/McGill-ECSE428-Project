@@ -11,7 +11,10 @@ export default function AvailableDrivers() {
         const fetchTrips = async()=> {
             const response = await fetch(`http://localhost:5000/getAvailableTrips/`);
             const data = await response.json();
+            console.log(data);
             getAvailTrips(data);
+            
+            return data;
         };
         fetchTrips();
     }, []);
@@ -30,6 +33,8 @@ export default function AvailableDrivers() {
                 <br></br>
                 {trips.map((trip) => (
                 <div key={trip.trip_id}>
+                 <label>Trip {trip.trip_id}</label>
+                 <br></br>
                  <label>Number of seats: {trip.available_seats}</label>
                  <br></br>
                 <label>Distance in km: {trip.distance_km}</label>

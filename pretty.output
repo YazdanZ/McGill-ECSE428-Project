@@ -1,0 +1,35 @@
+Feature: Display Available Trips # features/GetAvailableTrips.feature:1
+  As a passenger
+  I want to be able to see all the available trips
+  So that I can pick a trips
+  Scenario: Successful display available trips              # features/GetAvailableTrips.feature:6
+    Given There are available trips created                 # features/steps/GetAvailableTrips.py:11
+      Traceback (most recent call last):
+        File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/selenium/webdriver/common/service.py", line 72, in start
+          self.process = subprocess.Popen(cmd, env=self.env,
+        File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/subprocess.py", line 854, in __init__
+          self._execute_child(args, executable, preexec_fn, close_fds,
+        File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/subprocess.py", line 1702, in _execute_child
+          raise child_exception_type(errno_num, err_msg, err_filename)
+      FileNotFoundError: [Errno 2] No such file or directory: 'geckodriver.exe'
+      
+      During handling of the above exception, another exception occurred:
+      
+      Traceback (most recent call last):
+        File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/behave/model.py", line 1329, in run
+          match.run(runner.context)
+        File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/behave/matchers.py", line 98, in run
+          self.func(context, *args, **kwargs)
+        File "features/steps/GetAvailableTrips.py", line 13, in step_impl
+          context.behave_driver = behave_webdriver.Firefox(executable_path='geckodriver.exe')
+        File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/behave_webdriver/driver.py", line 70, in __init__
+          super(BehaveDriverMixin, self).__init__(*args, **kwargs)
+        File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/selenium/webdriver/firefox/webdriver.py", line 164, in __init__
+          self.service.start()
+        File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/selenium/webdriver/common/service.py", line 81, in start
+          raise WebDriverException(
+      selenium.common.exceptions.WebDriverException: Message: 'geckodriver.exe' executable needs to be in PATH.
+
+    When I go to the available trips page                   # None
+    Then I should be able to see all of the available trips # None
+
