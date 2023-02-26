@@ -77,12 +77,16 @@ def signup():
         # mcgill_id already exists
         return jsonify({"message": "McGill ID already exists"}), 401
 
+    if data['isDriver'] == True:
+        isDriver = "True"
+    else:
+        isDriver = "False"
     user = User(
         name=data['name'],
         email=data['email'],
         mcgill_id=data['mcgill_id'],
         password=data['password'],
-        isDriver=data['isDriver'])
+        isDriver=isDriver)
 
     db.session.add(user)
     db.session.commit()
