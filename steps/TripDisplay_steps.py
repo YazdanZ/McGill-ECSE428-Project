@@ -82,6 +82,4 @@ def step_impl(context):
         'Cost': context.behave_driver.find_element_by_id('cost').text
     }
     
-    print(actual_trip_details)
-    
     assert expected_trip_details == actual_trip_details
