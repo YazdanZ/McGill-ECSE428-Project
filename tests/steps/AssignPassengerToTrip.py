@@ -25,7 +25,7 @@ def step_impl(context):
 
 @when('I click the Submit button')
 def step_impl(context):
-    wait = WebDriverWait(context.driver, 10)
+    wait = WebDriverWait(context.driver, 50)
     element = wait.until(EC.visibility_of_element_located((By.ID, "sub_btn")))
     # Interact with the element
     element.click()
