@@ -201,3 +201,30 @@ def addPassengerToTrip():
     db.session.commit()
 
     return jsonify({"message": f"{user_email} added as a passenger to trip {trip_id}"}), 200
+
+# Calculates the distance between a given pickup location and the university
+@app.route("/calculateDistance", methods=['POST'])
+def calculatePickupDropoffRadius():
+    # Get the user, pickup location, and dropoff location from the request data
+    data = request.get_json()
+    user_email = data['userEmail']
+
+    user = User.query.filter_by(email=user_email).first()
+    if not user:
+        return jsonify({"message": f"User with email {user_email} does not exist"}), 404
+
+    pickup_location = data['pickupLocation']
+    dropoff_location = data['dropoffLocation']
+
+    if not pickup_location:
+        return jsonify({"message": "The pickup location is empty"}), 400
+    if not dropoff_location:
+        return jsonify({"message": "The dropoff location is empty"}), 400
+
+    # Calculate the distance between the pickup and dropoff locations
+    # Here you can implement your own logic to calculate the distance using a GoogleMaps API which we're going to implement in sprint B
+    # For now, we'll just use the dummy data
+    distance = 50  # km
+
+    return jsonify({"distance": distance}), 200
+
