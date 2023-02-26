@@ -27,7 +27,18 @@ def step_impl(context):
     # Interact with the element
     element.click()
 
+@when('I enter a non-existing email address and password')
+def step_impl(context):
+    context.behave_driver.find_element_by_id('email').send_keys('kasir@gmail.com')
+    context.behave_driver.find_element_by_id('password').send_keys('mamama')
+
 @then('I should be redirected to the UserInfo page')
 def step_impl(context):
+    time.sleep(2)
     assert context.behave_driver.current_url == 'http://localhost:3000/user-info'
+    context.behave_driver.quit()
+
+@then('The user should remain on the Login page')
+def step_impl(context):
+    assert context.behave_driver.current_url == 'http://localhost:3000/login'
     context.behave_driver.quit()
