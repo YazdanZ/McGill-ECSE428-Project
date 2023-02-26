@@ -219,7 +219,7 @@ def getAvailableTrips():
         pickup_location = pick_up_address.address_line_1 + ", " + pick_up_address.city + ", " + pick_up_address.postal_code
         dropoff_location = drop_off_address.address_line_1 + ", " + drop_off_address.city + ", " + drop_off_address.postal_code
         fuel_consumption = trip.vehicle.fuel_consumption
-        available_seats = trip.vehicle.seats 
+        available_seats = trip.vehicle.seats - len(trip.passengers)
         
         trip_dict = {
             'trip_id' : trip.trip_id,
@@ -240,16 +240,22 @@ def getAvailableTrips():
 @app.route("/assignPassenger/", methods=["POST"])
 def assignPassenger():
     data = request.get_json()
-    # user = User.query.filter_by(
-    #     email=data['email']
-    # ).first()
-    db.session.query(Trip).filter(
-        Trip.trip_id == data['trip_id']
-    ).update(
-        {
-            Trip.passenger_id: data['email']
-        }
-    )
+    # user = User(
+    #             name='Anandamoyi',
+    #             email='anandamoyi.saha@mail.mcgill.ca',
+    #             mcgill_id=260812345,
+    #             password='password12',
+    #             isDriver='False'
+    #        )
+    # db.session.add(user)
+    # db.session.commit()
+    user1 = User.query.filter_by(
+        email=data['email']
+    ).first()
+    trip = Trip.query.filter_by(
+        trip_id=data['trip_id']
+    ).first()
+    trip.passengers.append(user1)
     
     try:
       

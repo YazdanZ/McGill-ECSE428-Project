@@ -49,8 +49,8 @@ def step_impl(context):
 
 @when('I go to the available trips page')
 def step_impl(context):
-    print("Navigating to http://localhost:3001/display-trips...")
-    context.driver.get('http://localhost:3001/display-trips')
+    print("Navigating to http://localhost:3000/display-trips...")
+    context.driver.get('http://localhost:3000/display-trips')
     seats_data = context.driver.find_element_by_xpath('//div[@class="centered"]/div[1]/label[2]')
     distance_data = context.driver.find_element_by_xpath('//div[@class="centered"]/div[1]/label[3]')
     driver_name_data = context.driver.find_element_by_xpath('//div[@class="centered"]/div[1]/label[4]')
