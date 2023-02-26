@@ -6,7 +6,7 @@ import '../../App.css'
 
 export default function DisplayTripCost() {
     const fetchTripDetails = async (trip_id) => {
-        const response = await fetch(`/getTrip?trip_id=${trip_id}`);
+        const response = await fetch(`http://localhost:5000/getTrip?trip_id=${trip_id}`);
         const data = await response.json();
         return data;
       }
