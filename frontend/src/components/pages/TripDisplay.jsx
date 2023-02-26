@@ -29,13 +29,13 @@ export default function TripDisplay() {
         <h1 style={{ paddingTop: "510px" }}>Trip Details</h1>
         <div className="trip-details">
           <form style={{width: "500px"}} className='form'>
-            <p><strong>Driver:</strong> {tripDetails.driver_name}</p>
-            <p><strong>Vehicle:</strong> {tripDetails.driver_vehicle}</p>
-            <p><strong>Pickup Location:</strong> {tripDetails.pickup_location}</p>
-            <p><strong>Dropoff Location:</strong> {tripDetails.dropoff_location}</p>
-            <p><strong>Distance:</strong> {tripDetails.distance} kilometers</p>
-            <p><strong>Duration:</strong> {tripDetails.duration} minutes</p>
-            <p>
+            <p id="driver"><strong>Driver:</strong> {tripDetails.driver_name}</p>
+            <p id="vehicle"><strong>Vehicle:</strong> {tripDetails.driver_vehicle}</p>
+            <p id="pickup-location"><strong>Pickup Location:</strong> {tripDetails.pickup_location}</p>
+            <p id="dropoff-location"><strong>Dropoff Location:</strong> {tripDetails.dropoff_location}</p>
+            <p id="distance"><strong>Distance:</strong> {tripDetails.distance} kilometers</p>
+            <p id="duration"><strong>Duration:</strong> {tripDetails.duration} minutes</p>
+            <p id="cost">
               <strong>Cost:</strong> {tripDetails.cost}$
               <button style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
                 <Link to={`/trip-cost?trip_id=${tripDetails.trip_id}`}>
