@@ -65,6 +65,8 @@ async function post(event) {
     })
     let result = await response.json();
     if (response.ok) {
+        // Store the email in local storage
+        localStorage.setItem('email', email.current.value);
         notifySuccess(result.message);
         window.location.href = '/user-info';
 
@@ -72,4 +74,3 @@ async function post(event) {
         notifyError(result.message);
     }
 }
-
