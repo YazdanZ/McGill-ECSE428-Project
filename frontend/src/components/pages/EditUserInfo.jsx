@@ -3,8 +3,42 @@ import ParticlesComponent from '../Particles'
 import '../../App.css'
 import '../button/Logout'
 import Logout from '../button/Logout'
+import { Link } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import ButtonCustom from '../button/Button'
+
+
+export const notifySuccess = (text) => toast.success(text, {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    progress: undefined,
+    theme: "light",
+});
+
+export const notifyError = (text) => toast.error(text, {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    progress: undefined,
+    theme: "light",
+});
+
+var name = null;
+var mcgill_id = null;
+var password = null;
 
 export default function EditUserInfo() {
+
+    name = React.useRef();
+    mcgill_id = React.useRef();
+    password = React.useRef();
 
     return (
         <div className='App-header'>
@@ -15,28 +49,47 @@ export default function EditUserInfo() {
                 <form className='form'>
                     <p>
                         <label>Name:</label><br />
-                        <input type="text" name="name" required /><br />
-                        <label></label><br />
-                    </p>
-                    <br />
-                    <p id>
-                        <label>Email address:</label><br />
-                        <input type="email" name="email" required /><br />
+                        <input ref={name} type="text" name="name" required /><br />
                         <label></label><br />
                     </p>
                     <br />
                     <p>
                         <label>McGill ID:</label><br />
-                        <input type='text' name="id" required /><br />
+                        <input ref={mcgill_id} type='text' name="mcgill_id" required /><br />
                         <label></label><br />
                     </p>
                     <br />
                     <p>
-                        <button id="sub_btn" type="submit">Submit Changes</button>
+                        <label>Password:</label><br />
+                        <input ref={password} type='text' name="password" required /><br />
+                        <label></label><br />
                     </p>
+                    <br />
+                    <p>
+                        <ButtonCustom onclick='post' type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
+                    </p>
+                    <ToastContainer/>
                 </form>
             </div>
         </div>
     )
 
+}
+
+async function post(event) {
+    event.preventDefault();
+    let response = await fetch('http://localhost:5000/edit_user/', {
+        method: 'UPDATE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "name": name.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value})
+    })
+    let result = await response.json();
+    if (response.ok) {
+        notifySuccess(result.message);
+    } else {
+        notifyError(result.message);
+    }
 }
