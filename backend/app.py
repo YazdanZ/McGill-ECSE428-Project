@@ -189,11 +189,11 @@ def getAvailableTrips():
     for trip in trips:
       
         # user = User(
-        #         name='Jessica',
-        #         email='jessica@gmail.com',
+        #         name='Joe',
+        #         email='joe123@gmail.com',
         #         mcgill_id=260901234,
-        #         password='password1245',
-        #         isDriver='False'
+        #         password='password12798698',
+        #         isDriver='True'
         #    )
         # db.session.add(user)
         # db.session.commit()
@@ -219,7 +219,7 @@ def getAvailableTrips():
         pickup_location = pick_up_address.address_line_1 + ", " + pick_up_address.city + ", " + pick_up_address.postal_code
         dropoff_location = drop_off_address.address_line_1 + ", " + drop_off_address.city + ", " + drop_off_address.postal_code
         fuel_consumption = trip.vehicle.fuel_consumption
-        available_seats = trip.vehicle.seats - len(trip.passengers)
+        available_seats = trip.vehicle.seats
         
         trip_dict = {
             'trip_id' : trip.trip_id,

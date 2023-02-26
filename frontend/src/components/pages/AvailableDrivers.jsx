@@ -87,7 +87,7 @@ export default function AvailableDrivers() {
                 <label>Pick this trip</label>
                 <br></br>
                 <label>Enter your email:</label><br />
-                        <input ref={email} type="email" name="email" required /><br />
+                        <input ref={email} type="email" name="email" id="email" required /><br />
                         <label></label><br />
                         <p>
                         <ButtonCustom type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
