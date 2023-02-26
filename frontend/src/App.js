@@ -24,6 +24,7 @@ export default function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/createTrip' element={<Create_Trip />} />
           <Route path='/display-trip' element={<TripDisplay />} />
+          <Route path='/display-trip-cost' element={<DisplayTripCost />} />
           <Route path='/trip-cost' element={<DisplayTripCost />} />
         </Routes>
         <Footer />

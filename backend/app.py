@@ -17,7 +17,6 @@ class User(db.Model):
     __tablename__ = "user_table"
     name = db.Column(db.String(50))
     email = db.Column(db.String(50), primary_key=True)
-    #address = db.Column(db.String(50))
     mcgill_id = db.Column(db.Integer)
     password = db.Column(db.String(50))
     isDriver = db.Column(db.String(50))
@@ -58,37 +57,40 @@ class Car(db.Model):
 with app.app_context():
     db.create_all()
 
-@app.route("/createUser/", methods=["POST"])
-def createUser():
+@app.route("/signup/", methods=["POST"])
+def signup():
     data = request.get_json()
 
-    user = User.query.filter_by(
+    user = bool(User.query.filter_by(
         email=data['email']
-    ).first()
+    ).first())
 
     if user:
         # email already exists
         return jsonify({"message": "Email already exists"}), 401
 
-    user = User.query.filter_by(
+    user = bool(User.query.filter_by(
         mcgill_id=data['mcgill_id']
-    ).first()
+    ).first())
 
     if user:
         # mcgill_id already exists
         return jsonify({"message": "McGill ID already exists"}), 401
 
+    if data['isDriver'] == True:
+        isDriver = "True"
+    else:
+        isDriver = "False"
     user = User(
         name=data['name'],
         email=data['email'],
-        address=data['address'],
         mcgill_id=data['mcgill_id'],
         password=data['password'],
-        isDriver=data['checkbox'])
+        isDriver=isDriver)
 
     db.session.add(user)
     db.session.commit()
-    return "200"
+    return jsonify({"message": "User successfully created"}), 200
 
 
 @app.route("/createTrip", methods=['POST'])
@@ -138,8 +140,8 @@ def getTrip():
             'fuel_consumption': fuel_consumption,
             'num_seats': num_seats,
             'num_passengers': num_passengers,
-            'cost': 123, #cost will be calculated in a later sprint
-            'duration' : 20 #duration will be calculated in a later sprint
+            'cost': 50, #cost will be calculated in a later sprint
+            'duration' : 30 #duration will be calculated in a later sprint
         }
         
     else:

@@ -12,44 +12,34 @@ export default function DisplayTripCost() {
       }
     const urlParams = new URLSearchParams(window.location.search);
     const trip_id = urlParams.get('trip_id');
-    const updateHTML = (tripDetails) => {
-        document.getElementById("cost").innerHTML = `Total cost (CAD): ${tripDetails.cost}`;
-        document.getElementById("passengers").innerHTML = `Num passengers: ${tripDetails.num_passengers}`;
-        document.getElementById("seats").innerHTML = `Available Seats: ${tripDetails.num_seats-tripDetails.num_passengers}`;
-        document.getElementById("costpp").innerHTML = `Cost per passenger (CAD): ${tripDetails.cost/(tripDetails.num_passengers+1)}`;
-        document.getElementById("length").innerHTML = `Trip length (km): ${tripDetails.distance}`;
-        document.getElementById("fuel").innerHTML = `Estimated fuel consumption (L/km): ${tripDetails.fuel_consumption}`;
-        document.getElementById("c02").innerHTML = `Estimated C02 emission saved (approx. kg of CO2): ${2.5*tripDetails.distance*tripDetails.fuel_consumption*tripDetails.num_passengers}`;
-    }
-    fetchTripDetails(trip_id).then((tripDetails) =>
-        updateHTML(tripDetails)
-    )
+    const tripDetails = fetchTripDetails(trip_id);
+    
     return (
         <div className='App-header'>
             <ParticlesComponent/>
             <div className="centered">
-                <Link to="/display-trip" className="return_link"><p>Return to trip information</p></Link>
+                <Link to="/display-trip"><p>Return to trip information</p></Link>
                 <br></br>
                 <br></br>
                 <br></br>
                 <br></br>
                 <h2>Detailed Trip Cost</h2>
-                <h3 id="tripid">Trip ID: {trip_id}</h3>
+                <h3>Trip ID: {trip_id}</h3>
                 <br></br>
                 <br></br>
-                <label id="cost"></label>
+                <label>Total cost (CAD): {tripDetails.cost}</label>
                 <br></br>
-                <label id="passengers">Num passengers: ...</label>
+                <label>Num passengers: {tripDetails.num_passengers}</label>
                 <br></br>
-                <label id="seats">Available Seats: ...</label>
+                <label>Available Seats: {tripDetails.num_seats-tripDetails.num_passengers}</label>
                 <br></br>
-                <label id="costpp">Cost per passenger (CAD): ...</label>
+                <label>Cost per passenger (CAD): {tripDetails.cost/(tripDetails.num_passengers+1)}</label>
                 <br></br>
-                <label id="length">Trip length (km): ...</label>
+                <label>Trip length (km): {tripDetails.distance}</label>
                 <br></br>
-                <label id="fuel">Estimated fuel consumption (L/km): ...</label>
+                <label>Estimated fuel consumption (L/km): {tripDetails.fuel_consumption}</label>
                 <br></br>
-                <label id="c02">Estimated C02 emission saved (approx. kg of CO2): ...</label>
+                <label>Estimated C02 emission saved (approx. kg of CO2): {2.5*tripDetails.distance*tripDetails.fuel_consumption*tripDetails.num_passengers}</label>
             </div>
         </div>
     )
