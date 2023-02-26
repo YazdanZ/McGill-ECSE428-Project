@@ -23,14 +23,14 @@ class User(db.Model):
 
 class Trip(db.Model):
     __tablename__ = "trip_table"
-    trip_id = db.Column(db.Integer, primary_key=True)
+    trip_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     distance_km = db.Column(db.Integer)
     passenger_id = db.Column(db.Integer, db.ForeignKey("user_table.email"))
-    passenger = db.relationship("User", back_populates="passenger_trip",lazy="joined")
+    passenger = db.relationship("User", back_populates="passenger_trip", lazy="joined")
     vehicle_id = db.Column(db.Integer, db.ForeignKey("car_table.car_id"))
-    vehicle = db.relationship("Car", back_populates="vehicle_trip",lazy="joined")
-    drop_off_address = db.relationship("Address", back_populates="drop_off",lazy="joined")
-    pick_up_address = db.relationship("Address", back_populates="pick_up",lazy="joined")
+    vehicle = db.relationship("Car", back_populates="vehicle_trip", lazy="joined")
+    drop_off_address = db.relationship("Address", back_populates="drop_off", lazy="joined")
+    pick_up_address = db.relationship("Address", back_populates="pick_up", lazy="joined")
 
 
 class Car(db.Model):
@@ -39,8 +39,8 @@ class Car(db.Model):
     fuel_consumption = db.Column(db.Integer)  # km per gallon or smth
     seats = db.Column(db.Integer)
     driver_id = db.Column(db.Integer, db.ForeignKey("user_table.email"))
-    driver = db.relationship("User", back_populates="driver_car",lazy="joined")
-    vehicle_trip = db.relationship("Trip", back_populates="vehicle",lazy="joined")
+    driver = db.relationship("User", back_populates="driver_car", lazy="joined")
+    vehicle_trip = db.relationship("Trip", back_populates="vehicle", lazy="joined")
 
 
 class Address(db.Model):
@@ -50,16 +50,16 @@ class Address(db.Model):
     postal_code = db.Column(db.String(50))
     address_id = db.Column(db.Integer, primary_key=True)
     # drop_off_trip = db.Column(db.Integer, db.ForeignKey("trip_table.trip_id"))
-    drop_off = db.relationship("Trip", back_populates="drop_off_address",lazy="joined")
+    drop_off = db.relationship("Trip", back_populates="drop_off_address", lazy="joined")
     trip = db.Column(db.Integer, db.ForeignKey("trip_table.trip_id"))
-    pick_up = db.relationship("Trip", back_populates="pick_up_address",lazy="joined")
+    pick_up = db.relationship("Trip", back_populates="pick_up_address", lazy="joined")
 
 
 with app.app_context():
     db.create_all()
 
 
-@app.route("/createUser/", methods=["POST"])
+@app.route("/createUser", methods=["POST"])
 def createUser():
     data = request.get_json()
 
@@ -82,7 +82,7 @@ def createUser():
     user = User(
         name=data['name'],
         email=data['email'],
-       # address=data['address'],
+        # address=data['address'],
         mcgill_id=data['mcgill_id'],
         password=data['password'],
         isDriver=data['checkbox'])
@@ -97,18 +97,21 @@ def createTrip():
     data = request.get_json()
 
     trip = Trip(
-        trip_id=data["trip_id"],
         vehicle_id=data["vehicle_id"],
         passenger_id=data["passenger_id"],
         distance_km=data['distance_km'],
-        #fuel_consumption=data["fuel_consumption"],
-        #seats=data["seats"]
-
     )
 
-    db.session.add(trip)
-    db.session.commit()
-    return "200"
+    if trip.distance_km == "":
+        return jsonify({"message": "Add Distance covered"}), 401
+
+    else:
+        db.session.add(trip)
+        db.session.commit()
+        return jsonify({"message": "New Trip Created"}), 200
+
+
+
 
 
 @app.route("/getTrip", methods=['GET'])
@@ -143,16 +146,14 @@ def getTrip():
         return 'You are currently not signed up for any trip'
 
 
-
 # getting everything in plain text! :(
-@app.route("/login/", methods=["POST"])
+@app.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
 
     # make sure checkbox is "true" or "false" as strings
     user = User.query.filter_by(
-        email=data["email"], password=data["password"], isDriver=data["checkbox"]
-    ).first()
+        email=data["email"], password=data["password"], isDriver=str(data["checkbox"])).first()
 
     if user:
         # User exists and password is correct
@@ -177,4 +178,3 @@ def getAvailableDrivers():
         }
         user_list.append(user_dict)
     return jsonify(user_list), 200
-

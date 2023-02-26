@@ -2,10 +2,15 @@ import React from 'react'
 import ParticlesComponent from '../Particles'
 //import '../../App.css'
 import ButtonCustom from '../button/Button'
+import { Link } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoginInfo from '../pages/Login'
+
 
 export const notifySuccess = (text) => toast.success(text, {
+    containerId: "c1",
     position: "bottom-right",
-    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -15,8 +20,8 @@ export const notifySuccess = (text) => toast.success(text, {
 });
 
 export const notifyError = (text) => toast.error(text, {
+    containerId: "c2",
     position: "bottom-right",
-    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -26,13 +31,12 @@ export const notifyError = (text) => toast.error(text, {
 });
 
 
+
+var distance_km = null;
 export default function Create_Trip()  {
 
-    available_seats = React.useRef();
-    fuel_consumption = React.useRef();
     distance_km = React.useRef();
-    pickup_location = React.useRef();
-    dropoff_location = React.useRef();
+
 
 
     return (
@@ -42,34 +46,18 @@ export default function Create_Trip()  {
                 <h1>Create Trip</h1>
                 <form className='form'>
                     <p>
-                        <label>Available Seats</label><br/>
-                        <input type="text" name="available_seats" required /><br/>
-                        <label></label><br/>
-                    </p>
-                    <p>
-                        <label>Total Trip Fuel Consumption (KM/Liter)</label><br/>
-                        <input type="text" name="fuel_consumption" required /><br/>
-                        <label></label><br/>
-                    </p>
-                    <p>
-                        <label>Total Trip Distance Covered</label><br/>
-                        <input type="text" name="distance_km" required /><br/>
-                        <label></label><br/>
-                    </p>
-                    <p>
-                        <label>Pickup Location</label><br/>
-                        <input type='text' name="pickup_location" required /><br/>
-                        <label></label><br/>
-                    </p>
-                    <p>
-                        <label>Drop-Off Location</label><br/>
-                        <input type="text" name="dropoff_location" required /><br/>
+                        <label>Total Distance to Travel</label><br/>
+                        <input ref={distance_km} type="text" id="distance_km" name="distance_km" required /><br/>
                         <label></label><br/>
                     </p>
 
+
                     <p>
+                     <Link to="/user-info">
                         <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
+                     </Link>
                     </p>
+                    <ToastContainer/>
                 </form>
 
             </div>
@@ -81,30 +69,26 @@ export default function Create_Trip()  {
 
 }
 
-function post1() {
+async function post1(event) {
+    event.preventDefault();
+    let response = await fetch('http://localhost:5000/createTrip', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"vehicle_id":10, "passenger_id":"null", "distance_km":distance_km.current.value})
+    })
+    let result = await response.json();
 
-    let form = document.querySelector("form");
+    if (response.ok) {
+        alert(result.message);
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        let formdata = new FormData(this);
-        let vehicle_id =1;
-        let passenger_id="mihiranshul@gmail.com";
-        let distance_km = formdata.get("distance_km");
+    }
+    else {
+        alert(result.message);
+    }
 
 
-        e.preventDefault();
-        fetch('http://localhost:5000/createTip', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"vehicle_id":vehicle_id.current.value, "passenger_id": passenger_id,  "distance_km": distance_km})
-        })
-            .then(response => alert("New Driver Trip created"))
-        e.preventDefault();
-    });
 }
 
