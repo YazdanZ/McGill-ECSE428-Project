@@ -3,6 +3,7 @@ import ParticlesComponent from '../Particles'
 import '../../App.css'
 import Logout from '../button/Logout'
 import { Link } from 'react-router-dom'
+import ButtonCustom from '../button/Button'
 
 export default function UserInfo() {
 
@@ -41,15 +42,11 @@ export default function UserInfo() {
                         <label></label><br />
                         <br />
                         <div className='edit_button_holder'>
-                            <button id="info_btn" type="submit"> 
-                                <Link to={`/EditUserInfo`}>
-                                    Edit
-                                </Link>
-                            </button>
+                            <ButtonCustom onclick="window.location.href='http://localhost:3000/edit-user'" type=" submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
                         </div>
-                        <div>
+                        {/* <div>
                             <ButtonCustom type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Delete" id="del_btn"></ButtonCustom>
-                        </div>
+                        </div> */}
                     </p>
                 </form>
             </div>

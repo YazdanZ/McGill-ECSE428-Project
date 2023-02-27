@@ -46,7 +46,7 @@ export default function EditUserInfo() {
             <div className="title">
                 <Logout />
                 <h1>Edit User Info</h1>
-                <form className='form'>
+                <form className='form' onSubmit={post}>
                     <p>
                         <label>Name:</label><br />
                         <input ref={name} type="text" name="name" required /><br />
@@ -66,7 +66,7 @@ export default function EditUserInfo() {
                     </p>
                     <br />
                     <p>
-                        <ButtonCustom onclick='post' type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
+                        <ButtonCustom type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
                     </p>
                     <ToastContainer/>
                 </form>
@@ -78,17 +78,18 @@ export default function EditUserInfo() {
 
 async function post(event) {
     event.preventDefault();
-    let response = await fetch('http://localhost:5000/edit_user/', {
-        method: 'UPDATE',
+    let response = await fetch('http://localhost:5000/edit-user/', {
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "name": name.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value})
+        body: JSON.stringify({ "name": name.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value, "email": localStorage.getItem("currentUser")})
     })
     let result = await response.json();
     if (response.ok) {
         notifySuccess(result.message);
+        window.location.href = 'https://localhost:3000/user-info/';
     } else {
         notifyError(result.message);
     }
