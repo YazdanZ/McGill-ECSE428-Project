@@ -182,7 +182,7 @@ def login():
 @app.route("/getAvailableDrivers/", methods=["GET"])
 def getAvailableDrivers():
     users = User.query.filter_by(isDriver="True").all()
-
+ 
     user_list = []
     for user in users:
         user_dict = {
@@ -195,28 +195,94 @@ def getAvailableDrivers():
         user_list.append(user_dict)
     return jsonify(user_list), 200
 
+    
+
+@app.route("/getAvailableTrips/", methods=["GET"])
+def getAvailableTrips():
+    trips = Trip.query.all()
+     
+    trip_list = []
+    for trip in trips:
+      
+        # user = User(
+        #         name='Joe',
+        #         email='joe123@gmail.com',
+        #         mcgill_id=260901234,
+        #         password='password12798698',
+        #         isDriver='True'
+        #    )
+        # db.session.add(user)
+        # db.session.commit()
+
+        # car = Car(
+        #     car_id=trip.vehicle_id,
+        #     fuel_consumption=10,
+        #     seats=5,
+        #     driver=user
+        # )
+        # db.session.add(car)
+        # db.session.commit()
+         
+
+        
+        car = Car.query.filter_by(car_id=trip.vehicle_id).first()
+        driver = User.query.filter_by(email=car.driver_id).first()
+        pick_up_address = Address.query.filter_by(address_id=trip.pick_up_address_id).first()
+        drop_off_address = Address.query.filter_by(address_id=trip.drop_off_address_id).first()
+        #user = User.query.filter_by(email="mihiranshul@gmail.com").first()
+        driver_name = driver.name
+        driver_vehicle = trip.vehicle
+        pickup_location = pick_up_address.address_line_1 + ", " + pick_up_address.city + ", " + pick_up_address.postal_code
+        dropoff_location = drop_off_address.address_line_1 + ", " + drop_off_address.city + ", " + drop_off_address.postal_code
+        fuel_consumption = trip.vehicle.fuel_consumption
+        available_seats = trip.vehicle.seats
+        
+        trip_dict = {
+            'trip_id' : trip.trip_id,
+            'distance_km' : trip.distance_km,
+            #'passenger_id' : trip.passenger_id,
+             #'passenger' : trip.passenger,
+             'vehicle_name' : car.vehicle_description,
+              'driver_name': driver_name,
+            'drop_off_address' : dropoff_location,
+            'pick_up_address' : pickup_location,
+            'fuel_consumption': fuel_consumption,
+            'available_seats': available_seats
+
+        }
+        trip_list.append(trip_dict)
+    return jsonify(trip_list), 200
+
+@app.route("/assignPassenger/", methods=["POST"])
+def assignPassenger():
 
 # adds a passenger to a trip, for the time being used it to test Trip Display
 @app.route("/addPassengerToTrip", methods=['POST'])
 def addPassengerToTrip():
     data = request.get_json()
-    user_email = data['user_email']
-    trip_id = data['trip_id']
+    # user = User(
+    #             name='Anandamoyi',
+    #             email='anandamoyi.saha@mail.mcgill.ca',
+    #             mcgill_id=260812345,
+    #             password='password12',
+    #             isDriver='False'
+    #        )
+    # db.session.add(user)
+    # db.session.commit()
+    user1 = User.query.filter_by(
+        email=data['email']
+    ).first()
+    trip = Trip.query.filter_by(
+        trip_id=data['trip_id']
+    ).first()
+    trip.passengers.append(user1)
+    
+    try:
+      
+        db.session.commit()
+        return jsonify({"message": "Passenger added successfully!"}), 200
+    except:
+        return jsonify({"message": "Unable to add passenger."})
 
-    user = User.query.filter_by(email=user_email).first()
-    if not user:
-        return jsonify({"message": f"User with email {user_email} does not exist"}), 404
-
-    trip = Trip.query.filter_by(trip_id=trip_id).first()
-    if not trip:
-        return jsonify({"message": f"Trip with ID {trip_id} does not exist"}), 404
-
-    # Check if user is already a passenger on this trip
-    if user in trip.passengers:
-        return jsonify({"message": f"{user_email} is already a passenger on this trip"}), 400
-
-    # Add user to trip's passengers
-    trip.passengers.append(user)
-    db.session.commit()
-
-    return jsonify({"message": f"{user_email} added as a passenger to trip {trip_id}"}), 200
+if __name__ == "__main__":
+     app.run(debug=True)
