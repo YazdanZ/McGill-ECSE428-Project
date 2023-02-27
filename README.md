@@ -81,6 +81,3 @@ Start the development server
 Navigate to the tests directory in your command line and run following command
 
     behave ./features
-
-
-[Detailed test report](https://mcpool.netlify.app/)
