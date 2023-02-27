@@ -33,12 +33,14 @@ export const notifyError = (text) => toast.error(text, {
 var name = null;
 var mcgill_id = null;
 var password = null;
+var original_email = null;
 
 export default function EditUserInfo() {
 
     name = React.useRef();
     mcgill_id = React.useRef();
     password = React.useRef();
+    original_email = React.useRef();
 
     return (
         <div className='App-header'>
@@ -50,6 +52,12 @@ export default function EditUserInfo() {
                     <p>
                         <label>Name:</label><br />
                         <input ref={name} type="text" name="name" required /><br />
+                        <label></label><br />
+                    </p>
+                    <br />
+                    <p>
+                        <label>original email:</label><br />
+                        <input ref={name} type="text" name="original_email" required /><br />
                         <label></label><br />
                     </p>
                     <br />
@@ -84,7 +92,7 @@ async function post(event) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "name": name.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value, "email": localStorage.getItem("currentUser")})
+        body: JSON.stringify({ "name": name.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value, "original_email": original_email.current.value})
     })
     let result = await response.json();
     if (response.ok) {
