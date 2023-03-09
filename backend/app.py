@@ -255,7 +255,7 @@ def getAvailableTrips():
 
 @app.route("/assignPassenger/", methods=["POST"])
 def assignPassenger():
-
+    pass
 # adds a passenger to a trip, for the time being used it to test Trip Display
 @app.route("/addPassengerToTrip", methods=['POST'])
 def addPassengerToTrip():
