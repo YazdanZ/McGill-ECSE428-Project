@@ -25,6 +25,10 @@ body {
 
 }
 
+.box {
+  pointer-events: auto;
+}
+
 .centered {
   margin-top: 2rem;
   position: relative;
