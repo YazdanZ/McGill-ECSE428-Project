@@ -59,7 +59,7 @@ const ViewTripsCreatedAsDriver = () => {
                 <ul>
                   {trip.passengers.map(passenger => (
                     <li key={passenger.contact}>
-                      {passenger.name} ({passenger.pickup} to {passenger.dropoff})
+                      {passenger.name}
                     </li>
                   ))}
                 </ul>
