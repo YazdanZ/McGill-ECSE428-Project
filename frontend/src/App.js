@@ -9,6 +9,7 @@ import Create_Trip from './components/pages/Create_Trip'
 import TripDisplay from './components/pages/TripDisplay'
 import DisplayTripCost from './components/pages/DisplayTripCost'
 import AvailableDrivers from './components/pages/AvailableDrivers'
+import ViewTripsAsDriver from './components/pages/ViewTripsAsDriver'
 
 import './App.css'
 
@@ -27,6 +28,7 @@ export default function App() {
           <Route path='/display-trip-cost' element={<DisplayTripCost />} />
           <Route path='/trip-cost' element={<DisplayTripCost />} />
           <Route path='/display-trips' element={<AvailableDrivers />} />
+          <Route path='/view-trips-as-driver' element={<ViewTripsAsDriver />} />
         </Routes>
         <Footer />
       </div>
