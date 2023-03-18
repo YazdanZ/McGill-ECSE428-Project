@@ -33,9 +33,21 @@ export const notifyError = (text) => toast.error(text, {
 
 
 var distance_km = null;
+var start_city = null;
+var start_line1 = null;
+var start_postal_code = null;
+var end_city = null;
+var end_line1 = null;
+var end_postal_code = null;
 export default function Create_Trip()  {
 
     distance_km = React.useRef();
+    start_city = React.useRef();
+    start_line1 = React.useRef();
+    start_postal_code = React.useRef();
+    end_city = React.useRef();
+    end_line1 = React.useRef();
+    end_postal_code = React.useRef();
 
 
 
@@ -48,6 +60,18 @@ export default function Create_Trip()  {
                     <p>
                         <label>Total Distance to Travel</label><br/>
                         <input ref={distance_km} type="text" id="distance_km" name="distance_km" required /><br/>
+                        <label>Starting Address: City</label><br/>
+                        <input ref={start_city} type="text" id="start_city" name="start_city" required /><br/>
+                        <label>Starting Address: Line 1</label><br/>
+                        <input ref={start_line1} type="text" id="start_line1" name="start_line1" required /><br/>
+                        <label>Starting Address: Postal Code</label><br/>
+                        <input ref={start_postal_code} type="text" id="start_postal_code" name="start_postal_code" required /><br/><br/>
+                        <label>Destination Address: City</label><br/>
+                        <input ref={end_city} type="text" id="end_city" name="end_city" required /><br/>
+                        <label>Destination Address: Line 1</label><br/>
+                        <input ref={end_line1} type="text" id="end_line1" name="end_line1" required /><br/>
+                        <label>Destination Address: Postal Code</label><br/>
+                        <input ref={end_postal_code} type="text" id="end_postal_code" name="end_postal_code" required /><br/>
                         <label></label><br/>
                     </p>
 
@@ -77,7 +101,15 @@ async function post1(event) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"vehicle_id":10, "passenger_id":"null", "distance_km":distance_km.current.value})
+        body: JSON.stringify({"vehicle_id":10,
+            "passenger_id":"null",
+            "distance_km":distance_km.current.value,
+            "start_city":start_city.current.value,
+            "start_line1":start_line1.current.value,
+            "start_postal_code":start_postal_code.current.value,
+            "end_city":end_city.current.value,
+            "end_line1":end_line1.current.value,
+            "end_postal_code":end_postal_code.current.value})
     })
     let result = await response.json();
 
