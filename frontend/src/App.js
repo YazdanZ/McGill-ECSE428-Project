@@ -9,6 +9,7 @@ import Create_Trip from './components/pages/Create_Trip'
 import TripDisplay from './components/pages/TripDisplay'
 import DisplayTripCost from './components/pages/DisplayTripCost'
 import AvailableDrivers from './components/pages/AvailableDrivers'
+import MenuBarCustom from './components/menu_items/MenuBar'
 
 import './App.css'
 
@@ -16,6 +17,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <div className='App'>
+        <MenuBarCustom />
         <Routes>
           <Route path="/" element={<Signup />} />
           <Route path='/edit-user' element={<EditUserInfo />} />
