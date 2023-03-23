@@ -42,7 +42,7 @@ class Trip(db.Model):
 
 class Address(db.Model):
     __tablename__ = "address_table"
-    address_id = db.Column(db.Integer, primary_key=True)
+    address_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     city = db.Column(db.String(100))
     address_line_1 = db.Column(db.String(200))
     postal_code = db.Column(db.String(50))
@@ -122,6 +122,78 @@ def createTrip():
         return jsonify({"message": "New Trip Created"}), 200
 
 
+@app.route("/createPickUp", methods=['POST'])
+def createPickUp():
+    data = request.get_json()
+
+    location = Address.query.filter_by(
+        city=data['city'],
+        address_line_1=data['address_line_1'],
+        postal_code=data['postal_code']
+    ).first()
+
+    if location:
+        return jsonify(address_id=location.address_id)
+
+    pick_up = Address(
+        city=data["city"],
+        address_line_1=data['address_line_1'],
+        postal_code=data['postal_code']
+
+    )
+
+    if pick_up.city == "":
+        return jsonify({"message": "Add Pick up City"}), 401
+
+    if pick_up.address_line_1 == "":
+        return jsonify({"message": "Add Pick up Address Line"}), 401
+
+    if pick_up.postal_code == "":
+        return jsonify({"message": "Add Pick up Postal Code"}), 401
+
+    else:
+        db.session.add(pick_up)
+        db.session.commit()
+        # return jsonify({"message": "New Trip Created"}), 200
+
+        return jsonify(address_id=pick_up.address_id)
+
+
+@app.route("/createDropOff", methods=['POST'])
+def createDropOff():
+    data = request.get_json()
+
+    location2 = Address.query.filter_by(
+        city=data['city'],
+        address_line_1=data['address_line_1'],
+        postal_code=data['postal_code']
+    ).first()
+
+    if location2:
+        return jsonify(address_id=location2.address_id)
+
+    drop_off = Address(
+        city=data["city"],
+        address_line_1=data['address_line_1'],
+        postal_code=data['postal_code']
+
+    )
+
+    if drop_off.city == "":
+        return jsonify({"message": "Add Drop off City"}), 401
+
+    if drop_off.address_line_1 == "":
+        return jsonify({"message": "Add Drop off Address Line"}), 401
+
+    if drop_off.postal_code == "":
+        return jsonify({"message": "Add Drop off Postal Code"}), 401
+
+    else:
+        db.session.add(drop_off)
+        db.session.commit()
+        return jsonify(address_id=drop_off.address_id)
+
+
 @app.route("/getTrip", methods=['GET'])
 def getTrip():
     if 'passenger_id' in request.args:
@@ -182,7 +254,7 @@ def login():
 @app.route("/getAvailableDrivers/", methods=["GET"])
 def getAvailableDrivers():
     users = User.query.filter_by(isDriver="True").all()
- 
+
     user_list = []
     for user in users:
         user_dict = {
@@ -195,15 +267,13 @@ def getAvailableDrivers():
         user_list.append(user_dict)
     return jsonify(user_list), 200
 
-    
 
 @app.route("/getAvailableTrips/", methods=["GET"])
 def getAvailableTrips():
     trips = Trip.query.all()
-     
+
     trip_list = []
     for trip in trips:
-      
         # user = User(
         #         name='Joe',
         #         email='joe123@gmail.com',
@@ -222,30 +292,28 @@ def getAvailableTrips():
         # )
         # db.session.add(car)
         # db.session.commit()
-         
 
-        
         car = Car.query.filter_by(car_id=trip.vehicle_id).first()
         driver = User.query.filter_by(email=car.driver_id).first()
         pick_up_address = Address.query.filter_by(address_id=trip.pick_up_address_id).first()
         drop_off_address = Address.query.filter_by(address_id=trip.drop_off_address_id).first()
-        #user = User.query.filter_by(email="mihiranshul@gmail.com").first()
+        # user = User.query.filter_by(email="mihiranshul@gmail.com").first()
         driver_name = driver.name
         driver_vehicle = trip.vehicle
         pickup_location = pick_up_address.address_line_1 + ", " + pick_up_address.city + ", " + pick_up_address.postal_code
         dropoff_location = drop_off_address.address_line_1 + ", " + drop_off_address.city + ", " + drop_off_address.postal_code
         fuel_consumption = trip.vehicle.fuel_consumption
         available_seats = trip.vehicle.seats
-        
+
         trip_dict = {
-            'trip_id' : trip.trip_id,
-            'distance_km' : trip.distance_km,
-            #'passenger_id' : trip.passenger_id,
-             #'passenger' : trip.passenger,
-             'vehicle_name' : car.vehicle_description,
-              'driver_name': driver_name,
-            'drop_off_address' : dropoff_location,
-            'pick_up_address' : pickup_location,
+            'trip_id': trip.trip_id,
+            'distance_km': trip.distance_km,
+            # 'passenger_id' : trip.passenger_id,
+            # 'passenger' : trip.passenger,
+            'vehicle_name': car.vehicle_description,
+            'driver_name': driver_name,
+            'drop_off_address': dropoff_location,
+            'pick_up_address': pickup_location,
             'fuel_consumption': fuel_consumption,
             'available_seats': available_seats
 
@@ -253,10 +321,13 @@ def getAvailableTrips():
         trip_list.append(trip_dict)
     return jsonify(trip_list), 200
 
+
 @app.route("/assignPassenger/", methods=["POST"])
 def assignPassenger():
+    pass
 
-# adds a passenger to a trip, for the time being used it to test Trip Display
+
+## adds a passenger to a trip, for the time being used it to test Trip Display
 @app.route("/addPassengerToTrip", methods=['POST'])
 def addPassengerToTrip():
     data = request.get_json()
@@ -276,13 +347,14 @@ def addPassengerToTrip():
         trip_id=data['trip_id']
     ).first()
     trip.passengers.append(user1)
-    
+
     try:
-      
+
         db.session.commit()
         return jsonify({"message": "Passenger added successfully!"}), 200
     except:
         return jsonify({"message": "Unable to add passenger."})
 
+
 if __name__ == "__main__":
-     app.run(debug=True)
+    app.run(debug=True)
