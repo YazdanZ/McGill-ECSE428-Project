@@ -65,7 +65,7 @@ with app.app_context():
     db.create_all()
 
 
-@app.route("/signup", methods=["POST"])
+@app.route("/signup/", methods=["POST"])
 def signup():
     data = request.get_json()
 
@@ -85,7 +85,7 @@ def signup():
         # mcgill_id already exists
         return jsonify({"message": "McGill ID already exists"}), 401
 
-    if data['checkbox'] == True:
+    if data['isDriver'] == True:
         isDriver = "True"
     else:
         isDriver = "False"
