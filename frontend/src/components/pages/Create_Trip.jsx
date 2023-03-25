@@ -3,6 +3,7 @@ import ParticlesComponent from '../Particles'
 import '../../App.css'
 import ButtonCustom from '../button/Button'
 import Map from '../Map'
+import { toast } from 'react-toastify';
 
 
 export const notifySuccess = (text) => toast.success(text, {
