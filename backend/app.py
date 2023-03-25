@@ -2,6 +2,7 @@ from flask import Flask, jsonify, make_response
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
+from flask_migrate import Migrate
 import warnings
 
 warnings.filterwarnings('ignore')
@@ -10,6 +11,7 @@ app = Flask(__name__)
 CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcpool.db"
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # association table between User and Trip to store passengers on a given trip
 passengers_per_trip = db.Table('association', db.Column('user_id', db.String(50), db.ForeignKey('user_table.email')),
@@ -38,6 +40,7 @@ class Trip(db.Model):
     drop_off_address = db.relationship("Address", back_populates="drop_off_trips", foreign_keys=[drop_off_address_id])
     pick_up_address_id = db.Column(db.Integer, db.ForeignKey("address_table.address_id"))
     pick_up_address = db.relationship("Address", back_populates="pick_up_trips", foreign_keys=[pick_up_address_id])
+    
 
 
 class Address(db.Model):
@@ -354,6 +357,37 @@ def addPassengerToTrip():
         return jsonify({"message": "Passenger added successfully!"}), 200
     except:
         return jsonify({"message": "Unable to add passenger."})
+
+## adds a driver's schedule to a trip
+@app.route("/addDriverSchedule", methods=['POST'])
+def addDriverSchedule():
+    data = request.get_json()
+    # trip = Trip(
+    #             trip_id=1,
+    #             distance_km=30,
+    #             vehicle_id=3       
+    #        )
+    # departure_to_mcgill = db.Column(db.String(100))
+    # arrival_to_mcgill = db.Column(db.String(100))
+    # departure_from_mcgill = db.Column(db.String(100))
+    # arrival_from_mcgill = db.Column(db.String(100))
+    # db.session.add(trip)
+    # db.session.commit()
+    trip1 = Trip.query.filter_by(
+        trip_id=data['trip_id']
+    ).first()
+    trip1.departure_to_mcgill = data['departure_to_mcgill']
+    trip1.arrival_to_mcgill = data['arrival_to_mcgill']
+    trip1.departure_from_mcgill = data['departure_from_mcgill']
+    trip1.arrival_from_mcgill = data['arrival_from_mcgill']
+    try:
+
+        db.session.commit()
+        return jsonify({"message": "Schedule added successfully!"}), 200
+    except:
+        return jsonify({"message": "Unable to add schedule."})
+
+
 
 
 if __name__ == "__main__":

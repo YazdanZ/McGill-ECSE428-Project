@@ -31,10 +31,10 @@ export default function AddDriverSchedule(){
                    <label>Trip from McGill</label>
                     <br></br>
                     <label>Departure Time</label><br/>
-                    <input type="text" id="Departure_to_mcgill" name="Departure_to_mcgill" required/><br/>
+                    <input type="text" id="Departure_from_mcgill" name="Departure_from_mcgill" required/><br/>
                     <br></br>
                     <label>Arrival Time</label><br/>
-                    <input type="text" id="Arrival_to_mcgill" name="arrival_to_mcgill" required/><br/>
+                    <input type="text" id="Arrival_from_mcgill" name="arrival_from_mcgill" required/><br/>
                     <br></br>
             
                 </p>
