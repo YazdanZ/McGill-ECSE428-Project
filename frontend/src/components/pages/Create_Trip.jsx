@@ -1,11 +1,8 @@
 import React from 'react'
 import ParticlesComponent from '../Particles'
-//import '../../App.css'
+import '../../App.css'
 import ButtonCustom from '../button/Button'
-import { Link } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import LoginInfo from '../pages/Login'
+import Map from '../Map'
 
 
 export const notifySuccess = (text) => toast.success(text, {
@@ -50,10 +47,6 @@ export default function Create_Trip()  {
     drop_off_city = React.useRef();
     drop_off_postal_code = React.useRef();
 
-
-
-
-
     return (
         <div className='App-header'>
             <ParticlesComponent/>
@@ -91,27 +84,47 @@ export default function Create_Trip()  {
                         <label></label><br/>
                     </p>
                     <p>
-                        <label>Total Distance to Travel</label><br/>
-                        <input ref={distance_km} type="text" id="distance_km" name="distance_km" required /><br/>
+                        <label>Available Seats</label><br/>
+                        <input type="text" name="available_seats" required /><br/>
+                        <label></label><br/>
+                    </p>
+                    <p>
+                        <label>Total Trip Fuel Consumption (KM/Liter)</label><br/>
+                        <input type="text" name="fuel_consumption" required /><br/>
+                        <label></label><br/>
+                    </p>
+                    <p>
+                        <label>Total Trip Distance Covered</label><br/>
+                        <input type="text" name="distance_km" required /><br/>
+                        <label></label><br/>
+                    </p>
+                    <p>
+                        <label>Pickup Location</label><br/>
+                        <input type='text' name="pickup_location" required /><br/>
+                        <label></label><br/>
+                    </p>
+                    <p>
+                        <label>Drop-Off Location</label><br/>
+                        <input type="text" name="dropoff_location" required /><br/>
                         <label></label><br/>
                     </p>
 
                     <p>
-                     <Link to="/user-info">
                         <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
-                     </Link>
                     </p>
-                    <ToastContainer/>
                 </form>
 
             </div>
-            <div class="box" style={{width:"700px", height:"500px", border: "1px solid black", right:"130px", position:"absolute", top:"100px"}}></div>
-                        <br/><br/><br/><br/><br/>
-                        <h1 style={{color: "white", tab:"10"}}> MAP </h1>
+            <div class="box" style={{width:"700px", height:"500px", border: "1px solid black", right:"130px", position:"absolute", top:"100px"}}>
+                <Map/>
+            </div>
+                        
         </div>
+    
     )
 
 }
+
 
 async function post1(event) {
     event.preventDefault();
@@ -167,8 +180,6 @@ async function post1(event) {
     })
     let result = await response.json();
     alert(result.message);
-
-
 
 
 
