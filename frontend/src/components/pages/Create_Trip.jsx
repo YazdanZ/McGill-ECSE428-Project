@@ -101,7 +101,7 @@ export default function Create_Trip()  {
                 return;
             }
         } else if (selectedDropoff === "------") {
-            alert("Select a pickup location.");
+            alert("Select a dropoff location.");
             return;
         } else {
             result3 = {'address_id':selectedDropoff}
