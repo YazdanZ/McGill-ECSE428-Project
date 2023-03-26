@@ -255,6 +255,16 @@ def get_trips_by_driver(driver_email):
         return make_response(jsonify(trips_json), 200)
     else:
         return make_response(jsonify({"error": "Driver not found."}), 404)
+    
+@app.route('/deleteTrips/<int:trip_id>', methods=['DELETE'])
+def delete_trip(trip_id):
+    trip = Trip.query.get(trip_id)
+    if trip:
+        db.session.delete(trip)
+        db.session.commit()
+        return make_response(jsonify({"message": f"Trip with ID {trip_id} has been deleted."}), 200)
+    else:
+        return make_response(jsonify({"error": f"Trip with ID {trip_id} not found."}), 404)
 
 # getting everything in plain text! :(
 @app.route("/login", methods=["POST"])

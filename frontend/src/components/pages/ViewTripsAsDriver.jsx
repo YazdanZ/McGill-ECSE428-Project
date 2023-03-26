@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const ViewTripsCreatedAsDriver = () => {
   const driverEmail = localStorage.getItem('email');
@@ -12,6 +13,22 @@ const ViewTripsCreatedAsDriver = () => {
     };
     fetchTrips();
   }, [driverEmail]);
+
+  const handleCancelTrip = async (tripId) => {
+    const response = await fetch(`http://localhost:5000/deleteTrips/${tripId}`, { method: 'DELETE' });
+    if (response.ok) {
+      setTrips(trips.filter((trip) => trip.trip_id !== tripId));
+    } else {
+      console.error(`Failed to delete trip with ID ${tripId}.`);
+    }
+  };
+
+  const handleMapClick = (pickupAddress, dropoffAddress) => {
+    // Simulate a delay of 2 seconds before navigating to the map page
+    setTimeout(() => {
+      window.location = `/view-trips-as-driver-map?pickupAddress=${pickupAddress}&dropoffAddress=${dropoffAddress}`;
+    }, 2000);
+  };
 
   return (
     <div>
@@ -42,8 +59,8 @@ const ViewTripsCreatedAsDriver = () => {
                 </ul>
               </td>
               <td>
-                <button>Cancel</button>
-                <button>Map</button>
+                <button onClick={() => handleCancelTrip(trip.trip_id)}>Cancel</button>
+                <button onClick={() => handleMapClick(trip.pick_up_address, trip.drop_off_address)}>Map</button>
               </td>
             </tr>
           ))}
