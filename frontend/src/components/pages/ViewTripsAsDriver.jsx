@@ -1,32 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ViewTripsCreatedAsDriver = () => {
-  const driverTrips = [
-    {
-      id: 1,
-      pickup: "123 Main St.",
-      dropoff: "456 Elm St.",
-      date: "2023-03-20",
-      time: "10:00 AM",
-      fare: 25.00,
-      availableSeats: 2,
-      passengers: [
-        {
-          name: "John Doe",
-          pickup: "123 Main St.",
-          dropoff: "456 Elm St.",
-          contact: "john.doe@example.com"
-        },
-        {
-          name: "Jane Smith",
-          pickup: "789 Oak St.",
-          dropoff: "123 Main St.",
-          contact: "jane.smith@example.com"
-        }
-      ]
-    },
-    // add more trips here as needed
-  ];
+  const driverEmail = localStorage.getItem('email');
+  const [trips, setTrips] = useState([]);
+
+  useEffect(() => {
+    const fetchTrips = async () => {
+      const response = await fetch(`http://localhost:5000/trips/driver/${driverEmail}`);
+      const data = await response.json();
+      setTrips(data);
+    };
+    fetchTrips();
+  }, [driverEmail]);
 
   return (
     <div>
@@ -35,37 +20,28 @@ const ViewTripsCreatedAsDriver = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Pickup</th>
-            <th>Dropoff</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Fare</th>
+            <th>Pickup Address</th>
+            <th>Dropoff Address</th>
             <th>Available Seats</th>
             <th>Passengers</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {driverTrips.map(trip => (
-            <tr key={trip.id}>
-              <td>{trip.id}</td>
-              <td>{trip.pickup}</td>
-              <td>{trip.dropoff}</td>
-              <td>{trip.date}</td>
-              <td>{trip.time}</td>
-              <td>${trip.fare.toFixed(2)}</td>
-              <td>{trip.availableSeats}</td>
+          {trips.map((trip) => (
+            <tr key={trip.trip_id}>
+              <td>{trip.trip_id}</td>
+              <td>{trip.pick_up_address}</td>
+              <td>{trip.drop_off_address}</td>
+              <td>{trip.available_seats}</td>
               <td>
                 <ul>
-                  {trip.passengers.map(passenger => (
-                    <li key={passenger.contact}>
-                      {passenger.name}
-                    </li>
+                  {trip.passenger_names.map((passengerName) => (
+                    <li key={passengerName}>{passengerName}</li>
                   ))}
                 </ul>
               </td>
               <td>
-                <button>Edit</button>
                 <button>Cancel</button>
                 <button>Map</button>
               </td>
@@ -80,21 +56,22 @@ const ViewTripsCreatedAsDriver = () => {
           margin: 10px auto;
           border-collapse: collapse;
         }
-        
-        th, td {
+
+        th,
+        td {
           padding: 8px;
           text-align: left;
           border-bottom: 1px solid #ddd;
         }
-        
+
         tr:nth-child(even) {
           background-color: #f2f2f2;
         }
-        
+
         tr:hover {
           background-color: #ddd;
         }
-        
+
         .container {
           padding: 10px;
           border: 1px solid #ccc;
