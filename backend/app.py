@@ -84,7 +84,7 @@ def signup():
         # mcgill_id already exists
         return jsonify({"message": "McGill ID already exists"}), 401
 
-    if data['checkbox'] == True:
+    if data['isDriver'] == True:
         isDriver = "True"
     else:
         isDriver = "False"
@@ -125,7 +125,7 @@ def createTrip():
         pickup.pick_up_trips.append(trip)
         db.session.commit()
         return jsonify({"message": "New Trip Created"}), 200
-
+    
 
 @app.route("/createPickUp", methods=['POST'])
 def createPickUp():
@@ -261,6 +261,38 @@ def getTrip():
     else:
         return jsonify({'error': 'Could not find trip for arguments {}'.format(request.args.items())})
 
+
+@app.route('/trips/driver/<string:driver_email>', methods=['GET'])
+def get_trips_by_driver(driver_email):
+    driver = User.query.filter_by(email=driver_email, isDriver='True').first()
+    if driver:
+        trips = []
+        for car in driver.driver_car:
+            car_trips = Trip.query.filter_by(vehicle_id=car.car_id).all()
+            trips.extend(car_trips)
+        trips_json = []
+        for trip in trips:
+            trip_dict = {
+                "trip_id": trip.trip_id,
+                "pick_up_address": trip.pick_up_address.address_line_1 + ", " + trip.pick_up_address.city + ", " + trip.pick_up_address.postal_code,
+                "drop_off_address": trip.drop_off_address.address_line_1 + ", " + trip.drop_off_address.city + ", " + trip.drop_off_address.postal_code,
+                "available_seats": trip.vehicle.seats - len(trip.passengers),
+                "passenger_names": [passenger.name for passenger in trip.passengers]
+            }
+            trips_json.append(trip_dict)
+        return make_response(jsonify(trips_json), 200)
+    else:
+        return make_response(jsonify({"error": "Driver not found."}), 404)
+    
+@app.route('/deleteTrips/<int:trip_id>', methods=['DELETE'])
+def delete_trip(trip_id):
+    trip = Trip.query.get(trip_id)
+    if trip:
+        db.session.delete(trip)
+        db.session.commit()
+        return make_response(jsonify({"message": f"Trip with ID {trip_id} has been deleted."}), 200)
+    else:
+        return make_response(jsonify({"error": f"Trip with ID {trip_id} not found."}), 404)
 
 # getting everything in plain text! :(
 @app.route("/login", methods=["POST"])

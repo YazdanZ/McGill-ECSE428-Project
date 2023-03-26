@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ParticlesComponent from '../Particles'
 import { Link } from 'react-router-dom';
 import '../../App.css'
+import Map from '../MapDisplay';
 
 export default function TripDisplay() {
-  //const passenger_id = "mark@mail.com"; //hardcoded value until create trip and user sessions are implemented
-  //const trip_id = 1; //hardcoded trip_id
   const passenger_id = localStorage.getItem('email');
   console.log(passenger_id)
   const [tripDetails, setTripDetails] = useState({});
@@ -24,11 +23,13 @@ export default function TripDisplay() {
   return (
     <div>
       <div className="trip-display" style={{position: "relative", zIndex: "1"}}>
-        <div className="box" style={{width:"700px", height:"450px", border: "1px solid black", right:"575px", position:"absolute", top:"100px"}}></div>
+        <div className="box" style={{width:"700px", height:"450px", border: "1px solid black", right:"590px", position:"absolute", top:"100px"}}>
+          <Map pickupLocation={tripDetails.pickup_location} dropoffLocation={tripDetails.dropoff_location} />
+        </div>
         <h1 style={{color: "white", tab:"10", paddingTop: "40px"}}> MAP </h1>
         <h1 style={{ paddingTop: "510px" }}>Trip Details</h1>
         <div className="trip-details">
-          <form style={{width: "500px"}} className='form'>
+          <form style={{width: "800px"}} className='form'>
             <p id="driver"><strong>Driver:</strong> {tripDetails.driver_name}</p>
             <p id="vehicle"><strong>Vehicle:</strong> {tripDetails.driver_vehicle}</p>
             <p id="pickup-location"><strong>Pickup Location:</strong> {tripDetails.pickup_location}</p>

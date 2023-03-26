@@ -1,9 +1,9 @@
 import React from 'react'
 import { useState } from 'react';
 import ParticlesComponent from '../Particles'
-//import '../../App.css'
+import '../../App.css'
 import ButtonCustom from '../button/Button'
-import { Link } from 'react-router-dom'
+import Map from '../Map'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -230,6 +230,7 @@ export default function Create_Trip()  {
 
             </div>
         </div>
+    
     )
 
 }
