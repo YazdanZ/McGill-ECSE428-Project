@@ -222,9 +222,7 @@ export default function Create_Trip()  {
                 </p>
                 
                 <p>
-                <Link to="/user-info">
                     <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
-                </Link>
                 </p>
                 <ToastContainer/>
 
