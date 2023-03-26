@@ -203,17 +203,13 @@ def getAddresses():
     if 'passenger_id' in request.args:
         passenger_id = request.args.get('passenger_id')
         trips = Trip.query.filter(Trip.passengers.any(mcgill_id=passenger_id)).all()
-        print(len(trips))
         addresses = []
         for trip in trips:
-            print()
             if trip.pick_up_address not in addresses: addresses.append(trip.pick_up_address)
             if trip.drop_off_address not in addresses: addresses.append(trip.drop_off_address)
-        print(len(addresses))
     else:
         return jsonify({'error': 'Invalid request. Must include "passenger_id" argument.'})
     addresses = [ {"id":address.address_id, "address": str(address.address_line_1) + ", " + str(address.postal_code) + ", " + str(address.city)} for address in addresses]
-    print(addresses)
     return jsonify(addresses)
 
 @app.route("/getTrip", methods=['GET'])

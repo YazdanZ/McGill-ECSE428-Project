@@ -60,10 +60,12 @@ export default function Create_Trip()  {
     }
     const urlParams = new URLSearchParams(window.location.search);
     const passenger_id = urlParams.get('passenger_id');
-    fetchAddresses(passenger_id).then(data => {
-        setAddresses(data);
-        setLoading(false);
-    });
+    if (isLoading) {
+        fetchAddresses(passenger_id).then(data => {
+            setAddresses(data);
+            setLoading(false);
+        });
+    }
 
     function handlePickupChange(event) {
         setPickup(event.target.value);
@@ -182,8 +184,6 @@ export default function Create_Trip()  {
                         </form>
                         </div>
                     )}
-                    </div>
-                    <div style={{ width: '50%' }}>
                     <label>Dropoff Address:</label>
                     <select value={selectedDropoff} onChange={handleDropoffChange}>
                         <option key={'------'} value={'------'}>------</option>
@@ -213,13 +213,14 @@ export default function Create_Trip()  {
                         </form>
                         </div>
                     )}
+                    
+                    <p>
+                        <label>Total Distance to Travel</label><br/>
+                        <input ref={distance_km} type="text" id="distance_km" name="distance_km" required /><br/>
+                        <label></label><br/>
+                    </p>
                     </div>
                 </div>
-                <p>
-                    <label>Total Distance to Travel</label><br/>
-                    <input ref={distance_km} type="text" id="distance_km" name="distance_km" required /><br/>
-                    <label></label><br/>
-                </p>
                 
                 <p>
                     <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
