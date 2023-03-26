@@ -3,6 +3,8 @@ import ParticlesComponent from '../Particles'
 import '../../App.css'
 import ButtonCustom from '../button/Button'
 import Map from '../Map'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const notifySuccess = (text) => toast.success(text, {
@@ -37,7 +39,7 @@ var drop_off_address_line_1 = null;
 var drop_off_city = null;
 var drop_off_postal_code = null;
 
-export default function Create_Trip()  {
+export default function Create_Trip() {
 
     distance_km = React.useRef();
     pick_up_address_line_1 = React.useRef();
@@ -49,64 +51,64 @@ export default function Create_Trip()  {
 
     return (
         <div className='App-header'>
-            <ParticlesComponent/>
-            <div className="title" style={{width: "500px", height:"200px", top:"10px", left:"100px"}}>
+            <ParticlesComponent />
+            <div className="title" style={{ width: "500px", height: "200px", top: "10px", left: "100px" }}>
                 <h1>Create Trip</h1>
                 <form className='form'>
-                     <p>
-                        <label>Pick Up Address Line 1</label><br/>
-                        <input ref={pick_up_address_line_1} type="text" id="pick_up_address_line_1" name="pick_up_address_line_1" required /><br/>
-                        <label></label><br/>
-                    </p>
-                     <p>
-                        <label>Pick Up City</label><br/>
-                        <input ref={pick_up_city} type="text" id="pick_up_city" name="pick_up_city" required /><br/>
-                        <label></label><br/>
-                    </p>
-                     <p>
-                        <label>Pick Up Postal Code</label><br/>
-                        <input ref={pick_up_postal_code} type="text" id="pick_up_postal_code" name="pick_up_postal_code" required /><br/>
-                        <label></label><br/>
-                    </p>
-                        <p>
-                        <label>Drop Off Address Line 1</label><br/>
-                        <input ref={drop_off_address_line_1} type="text" id="drop_off_address_line_1" name="drop_off_address_line_1" required /><br/>
-                        <label></label><br/>
-                    </p>
-                     <p>
-                        <label>Drop Off City</label><br/>
-                        <input ref={drop_off_city} type="text" id="drop_off_city" name="drop_off_city" required /><br/>
-                        <label></label><br/>
-                    </p>
-                     <p>
-                        <label>Drop Off Postal Code</label><br/>
-                        <input ref={drop_off_postal_code} type="text" id="drop_off_postal_code" name="drop_off_postal_code" required /><br/>
-                        <label></label><br/>
+                    <p>
+                        <label>Pick Up Address Line 1</label><br />
+                        <input ref={pick_up_address_line_1} type="text" id="pick_up_address_line_1" name="pick_up_address_line_1" required /><br />
+                        <label></label><br />
                     </p>
                     <p>
-                        <label>Available Seats</label><br/>
-                        <input type="text" name="available_seats" required /><br/>
-                        <label></label><br/>
+                        <label>Pick Up City</label><br />
+                        <input ref={pick_up_city} type="text" id="pick_up_city" name="pick_up_city" required /><br />
+                        <label></label><br />
                     </p>
                     <p>
-                        <label>Total Trip Fuel Consumption (KM/Liter)</label><br/>
-                        <input type="text" name="fuel_consumption" required /><br/>
-                        <label></label><br/>
+                        <label>Pick Up Postal Code</label><br />
+                        <input ref={pick_up_postal_code} type="text" id="pick_up_postal_code" name="pick_up_postal_code" required /><br />
+                        <label></label><br />
                     </p>
                     <p>
-                        <label>Total Trip Distance Covered</label><br/>
-                        <input type="text" name="distance_km" required /><br/>
-                        <label></label><br/>
+                        <label>Drop Off Address Line 1</label><br />
+                        <input ref={drop_off_address_line_1} type="text" id="drop_off_address_line_1" name="drop_off_address_line_1" required /><br />
+                        <label></label><br />
                     </p>
                     <p>
-                        <label>Pickup Location</label><br/>
-                        <input type='text' name="pickup_location" required /><br/>
-                        <label></label><br/>
+                        <label>Drop Off City</label><br />
+                        <input ref={drop_off_city} type="text" id="drop_off_city" name="drop_off_city" required /><br />
+                        <label></label><br />
                     </p>
                     <p>
-                        <label>Drop-Off Location</label><br/>
-                        <input type="text" name="dropoff_location" required /><br/>
-                        <label></label><br/>
+                        <label>Drop Off Postal Code</label><br />
+                        <input ref={drop_off_postal_code} type="text" id="drop_off_postal_code" name="drop_off_postal_code" required /><br />
+                        <label></label><br />
+                    </p>
+                    <p>
+                        <label>Available Seats</label><br />
+                        <input type="text" name="available_seats" required /><br />
+                        <label></label><br />
+                    </p>
+                    <p>
+                        <label>Total Trip Fuel Consumption (KM/Liter)</label><br />
+                        <input type="text" name="fuel_consumption" required /><br />
+                        <label></label><br />
+                    </p>
+                    <p>
+                        <label>Total Trip Distance Covered</label><br />
+                        <input ref={distance_km} type="text" name="distance_km" required /><br />
+                        <label></label><br />
+                    </p>
+                    <p>
+                        <label>Pickup Location</label><br />
+                        <input type='text' name="pickup_location" required /><br />
+                        <label></label><br />
+                    </p>
+                    <p>
+                        <label>Drop-Off Location</label><br />
+                        <input type="text" name="dropoff_location" required /><br />
+                        <label></label><br />
                     </p>
 
                     <p>
@@ -115,12 +117,12 @@ export default function Create_Trip()  {
                 </form>
 
             </div>
-            <div class="box" style={{width:"700px", height:"500px", border: "1px solid black", right:"130px", position:"absolute", top:"100px"}}>
-                <Map/>
+            <div class="box" style={{ width: "700px", height: "500px", border: "1px solid black", right: "130px", position: "absolute", top: "100px" }}>
+                <Map />
             </div>
-                        
+
         </div>
-    
+
     )
 
 }
@@ -129,19 +131,19 @@ export default function Create_Trip()  {
 async function post1(event) {
     event.preventDefault();
 
-     let response3 = await fetch('http://localhost:5000/createPickUp', {
+    let response3 = await fetch('http://localhost:5000/createPickUp', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"city":pick_up_city.current.value, "address_line_1":pick_up_address_line_1.current.value, "postal_code":pick_up_postal_code.current.value})
+        body: JSON.stringify({ "city": pick_up_city.current.value, "address_line_1": pick_up_address_line_1.current.value, "postal_code": pick_up_postal_code.current.value })
     })
     let result3 = await response3.json();
-    if(response3.ok){
+    if (response3.ok) {
 
     }
-    else{
+    else {
         alert(result3.message);
     }
 
@@ -149,26 +151,23 @@ async function post1(event) {
 
 
 
-     let response2 = await fetch('http://localhost:5000/createDropOff', {
+    let response2 = await fetch('http://localhost:5000/createDropOff', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"city":drop_off_city.current.value, "address_line_1":drop_off_address_line_1.current.value, "postal_code":drop_off_postal_code.current.value})
+        body: JSON.stringify({ "city": drop_off_city.current.value, "address_line_1": drop_off_address_line_1.current.value, "postal_code": drop_off_postal_code.current.value })
     })
 
     let result2 = await response2.json();
-    if(response2.ok){
-
+    if (response2.ok) {
+        console.log("drop off!!!");
     }
-    else{
+    else {
+        console.log("No drop off!!!");
         alert(result2.message);
     }
-
-
-
-
 
     let response = await fetch('http://localhost:5000/createTrip', {
         method: 'POST',
@@ -176,7 +175,7 @@ async function post1(event) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"vehicle_id":12, "passenger_id":"null", "distance_km":distance_km.current.value, "drop_off_address_id":result2.address_id, "pick_up_address_id":result3.address_id})
+        body: JSON.stringify({ "vehicle_id": 12, "passenger_id": "null", "distance_km": distance_km.current.value, "drop_off_address_id": result2.address_id, "pick_up_address_id": result3.address_id })
     })
     let result = await response.json();
     alert(result.message);

@@ -97,7 +97,7 @@ async function post(event) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "name": name.current.value, "email": email.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value, "isDriver": checkbox.current.checked })
+        body: JSON.stringify({ "name": name.current.value, "email": email.current.value, "mcgill_id": mcgill_id.current.value, "password": password.current.value, "checkbox": checkbox.current.checked })
     })
     let result = await response.json();
     if (response.ok) {

@@ -33,11 +33,17 @@ class Trip(db.Model):
     distance_km = db.Column(db.Integer)
     passengers = db.relationship("User", secondary=passengers_per_trip, back_populates="passenger_trip")
     vehicle_id = db.Column(db.Integer, db.ForeignKey("car_table.car_id"))
-    vehicle = db.relationship("Car", back_populates="vehicle_trip")
+    vehicle = db.relationship("Car", back_populates="vehicle_trip", foreign_keys=[vehicle_id])
     drop_off_address_id = db.Column(db.Integer, db.ForeignKey("address_table.address_id"))
     drop_off_address = db.relationship("Address", back_populates="drop_off_trips", foreign_keys=[drop_off_address_id])
     pick_up_address_id = db.Column(db.Integer, db.ForeignKey("address_table.address_id"))
     pick_up_address = db.relationship("Address", back_populates="pick_up_trips", foreign_keys=[pick_up_address_id])
+
+class Bill(db.Model):
+    __tablename__ = "bill_table"
+    bill_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    trip_id = db.Column(db.Integer, db.ForeignKey("trip_table.trip_id"))
+    distance_km = db.Column(db.Integer, db.ForeignKey("trip_table.distance_km"))
 
 
 class Address(db.Model):
@@ -65,7 +71,7 @@ with app.app_context():
     db.create_all()
 
 
-@app.route("/signup", methods=["POST"])
+@app.route("/signup/", methods=["POST"])
 def signup():
     data = request.get_json()
 
@@ -232,10 +238,50 @@ def getTrip():
 
     else:
         return jsonify({'error': 'Could not find trip for arguments {}'.format(request.args.items())})
+    
+def getAllTripIds():
+    trip_ids = []
+    trips = Trip.query.all()
+    for trip in trips:
+        trip_ids.append(trip.trip_id)
+    return trip_ids
+    
+@app.route("/getAllTrips", methods=['GET'])
+def getAllTrips():
+    trip_ids = getAllTripIds()
+    if not trip_ids:
+        return jsonify({'error': 'No trips found'})
+    
+    trips = []
+
+    for trip_id in trip_ids:
+        trip = Trip.query.filter_by(trip_id=trip_id).first()
+
+        if trip:
+            pickup_location = trip.pick_up_address.address_line_1 + ', ' + trip.pick_up_address.city + ', ' + trip.pick_up_address.postal_code
+            dropoff_location = trip.drop_off_address.address_line_1 + ', ' + trip.drop_off_address.city + ', ' + trip.drop_off_address.postal_code
+            distance = trip.distance_km
+            trip_id = trip.trip_id
+            
+            # create a dictionary to store the relevant information
+            trip_dict = {
+                'pickup_location': pickup_location,
+                'dropoff_location': dropoff_location,
+                'distance': distance,
+                'trip_id': trip_id
+            }
+
+            # append the trip dictionary to the trips array
+            trips.append(trip_dict)
+        else: 
+            return jsonify({'error': 'Could not find trip'})
+
+    # return the trips array as a JSON response
+    return jsonify(trips)
 
 
 # getting everything in plain text! :(
-@app.route("/login", methods=["POST"])
+@app.route("/login/", methods=["POST"])
 def login():
     data = request.get_json()
 
