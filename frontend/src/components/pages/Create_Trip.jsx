@@ -85,7 +85,7 @@ export default function Create_Trip()  {
                         <input ref={drop_off_postal_code} type="text" id="drop_off_postal_code" name="drop_off_postal_code" required /><br/>
                         <label></label><br/>
                     </p>
-                    <p>
+                   {/* <p>
                         <label>Available Seats</label><br/>
                         <input type="text" name="available_seats" required /><br/>
                         <label></label><br/>
@@ -94,22 +94,13 @@ export default function Create_Trip()  {
                         <label>Total Trip Fuel Consumption (KM/Liter)</label><br/>
                         <input type="text" name="fuel_consumption" required /><br/>
                         <label></label><br/>
-                    </p>
+                    </p>*/}
                     <p>
                         <label>Total Trip Distance Covered</label><br/>
-                        <input type="text" name="distance_km" required /><br/>
+                        <input ref={distance_km} type="text" id="distance_km" name="distance_km" required /><br/>
                         <label></label><br/>
                     </p>
-                    <p>
-                        <label>Pickup Location</label><br/>
-                        <input type='text' name="pickup_location" required /><br/>
-                        <label></label><br/>
-                    </p>
-                    <p>
-                        <label>Drop-Off Location</label><br/>
-                        <input type="text" name="dropoff_location" required /><br/>
-                        <label></label><br/>
-                    </p>
+
 
                     <p>
                         <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
@@ -178,12 +169,13 @@ async function post1(event) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"vehicle_id":12, "passenger_id":"null", "distance_km":distance_km.current.value, "drop_off_address_id":result2.address_id, "pick_up_address_id":result3.address_id})
+        body: JSON.stringify({"vehicle_id":"null", "passenger_id":"null", "distance_km":distance_km.current.value, "drop_off_address_id":result2.address_id, "pick_up_address_id":result3.address_id})
     })
     let result = await response.json();
     alert(result.message);
 
 
 
-}
 
+
+}
