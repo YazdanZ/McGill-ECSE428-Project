@@ -169,7 +169,7 @@ async function post1(event) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"vehicle_id":12, "passenger_id":"null", "distance_km":distance_km.current.value, "drop_off_address_id":result2.address_id, "pick_up_address_id":result3.address_id})
+        body: JSON.stringify({"vehicle_id":"null", "passenger_id":"null", "distance_km":distance_km.current.value, "drop_off_address_id":result2.address_id, "pick_up_address_id":result3.address_id})
     })
     let result = await response.json();
     alert(result.message);
