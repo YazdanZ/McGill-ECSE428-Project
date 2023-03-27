@@ -60,10 +60,12 @@ export default function Create_Trip()  {
     }
     const urlParams = new URLSearchParams(window.location.search);
     const passenger_id = urlParams.get('passenger_id');
-    fetchAddresses(passenger_id).then(data => {
-        setAddresses(data);
-        setLoading(false);
-    });
+    if (isLoading) {
+        fetchAddresses(passenger_id).then(data => {
+            setAddresses(data);
+            setLoading(false);
+        });
+    }
 
     function handlePickupChange(event) {
         setPickup(event.target.value);
@@ -149,11 +151,11 @@ export default function Create_Trip()  {
     return (
         <div className='App-header'>
             <ParticlesComponent/>
-            <div className="title" style={{width: "70%", height:"200px", top:"10px", left:"15%"}}>
+            <div className="title" style={{width: "70%", height:"10%", top:"-20px", left:"15%"}}>
                 <h1>Create Trip</h1>
                 <div style={{ display: 'flex' }}>
                     <div style={{ width: '50%' }}>
-                    <label>Pick Up Address:</label>
+                    <label style={{height:"2px", margin:"0px"}}>Pick Up Address:</label>
                     <select value={selectedPickup} onChange={handlePickupChange}>
                         <option key={'------'} value={'------'}>------</option>
                         <option key={'Create New'} value={'Create New'}>Create New</option>
@@ -165,26 +167,24 @@ export default function Create_Trip()  {
                         <div>
                         <form className='form'>
                             <p>
-                                <label>Pick Up Address Line 1</label><br/>
-                                <input ref={pick_up_address_line_1} type="text" id="pick_up_address_line_1" name="pick_up_address_line_1" required /><br/>
+                                <label >Pick Up Address Line 1</label>
+                                <input  ref={pick_up_address_line_1} type="text" id="pick_up_address_line_1" name="pick_up_address_line_1" required /><br/>
                                 <label></label><br/>
                             </p>
                             <p>
-                                <label>Pick Up City</label><br/>
-                                <input ref={pick_up_city} type="text" id="pick_up_city" name="pick_up_city" required /><br/>
+                                <label >Pick Up City</label>
+                                <input  ref={pick_up_city} type="text" id="pick_up_city" name="pick_up_city" required /><br/>
                                 <label></label><br/>
                             </p>
                             <p>
-                                <label>Pick Up Postal Code</label><br/>
-                                <input ref={pick_up_postal_code} type="text" id="pick_up_postal_code" name="pick_up_postal_code" required /><br/>
+                                <label >Pick Up Postal Code</label>
+                                <input  ref={pick_up_postal_code} type="text" id="pick_up_postal_code" name="pick_up_postal_code" required /><br/>
                                 <label></label><br/>
                             </p>
                         </form>
                         </div>
                     )}
-                    </div>
-                    <div style={{ width: '50%' }}>
-                    <label>Dropoff Address:</label>
+                    <label style={{height:"2px", margin:"0px"}}>Dropoff Address:</label>
                     <select value={selectedDropoff} onChange={handleDropoffChange}>
                         <option key={'------'} value={'------'}>------</option>
                         <option key={'Create New'} value={'Create New'}>Create New</option>
@@ -196,39 +196,43 @@ export default function Create_Trip()  {
                         <div>
                         <form className='form'>
                                 <p>
-                                <label>Drop Off Address Line 1</label><br/>
-                                <input ref={drop_off_address_line_1} type="text" id="drop_off_address_line_1" name="drop_off_address_line_1" required /><br/>
+                                <label >Drop Off Address Line 1</label>
+                                <input  ref={drop_off_address_line_1} type="text" id="drop_off_address_line_1" name="drop_off_address_line_1" required /><br/>
                                 <label></label><br/>
                             </p>
                             <p>
-                                <label>Drop Off City</label><br/>
-                                <input ref={drop_off_city} type="text" id="drop_off_city" name="drop_off_city" required /><br/>
+                                <label >Drop Off City</label>
+                                <input  ref={drop_off_city} type="text" id="drop_off_city" name="drop_off_city" required /><br/>
                                 <label></label><br/>
                             </p>
                             <p>
-                                <label>Drop Off Postal Code</label><br/>
-                                <input ref={drop_off_postal_code} type="text" id="drop_off_postal_code" name="drop_off_postal_code" required /><br/>
+                                <label >Drop Off Postal Code</label>
+                                <input  ref={drop_off_postal_code} type="text" id="drop_off_postal_code" name="drop_off_postal_code" required /><br/>
                                 <label></label><br/>
                             </p>
                         </form>
                         </div>
                     )}
+
+                    <p>
+                        <label>Total Distance to Travel</label><br/>
+                        <input ref={distance_km} style ={{height: "30px", width: "100px"}} type="text" id="distance_km" name="distance_km" required /><br/>
+                        <label></label><br/>
+                    </p>
                     </div>
                 </div>
-                <p>
-                    <label>Total Distance to Travel</label><br/>
-                    <input ref={distance_km} type="text" id="distance_km" name="distance_km" required /><br/>
-                    <label></label><br/>
-                </p>
                 
                 <p>
-                <Link to="/user-info">
                     <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
-                </Link>
                 </p>
                 <ToastContainer/>
 
             </div>
+            <div class="box" style={{width:"600px", height:"500px", border: "1px solid black", right:"30px", position:"absolute", top:"105px"}}>
+                <Map/>
+            </div>
+
+
         </div>
     
     )
