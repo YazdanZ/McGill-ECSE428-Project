@@ -463,6 +463,33 @@ def addPassengerToTrip():
     except:
         return jsonify({"message": "Unable to add passenger."})
 
+## adds a driver's schedule to a trip
+@app.route("/addDriverSchedule", methods=['POST'])
+def addDriverSchedule():
+    data = request.get_json()
+    # trip = Trip(
+    #             trip_id=1,
+    #             distance_km=30,
+    #             vehicle_id=3       
+    #        )
+    # departure_to_mcgill = db.Column(db.String(100))
+    # arrival_to_mcgill = db.Column(db.String(100))
+    # departure_from_mcgill = db.Column(db.String(100))
+    # arrival_from_mcgill = db.Column(db.String(100))
+    # db.session.add(trip)
+    # db.session.commit()
+    trip1 = Trip.query.filter_by(
+        trip_id=data['trip_id']
+    ).first()
+    trip1.start_date = data['start_date']
+    trip1.start_time = data['start_time']
+    
+    try:
+
+        db.session.commit()
+        return jsonify({"message": "Schedule added successfully!"}), 200
+    except:
+        return jsonify({"message": "Unable to add schedule."})
 
 if __name__ == "__main__":
     app.run(debug=True)
