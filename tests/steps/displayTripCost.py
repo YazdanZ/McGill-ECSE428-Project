@@ -34,42 +34,42 @@ def step_impl(context):
     try:
         wait = WebDriverWait(context.behave_driver, 10)
         element = wait.until(EC.presence_of_element_located((By.ID, "tripid")))
-    finally:
+    except:
         assert False
     try:
         wait = WebDriverWait(context.behave_driver, 10)
         element = wait.until(EC.presence_of_element_located((By.ID, "cost")))
-    finally:
+    except:
         assert False
     try:
         wait = WebDriverWait(context.behave_driver, 10)
         element = wait.until(EC.presence_of_element_located((By.ID, "passengers")))
-    finally:
+    except:
         assert False
     try:
         wait = WebDriverWait(context.behave_driver, 10)
         element = wait.until(EC.presence_of_element_located((By.ID, "seats")))
-    finally:
+    except:
         assert False
     try:
         wait = WebDriverWait(context.behave_driver, 10)
         element = wait.until(EC.presence_of_element_located((By.ID, "costpp")))
-    finally:
+    except:
         assert False
     try:
         wait = WebDriverWait(context.behave_driver, 10)
         element = wait.until(EC.presence_of_element_located((By.ID, "length")))
-    finally:
+    except:
         assert False
     try:
         wait = WebDriverWait(context.behave_driver, 10)
         element = wait.until(EC.presence_of_element_located((By.ID, "fuel")))
-    finally:
+    except:
         assert False
     try:
         wait = WebDriverWait(context.behave_driver, 10)
         element = wait.until(EC.presence_of_element_located((By.ID, "c02")))
-    finally:
+    except:
         assert False
 
 @then("A link to return to the trip display page is displayed")
