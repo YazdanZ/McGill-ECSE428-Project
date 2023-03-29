@@ -12,6 +12,7 @@ import AvailableDrivers from './components/pages/AvailableDrivers'
 import ViewTripsAsDriver from './components/pages/ViewTripsAsDriver'
 import ViewTripsAsDriverMap from './components/pages/ViewTripsAsDriverMap'
 import PassengerBill from './components/pages/PassengerBill'
+import Add_Driver_Schedule from './components/pages/Add_Driver_Schedule'
 
 import './App.css'
 
@@ -33,6 +34,7 @@ export default function App() {
           <Route path='/view-trips-as-driver' element={<ViewTripsAsDriver />} />
           <Route path='/view-trips-as-driver-map' element={<ViewTripsAsDriverMap />} />
           <Route path='/passenger-bill' element={<PassengerBill />} />
+          <Route path='/add-driver-schedule' element={<Add_Driver_Schedule />} />
         </Routes>
         <Footer />
       </div>
