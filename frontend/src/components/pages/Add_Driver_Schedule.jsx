@@ -63,7 +63,7 @@ export default function AddDriverSchedule(){
                     <br></br>
                 </p>
                 <p>
-                 <ButtonCustom type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn"></ButtonCustom>
+                 <ButtonCustom type="submit" style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="bt"></ButtonCustom>
                 </p>
 
             </form>
