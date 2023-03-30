@@ -4,10 +4,11 @@ import '../../App.css'
 import Logout from '../button/Logout'
 
 export default function PassengerBill() {
-    const passenger_id = localStorage.getItem('email');
     const [trips, setTrips] = useState([])
 
     useEffect(() => {
+        const passenger_id = localStorage.getItem('email');
+        console.log(passenger_id)
         const fetchTrips = async () => {
             const response = await fetch(`http://localhost:5000/getAllTrips?passenger_id=${passenger_id}`);
             const data = await response.json();

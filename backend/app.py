@@ -64,7 +64,7 @@ class Car(db.Model):
 with app.app_context():
     db.create_all()
 
-@app.route("/signup", methods=["POST"])
+@app.route("/signup/", methods=["POST"])
 def signup():
     data = request.get_json()
 
@@ -259,14 +259,14 @@ def getTrip():
     
 def getAllTripIds(passenger_id):
     trip_ids = []
-    trips = Trip.query.filter(Trip.passengers.any(email=passenger_id))
+    trips = Trip.query.filter(Trip.passengers.has(email=passenger_id))
     trips2 = Trip.query.all()
-    if trips.count() > 0:
-        for trip in trips:
-            trip_ids.append(trip.trip_id)
-    else:
-        for trip in trips2:
-            trip_ids.append(trip.trip_id)
+    # if trips.count() > 0:
+    for trip in trips:
+        trip_ids.append(trip.trip_id)
+    # else:
+    #     for trip in trips2:
+    #         trip_ids.append(trip.trip_id)
     return trip_ids
     
 @app.route("/getAllTrips", methods=['GET'])
