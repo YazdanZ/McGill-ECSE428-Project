@@ -30,7 +30,7 @@ def step_impl(context):
     context.behave_driver.maximize_window()
     context.behave_driver.get('http://localhost:3000/createTrip')
     wait5 = WebDriverWait(context.behave_driver, 1)
-    select_element = wait5.until(EC.presence_of_element_located((By.ID, 'select_pickup')))
+    select_element = wait5.until(EC.presence_of_element_located((By.ID, 'pickupDropdown')))
     #select_element = context.behave_driver.find_element(By.ID, 'select_pickup')
     select_element.click
     wait = WebDriverWait(context.behave_driver, 1)
@@ -62,7 +62,7 @@ def step_impl(context):
 def step_impl(context):
     #context.behave_driver.maximize_window()
     #context.behave_driver.get('http://localhost:3000/createTrip')
-    select_element = context.behave_driver.find_element(By.ID, 'select_dropoff')
+    select_element = context.behave_driver.find_element(By.ID, 'dropoffDropdown')
     select_element.click
     wait = WebDriverWait(context.behave_driver, 1)
     element2 = wait.until(EC.presence_of_element_located((By.ID, 'create_new_dropoff')))
@@ -118,7 +118,7 @@ def step_impl(context):
     context.behave_driver.maximize_window()
     context.behave_driver.get('http://localhost:3000/createTrip')
     wait5 = WebDriverWait(context.behave_driver, 1)
-    select_element = wait5.until(EC.presence_of_element_located((By.ID, 'select_pickup')))
+    select_element = wait5.until(EC.presence_of_element_located((By.ID, 'pickupDropdown')))
     # select_element = context.behave_driver.find_element(By.ID, 'select_pickup')
     select_element.click
     wait = WebDriverWait(context.behave_driver, 1)
@@ -179,7 +179,7 @@ def step_impl(context):
 def step_impl(context):
     #context.behave_driver.maximize_window()
     #context.behave_driver.get('http://localhost:3000/createTrip')
-    select_element = context.behave_driver.find_element(By.ID, 'select_dropoff')
+    select_element = context.behave_driver.find_element(By.ID, 'dropoffDropdown')
     select_element.click
     wait = WebDriverWait(context.behave_driver, 1)
     element2 = wait.until(EC.presence_of_element_located((By.ID, 'create_new_dropoff')))
