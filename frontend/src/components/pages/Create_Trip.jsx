@@ -105,6 +105,9 @@ export default function Create_Trip()  {
         } else if (selectedDropoff === "------") {
             alert("Select a dropoff location.");
             return;
+        } else if (selectedDropoff === selectedPickup) {
+            alert("Pickup and dropoff address must be different.");
+            return;
         } else {
             result3 = {'address_id':selectedDropoff}
         }
@@ -156,7 +159,7 @@ export default function Create_Trip()  {
                 <div style={{ display: 'flex' }}>
                     <div style={{ width: '50%' }}>
                     <label style={{height:"2px", margin:"0px"}}>Pick Up Address:</label>
-                    <select value={selectedPickup} onChange={handlePickupChange}>
+                    <select value={selectedPickup} onChange={handlePickupChange} id='pickupDropdown'>
                         <option key={'------'} value={'------'}>------</option>
                         <option key={'Create New'} value={'Create New'}>Create New</option>
                         {addresses.map((address) => (
@@ -185,7 +188,7 @@ export default function Create_Trip()  {
                         </div>
                     )}
                     <label style={{height:"2px", margin:"0px"}}>Dropoff Address:</label>
-                    <select value={selectedDropoff} onChange={handleDropoffChange}>
+                    <select value={selectedDropoff} onChange={handleDropoffChange} id='dropoffDropdown'>
                         <option key={'------'} value={'------'}>------</option>
                         <option key={'Create New'} value={'Create New'}>Create New</option>
                         {addresses.map((address) => (
