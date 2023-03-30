@@ -84,8 +84,8 @@ async function post(event) {
     })
     let result = await response.json();
     if (response.ok) {
-        notifySuccess(result.message);
+        alert(result.message);
     } else {
-        notifyError(result.message);
+        alert(result.message);
     }
 }
