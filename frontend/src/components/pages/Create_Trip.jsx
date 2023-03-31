@@ -142,7 +142,7 @@ export default function Create_Trip()  {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"vehicle_id":12, "passenger_id":passenger_id, "distance_km":distance_km.current.value, "drop_off_address_id":result2.address_id, "pick_up_address_id":result3.address_id})
+            body: JSON.stringify({"vehicle_id":7, "passenger_id":passenger_id, "distance_km":distance_km.current.value, "drop_off_address_id":result2.address_id, "pick_up_address_id":result3.address_id})
         })
         let result = await response.json();
         alert(result.message);
