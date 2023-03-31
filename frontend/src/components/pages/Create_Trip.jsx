@@ -157,7 +157,7 @@ export default function Create_Trip()  {
             <div className="title" style={{width: "70%", height:"10%", top:"-20px", left:"15%"}}>
                 <h1>Create Trip</h1>
                 <div style={{ display: 'flex' }}>
-                    <div style={{ width: '50%' }}>
+                    <div style={{ width: '50%', textAlign:"left" }}>
                     <label style={{height:"2px", margin:"0px"}}>Pick Up Address:</label>
                     <select value={selectedPickup} onChange={handlePickupChange} id='pickupDropdown'>
                         <option key={'------'} value={'------'}>------</option>
@@ -216,18 +216,20 @@ export default function Create_Trip()  {
                         </form>
                         </div>
                     )}
-
+                <div style={{ display: 'flex', justifyContent: 'end' }}>
                     <p>
                         <label>Total Distance to Travel      </label>
                         <input ref={distance_km} style ={{height: "30px", width: "100px"}} type="text" id="distance_km" name="distance_km" required /><br/>
                         <label></label><br/>
                     </p>
-                    </div>
-                </div>
                 
                 <p>
-                    <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
+                    <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px",marginLeft:"50px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
                 </p>
+                
+                    </div>
+                </div>
+                </div>
                 <ToastContainer/>
 
             </div>
