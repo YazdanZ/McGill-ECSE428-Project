@@ -64,8 +64,7 @@ class Car(db.Model):
 with app.app_context():
     db.create_all()
 
-
-@app.route("/signup/", methods=["POST"])
+@app.route("/signup", methods=["POST"])
 def signup():
     data = request.get_json()
 
@@ -105,19 +104,25 @@ def signup():
 def createTrip():
     data = request.get_json()
 
+    user = User.query.filter_by(mcgill_id=data["passenger_id"]).first()
+
+    dropoff = Address.query.filter_by(address_id=data["drop_off_address_id"]).first()
+    pickup = Address.query.filter_by(address_id=data["pick_up_address_id"]).first()
+
     trip = Trip(
         vehicle_id=data["vehicle_id"],
         distance_km=data['distance_km'],
         drop_off_address_id=data['drop_off_address_id'],
         pick_up_address_id=data['pick_up_address_id']
-
     )
 
     if trip.distance_km == "":
         return jsonify({"message": "Add Distance covered"}), 401
-
     else:
+        if user: trip.passengers.append(user)
         db.session.add(trip)
+        dropoff.drop_off_trips.append(trip)
+        pickup.pick_up_trips.append(trip)
         db.session.commit()
         return jsonify({"message": "New Trip Created"}), 200
     
@@ -193,6 +198,19 @@ def createDropOff():
         db.session.commit()
         return jsonify(address_id=drop_off.address_id)
 
+@app.route("/getAddresses", methods=['GET'])
+def getAddresses():
+    if 'passenger_id' in request.args:
+        passenger_id = request.args.get('passenger_id')
+        trips = Trip.query.filter(Trip.passengers.any(mcgill_id=passenger_id)).all()
+        addresses = []
+        for trip in trips:
+            if trip.pick_up_address not in addresses: addresses.append(trip.pick_up_address)
+            if trip.drop_off_address not in addresses: addresses.append(trip.drop_off_address)
+    else:
+        return jsonify({'error': 'Invalid request. Must include "passenger_id" argument.'})
+    addresses = [ {"id":address.address_id, "address": str(address.address_line_1) + ", " + str(address.postal_code) + ", " + str(address.city)} for address in addresses]
+    return jsonify(addresses)
 
 @app.route("/getTrip", methods=['GET'])
 def getTrip():
@@ -206,14 +224,20 @@ def getTrip():
         return jsonify({'error': 'Invalid request. Must include at least one of "userEmail" or "trip_id" arguments.'})
 
     if trip:
-        driver_email = trip.vehicle.driver.name
-        driver_vehicle = trip.vehicle.vehicle_description
+        try:
+            driver_email = trip.vehicle.driver.name
+            driver_vehicle = trip.vehicle.vehicle_description
+            fuel_consumption = trip.vehicle.fuel_consumption
+            num_seats = trip.vehicle.seats
+        except AttributeError:
+            driver_email = "null"
+            driver_vehicle = "null"
+            fuel_consumption = 999
+            num_seats = 5
         pickup_location = trip.pick_up_address.address_line_1 + ', ' + trip.pick_up_address.city + ', ' + trip.pick_up_address.postal_code
         dropoff_location = trip.drop_off_address.address_line_1 + ', ' + trip.drop_off_address.city + ', ' + trip.drop_off_address.postal_code
         distance = trip.distance_km
         trip_id = trip.trip_id
-        fuel_consumption = trip.vehicle.fuel_consumption
-        num_seats = trip.vehicle.seats
         num_passengers = len(trip.passengers)
 
         return {
@@ -232,6 +256,53 @@ def getTrip():
 
     else:
         return jsonify({'error': 'Could not find trip for arguments {}'.format(request.args.items())})
+    
+def getAllTripIds(passenger_id):
+    trip_ids = []
+    trips = Trip.query.filter(Trip.passengers.any(email=passenger_id))
+    trips2 = Trip.query.all()
+    if trips.count() > 0:
+        for trip in trips:
+            trip_ids.append(trip.trip_id)
+    else:
+        for trip in trips2:
+            trip_ids.append(trip.trip_id)
+    return trip_ids
+    
+@app.route("/getAllTrips", methods=['GET'])
+def getAllTrips():
+    if 'passenger_id' in request.args:
+        passenger_id = request.args.get('passenger_id')
+    trip_ids = getAllTripIds(passenger_id)
+    if not trip_ids:
+        return jsonify({'error': 'No trips found'})
+    
+    trips = []
+
+    for trip_id in trip_ids:
+        trip = Trip.query.filter_by(trip_id=trip_id).first()
+
+        if trip:
+            pickup_location = trip.pick_up_address.address_line_1 + ', ' + trip.pick_up_address.city + ', ' + trip.pick_up_address.postal_code
+            dropoff_location = trip.drop_off_address.address_line_1 + ', ' + trip.drop_off_address.city + ', ' + trip.drop_off_address.postal_code
+            distance = trip.distance_km
+            trip_id = trip.trip_id
+            
+            # create a dictionary to store the relevant information
+            trip_dict = {
+                'pickup_location': pickup_location,
+                'dropoff_location': dropoff_location,
+                'distance': distance,
+                'trip_id': trip_id
+            }
+
+            # append the trip dictionary to the trips array
+            trips.append(trip_dict)
+        else: 
+            return jsonify({'error': 'Could not find trip'})
+
+    # return the trips array as a JSON response
+    return jsonify(trips)
 
 
 @app.route('/trips/driver/<string:driver_email>', methods=['GET'])
