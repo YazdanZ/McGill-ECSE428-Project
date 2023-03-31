@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ParticlesComponent from '../Particles'
 import '../../App.css'
 import ButtonCustom from '../button/Button'
-import Map from '../Map'
+import MapForCreateTrip from '../MapForCreateTrip';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -232,7 +232,7 @@ export default function Create_Trip()  {
 
             </div>
             <div class="box" style={{width:"600px", height:"500px", border: "1px solid black", right:"30px", position:"absolute", top:"105px"}}>
-                <Map/>
+                <MapForCreateTrip selectedPickup={selectedPickup} setPickup={setPickup} selectedDropoff={selectedDropoff} setDropoff={setDropoff} isLoading={isLoading} setLoading={setLoading} addresses={addresses} setAddresses={setAddresses} pick_up_address_line_1={pick_up_address_line_1} pick_up_city={pick_up_city} pick_up_postal_code={pick_up_postal_code} drop_off_address_line_1={drop_off_address_line_1} drop_off_city={drop_off_city} drop_off_postal_code={drop_off_postal_code} distance_km={distance_km} />
             </div>
 
 
