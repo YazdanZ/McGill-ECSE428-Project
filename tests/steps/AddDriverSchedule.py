@@ -44,3 +44,22 @@ def step_impl(context):
     alert = Alert(context.driver)
     assert alert.text == "Schedule added successfully!"
     context.driver.quit()
+
+
+
+@when('I fill in a non-existing trip id')
+def step_impl(context):
+    context.driver.find_element_by_id('start_date').send_keys('30/03/2023')
+    context.driver.find_element_by_id('start_time').send_keys('10:00')
+    context.driver.find_element_by_id('trip_id').send_keys(5)
+
+
+
+@then('I should see an error message')
+def step_impl(context):
+    WebDriverWait(context.driver, 3).until(EC.alert_is_present(),
+                                                  'Timed out waiting for PA creation ' +
+                                                  'confirmation popup to appear.')
+    alert = Alert(context.driver)
+    assert alert.text == "Unable to add schedule."
+    context.driver.quit()
