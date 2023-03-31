@@ -526,3 +526,6 @@ console.warn: LoginRecipes: "Falling back to a synchronous message for: http://l
 1680216647053	Marionette	INFO	Stopped listening on port 64157
 JavaScript error: resource://gre/modules/Prompter.sys.mjs, line 1192: NS_ERROR_NOT_AVAILABLE: prompt aborted by user
 1680216647950	Marionette	INFO	Stopped listening on port 64119
+_RegisterApplication(), FAILED TO establish the default connection to the WindowServer, _CGSDefaultConnection() is NULL.
+1680218936309	Marionette	INFO	Stopped listening on port 62945
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.

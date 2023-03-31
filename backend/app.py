@@ -478,18 +478,28 @@ def addDriverSchedule():
     # arrival_from_mcgill = db.Column(db.String(100))
     # db.session.add(trip)
     # db.session.commit()
-    trip1 = Trip.query.filter_by(
-        trip_id=data['trip_id']
-    ).first()
-    trip1.start_date = data['start_date']
-    trip1.start_time = data['start_time']
+    try:
+      trip1 = Trip.query.filter_by(
+         trip_id=data['trip_id']
+        ).first()
+    except:
+      return jsonify({"message": "Unable to add schedule."}), 401
+
+    
+    try:
+
+      trip1.start_date = data['start_date']
+      trip1.start_time = data['start_time']
+
+    except:
+      return jsonify({"message": "Unable to add schedule."}), 401
     
     try:
 
         db.session.commit()
         return jsonify({"message": "Schedule added successfully!"}), 200
     except:
-        return jsonify({"message": "Unable to add schedule."})
+        return jsonify({"message": "Unable to add schedule."}), 401
 
 if __name__ == "__main__":
     app.run(debug=True)
