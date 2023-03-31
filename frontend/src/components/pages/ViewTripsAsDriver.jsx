@@ -59,7 +59,7 @@ const ViewTripsCreatedAsDriver = () => {
                 </ul>
               </td>
               <td>
-                <button onClick={() => handleCancelTrip(trip.trip_id)}>Cancel</button>
+                <button id="cancel-button" onClick={() => handleCancelTrip(trip.trip_id)}>Cancel</button>
                 <button onClick={() => handleMapClick(trip.pick_up_address, trip.drop_off_address)}>Map</button>
               </td>
             </tr>
