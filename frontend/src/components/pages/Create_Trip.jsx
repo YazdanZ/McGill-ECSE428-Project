@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ParticlesComponent from '../Particles'
 import '../../App.css'
 import ButtonCustom from '../button/Button'
-import Map from '../Map'
+import MapForCreateTrip from '../MapForCreateTrip';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -105,6 +105,9 @@ export default function Create_Trip() {
         } else if (selectedDropoff === "------") {
             alert("Select a dropoff location.");
             return;
+        } else if (selectedDropoff === selectedPickup) {
+            alert("Pickup and dropoff address must be different.");
+            return;
         } else {
             result3 = { 'address_id': selectedDropoff }
         }
@@ -139,7 +142,7 @@ export default function Create_Trip() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "vehicle_id": 12, "passenger_id": passenger_id, "distance_km": distance_km.current.value, "drop_off_address_id": result2.address_id, "pick_up_address_id": result3.address_id })
+            body: JSON.stringify({ "vehicle_id": 7, "passenger_id": passenger_id, "distance_km": distance_km.current.value, "drop_off_address_id": result2.address_id, "pick_up_address_id": result3.address_id })
         })
         let result = await response.json();
         alert(result.message);
@@ -154,11 +157,11 @@ export default function Create_Trip() {
             <div className="title" style={{ width: "70%", height: "10%", top: "-20px", left: "15%" }}>
                 <h1>Create Trip</h1>
                 <div style={{ display: 'flex' }}>
-                    <div style={{ width: '50%' }}>
+                    <div style={{ width: '50%', textAlign: "left" }}>
                         <label style={{ height: "2px", margin: "0px" }}>Pick Up Address:</label>
-                        <select id="pickup" value={selectedPickup} onChange={handlePickupChange}>
+                        <select value={selectedPickup} onChange={handlePickupChange} id='pickupDropdown'>
                             <option key={'------'} value={'------'}>------</option>
-                            <option id="create_new_pickup" key={'Create New'} value={'Create New'}>Create New</option>
+                            <option id={'create_new_pickup'} key={'Create New'} value={'Create New'}>Create New</option>
                             {addresses.map((address) => (
                                 <option key={address.id} value={address.id}>{address.address}</option>
                             ))}
@@ -185,9 +188,9 @@ export default function Create_Trip() {
                             </div>
                         )}
                         <label style={{ height: "2px", margin: "0px" }}>Dropoff Address:</label>
-                        <select id="dropoff" value={selectedDropoff} onChange={handleDropoffChange}>
+                        <select value={selectedDropoff} onChange={handleDropoffChange} id='dropoffDropdown'>
                             <option key={'------'} value={'------'}>------</option>
-                            <option id="create_new_dropoff" key={'Create New'} value={'Create New'}>Create New</option>
+                            <option id={'create_new_dropoff'} key={'Create New'} value={'Create New'}>Create New</option>
                             {addresses.map((address) => (
                                 <option key={address.id} value={address.id}>{address.address}</option>
                             ))}
@@ -213,28 +216,29 @@ export default function Create_Trip() {
                                 </form>
                             </div>
                         )}
+                        <div style={{ display: 'flex', justifyContent: 'end' }}>
+                            <p>
+                                <label>Total Distance to Travel      </label>
+                                <input ref={distance_km} style={{ height: "30px", width: "100px" }} type="text" id="distance_km" name="distance_km" required /><br />
+                                <label></label><br />
+                            </p>
 
-                        <p>
-                            <label>Total Distance to Travel</label><br />
-                            <input ref={distance_km} style={{ height: "30px", width: "100px" }} type="text" id="distance_km" name="distance_km" required /><br />
-                            <label></label><br />
-                        </p>
+                            <p>
+                                <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px", marginLeft: "50px" }} title="Submit" id="sub_btn" type="button"></ButtonCustom>
+                            </p>
+
+                        </div>
                     </div>
                 </div>
-
-                <p>
-                    <ButtonCustom onClick={post1} style={{ height: "39px", width: "156px", fontSize: "20px" }} title="Submit" id="sub_btn" type="button" ></ButtonCustom>
-                </p>
                 <ToastContainer />
 
             </div>
             <div class="box" style={{ width: "600px", height: "500px", border: "1px solid black", right: "30px", position: "absolute", top: "105px" }}>
-                <Map />
+                <MapForCreateTrip selectedPickup={selectedPickup} setPickup={setPickup} selectedDropoff={selectedDropoff} setDropoff={setDropoff} isLoading={isLoading} setLoading={setLoading} addresses={addresses} setAddresses={setAddresses} pick_up_address_line_1={pick_up_address_line_1} pick_up_city={pick_up_city} pick_up_postal_code={pick_up_postal_code} drop_off_address_line_1={drop_off_address_line_1} drop_off_city={drop_off_city} drop_off_postal_code={drop_off_postal_code} distance_km={distance_km} />
             </div>
 
 
         </div>
-
     )
 
 }

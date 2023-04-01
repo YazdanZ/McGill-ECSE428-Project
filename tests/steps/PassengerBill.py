@@ -78,7 +78,7 @@ def step_impl(context):
     context.behave_driver.get('http://localhost:3000/createTrip')
 
     wait5 = WebDriverWait(context.behave_driver, 3)
-    select_element = wait5.until(EC.presence_of_element_located((By.ID, 'pickup')))
+    select_element = wait5.until(EC.presence_of_element_located((By.ID, 'pickupDropdown')))
     select_element.click
     wait = WebDriverWait(context.behave_driver, 1)
     element2 = wait.until(EC.presence_of_element_located((By.ID, 'create_new_pickup')))
@@ -90,7 +90,7 @@ def step_impl(context):
     context.behave_driver.find_element_by_id('pick_up_postal_code').send_keys('H2W2J8')
 
     wait5 = WebDriverWait(context.behave_driver, 3)
-    select_element = wait5.until(EC.presence_of_element_located((By.ID, 'dropoff')))
+    select_element = wait5.until(EC.presence_of_element_located((By.ID, 'dropoffDropdown')))
     select_element.click
     wait = WebDriverWait(context.behave_driver, 1)
     element2 = wait.until(EC.presence_of_element_located((By.ID, 'create_new_dropoff')))

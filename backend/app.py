@@ -64,7 +64,7 @@ class Car(db.Model):
 with app.app_context():
     db.create_all()
 
-@app.route("/signup/", methods=["POST"])
+@app.route("/signup", methods=["POST"])
 def signup():
     data = request.get_json()
 
