@@ -59,7 +59,7 @@ const ViewTripsCreatedAsDriver = () => {
                 </ul>
               </td>
               <td>
-                <button onClick={() => handleCancelTrip(trip.trip_id)}>Cancel</button>
+                <button id="cancel-button" onClick={() => handleCancelTrip(trip.trip_id)}>Cancel</button>
                 <button onClick={() => handleMapClick(trip.pick_up_address, trip.drop_off_address)}>Map</button>
               </td>
             </tr>
@@ -79,10 +79,6 @@ const ViewTripsCreatedAsDriver = () => {
           padding: 8px;
           text-align: left;
           border-bottom: 1px solid #ddd;
-        }
-
-        tr:nth-child(even) {
-          background-color: #f2f2f2;
         }
 
         tr:hover {
