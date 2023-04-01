@@ -25,6 +25,8 @@ class User(db.Model):
     isDriver = db.Column(db.String(50))
     passenger_trip = db.relationship("Trip", secondary=passengers_per_trip, back_populates="passengers")
     driver_car = db.relationship("Car", back_populates="driver")
+    sched_start = db.Column(db.String(50)) # assume same schedule everyday
+    sched_end = db.Column(db.String(50))  
 
 
 class Trip(db.Model):
@@ -461,3 +463,28 @@ def addPassengerToTrip():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+## adds a driver's schedule to a trip
+@app.route("/addUserSchedule", methods=['POST'])
+def add_user_schedule():
+    data = request.get_json()
+
+
+    user = User.query.filter_by(
+        email=data["email"]).first()
+
+    if user:
+        try:
+            user.sched_start = data["sched_start"]
+            user.sched_end = data["sched_end"]
+        except: 
+            return jsonify({"message": "Unable to add schedule"}), 401
+        try:
+            db.session.commit()
+        except:
+            return jsonify({"message": "Unable to add schedule"}), 401
+        return jsonify({"message": "Schedule added successfully!"}), 200
+
+    else:
+        # User does not exist
+        return jsonify({"message": "Invalid email"}), 401
