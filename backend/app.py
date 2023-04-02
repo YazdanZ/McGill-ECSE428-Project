@@ -2,6 +2,7 @@ from flask import Flask, jsonify, make_response
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
+from flask_migrate import Migrate
 import warnings
 
 warnings.filterwarnings('ignore')
@@ -10,6 +11,7 @@ app = Flask(__name__)
 CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcpool.db"
 db = SQLAlchemy(app)
+migrate = Migrate(app,db)
 
 # association table between User and Trip to store passengers on a given trip
 passengers_per_trip = db.Table('association', db.Column('user_id', db.String(50), db.ForeignKey('user_table.email')),
@@ -38,6 +40,9 @@ class Trip(db.Model):
     drop_off_address = db.relationship("Address", back_populates="drop_off_trips", foreign_keys=[drop_off_address_id])
     pick_up_address_id = db.Column(db.Integer, db.ForeignKey("address_table.address_id"))
     pick_up_address = db.relationship("Address", back_populates="pick_up_trips", foreign_keys=[pick_up_address_id])
+    start_date = db.Column(db.String(100))
+    start_time = db.Column(db.String(100))
+
 
 
 class Address(db.Model):
@@ -327,15 +332,15 @@ def get_trips_by_driver(driver_email):
     else:
         return make_response(jsonify({"error": "Driver not found."}), 404)
     
-@app.route('/deleteTrips/<int:trip_id>', methods=['DELETE'])
-def delete_trip(trip_id):
-    trip = Trip.query.get(trip_id)
-    if trip:
-        db.session.delete(trip)
-        db.session.commit()
-        return make_response(jsonify({"message": f"Trip with ID {trip_id} has been deleted."}), 200)
-    else:
-        return make_response(jsonify({"error": f"Trip with ID {trip_id} not found."}), 404)
+# @app.route('/deleteTrips/<int:trip_id>', methods=['DELETE'])
+# def delete_trip(trip_id):
+#     trip = Trip.query.get(trip_id)
+#     if trip:
+#         db.session.delete(trip)
+#         db.session.commit()
+#         return make_response(jsonify({"message": f"Trip with ID {trip_id} has been deleted."}), 200)
+#     else:
+#         return make_response(jsonify({"error": f"Trip with ID {trip_id} not found."}), 404)
 
 # getting everything in plain text! :(
 @app.route("/login", methods=["POST"])
@@ -458,6 +463,43 @@ def addPassengerToTrip():
     except:
         return jsonify({"message": "Unable to add passenger."})
 
+## adds a driver's schedule to a trip
+@app.route("/addDriverSchedule", methods=['POST'])
+def addDriverSchedule():
+    data = request.get_json()
+    # trip = Trip(
+    #             trip_id=1,
+    #             distance_km=30,
+    #             vehicle_id=3       
+    #        )
+    # departure_to_mcgill = db.Column(db.String(100))
+    # arrival_to_mcgill = db.Column(db.String(100))
+    # departure_from_mcgill = db.Column(db.String(100))
+    # arrival_from_mcgill = db.Column(db.String(100))
+    # db.session.add(trip)
+    # db.session.commit()
+    try:
+      trip1 = Trip.query.filter_by(
+         trip_id=data['trip_id']
+        ).first()
+    except:
+      return jsonify({"message": "Unable to add schedule."}), 401
+
+    
+    try:
+
+      trip1.start_date = data['start_date']
+      trip1.start_time = data['start_time']
+
+    except:
+      return jsonify({"message": "Unable to add schedule."}), 401
+    
+    try:
+
+        db.session.commit()
+        return jsonify({"message": "Schedule added successfully!"}), 200
+    except:
+        return jsonify({"message": "Unable to add schedule."}), 401
 
 if __name__ == "__main__":
     app.run(debug=True)
