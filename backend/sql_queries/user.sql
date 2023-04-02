@@ -9,5 +9,5 @@ INSERT INTO user_table (name, email, mcgill_id, password, isDriver)
 VALUES ('Jane', 'jane@mail.com', 32, 'password', 0);
 
 INSERT INTO user_table (name, email, mcgill_id, password, isDriver)
-VALUES ('Mihir', 'mihir.kumar@mail.mcgill.ca', 260,' anshul123', 1)
+VALUES ('Mihir', 'mihir.kumar@mail.mcgill.ca', 260, 'anshul123', 1)
 
