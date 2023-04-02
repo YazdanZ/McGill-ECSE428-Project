@@ -10,6 +10,12 @@ import TripDisplay from './components/pages/TripDisplay'
 import DisplayTripCost from './components/pages/DisplayTripCost'
 import AvailableDrivers from './components/pages/AvailableDrivers'
 import MenuBarCustom from './components/menu_items/MenuBar'
+import ViewTripsAsDriver from './components/pages/ViewTripsAsDriver'
+import ViewTripsAsDriverMap from './components/pages/ViewTripsAsDriverMap'
+import PassengerBill from './components/pages/PassengerBill'
+import MapTest from './components/pages/MapTest'
+import MapAlt from './components/pages/MapAlt'
+import Add_Driver_Schedule from './components/pages/Add_Driver_Schedule'
 
 import './App.css'
 
@@ -29,6 +35,13 @@ export default function App() {
           <Route path='/display-trip-cost' element={<DisplayTripCost />} />
           <Route path='/trip-cost' element={<DisplayTripCost />} />
           <Route path='/display-trips' element={<AvailableDrivers />} />
+          <Route path='/view-trips-as-driver' element={<ViewTripsAsDriver />} />
+          <Route path='/view-trips-as-driver-map' element={<ViewTripsAsDriverMap />} />
+          <Route path='/map' element={<MapTest />} />
+          <Route path='/maps' element={<MapAlt />} />
+          <Route path='/passenger-bill' element={<PassengerBill />} />
+          <Route path='/add-driver-schedule' element={<Add_Driver_Schedule />} />
+
         </Routes>
         <Footer />
       </div>
