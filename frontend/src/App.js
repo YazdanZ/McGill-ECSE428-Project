@@ -9,6 +9,7 @@ import Create_Trip from './components/pages/Create_Trip'
 import TripDisplay from './components/pages/TripDisplay'
 import DisplayTripCost from './components/pages/DisplayTripCost'
 import AvailableDrivers from './components/pages/AvailableDrivers'
+import MenuBarCustom from './components/menu_items/MenuBar'
 import ViewTripsAsDriver from './components/pages/ViewTripsAsDriver'
 import ViewTripsAsDriverMap from './components/pages/ViewTripsAsDriverMap'
 import PassengerBill from './components/pages/PassengerBill'
@@ -16,13 +17,13 @@ import MapTest from './components/pages/MapTest'
 import MapAlt from './components/pages/MapAlt'
 import Add_Driver_Schedule from './components/pages/Add_Driver_Schedule'
 
-
 import './App.css'
 
 export default function App() {
   return (
     <BrowserRouter>
       <div className='App'>
+        <MenuBarCustom />
         <Routes>
           <Route path="/" element={<Signup />} />
           <Route path='/edit-user' element={<EditUserInfo />} />
