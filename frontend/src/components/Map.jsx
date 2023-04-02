@@ -7,7 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGltZWxzYWhhMjkiLCJhIjoiY2xmMG9xdHUzMDBpYTNybzlnZTBydnlvdyJ9.jH-mX6EyYU2htEyLn8aMDw';
 
-const Map = () => {
+function Map(props) {
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: 'map',
@@ -23,11 +23,31 @@ const Map = () => {
         profile: 'mapbox/driving',
         controls: {
           profileSwitcher: false
-        }
+        },
       }),
       'top-left'
     );
 
+    if (props.flag == true) {
+      setTimeout(() => {
+        directions.setOrigin("Montréal-Pierre Elliott Trudeau International Airport (YUL), 975 rue Roméo-Vachon Nord, Dorval, Quebec H4Y 1H1, Canada");
+      }, 7000);
+
+      setTimeout(() => {
+        directions.setDestination("845 Sherbrooke O Rue, Montréal, Quebec H3A 0G4, Canada");
+      }, 9000);
+    } else {
+      setTimeout(() => {
+        directions.setOrigin("845 Sherbrooke O Rue, Montréal, Quebec H3A 0G4, Canada");
+      }, 7000);
+
+      setTimeout(() => {
+        alert('Destination address missing');
+      }, 9000);
+    }
+
+
+    
     directions.on('origin', (e) => {
       console.log('Origin: ' + JSON.stringify(e.feature.geometry));
     });
