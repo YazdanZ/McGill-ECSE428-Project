@@ -1,5 +1,6 @@
 import React from 'react'
 import ParticlesComponent from '../Particles'
+import MenuBarCustom from '../menu_items/MenuBar'
 import '../../App.css'
 import '../button/Logout'
 import Logout from '../button/Logout'
