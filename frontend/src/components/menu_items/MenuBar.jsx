@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../styles.scss'
 import Home from '../button/home';
+import Logout from '../button/Logout';
 
 function MenuBarCustom({ logoutFunction }) {
 
@@ -13,7 +14,7 @@ function MenuBarCustom({ logoutFunction }) {
                 <Home />
             </div>
             <div className='header_right'>
-                <button>Logout</button>
+                <Logout />
             </div>
         </div>
     );

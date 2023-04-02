@@ -12,7 +12,7 @@ export default function Home() {
     return (
         <p>
             <Link to="/" onClick={handleClick}>
-                <ButtonCustom title="Home" id="home_btn" type="submit"></ButtonCustom>
+                <ButtonCustom style={{ height: "39px", width: "156px", fontSize: "20px", left: '100', position: 'relative' }} title="Home" id="home_btn" type="submit"></ButtonCustom>
             </Link>
         </p>
     )
