@@ -255,8 +255,8 @@ def getTrip():
             'fuel_consumption': fuel_consumption,
             'num_seats': num_seats,
             'num_passengers': num_passengers,
-            'cost': 50,  # cost will be calculated in a later sprint
-            'duration': 30  # duration will be calculated in a later sprint
+            'cost': distance*0.112,
+            'duration': distance*50/1000 
         }
 
     else:

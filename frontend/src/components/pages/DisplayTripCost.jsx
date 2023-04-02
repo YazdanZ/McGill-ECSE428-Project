@@ -17,9 +17,9 @@ export default function DisplayTripCost() {
         document.getElementById("passengers").innerHTML = `Num passengers: ${tripDetails.num_passengers}`;
         document.getElementById("seats").innerHTML = `Available Seats: ${tripDetails.num_seats-tripDetails.num_passengers}`;
         document.getElementById("costpp").innerHTML = `Cost per passenger (CAD): ${tripDetails.cost/(tripDetails.num_passengers+1)}`;
-        document.getElementById("length").innerHTML = `Trip length (km): ${(parseStringToNumber(tripDetails.distance)/1000).toString()} km`;
-        document.getElementById("fuel").innerHTML = `Estimated fuel consumption (L/km): ${parseStringToNumber(tripDetails.distance)*0.07/1000}`;
-        document.getElementById("c02").innerHTML = `Estimated C02 emission saved (approx. g of CO2): ${2.5*(parseStringToNumber(tripDetails.distance)*0.07)*(tripDetails.num_passengers+1)} g`;
+        document.getElementById("length").innerHTML = `Trip length (km): ${(tripDetails.distance)/1000} km`;
+        document.getElementById("fuel").innerHTML = `Estimated fuel consumption (L/km): ${((tripDetails.distance)*0.07/1000).toFixed(5)}`;
+        document.getElementById("c02").innerHTML = `Estimated C02 emission saved (approx. g of CO2): ${(2.5*(tripDetails.distance)*0.07*(tripDetails.num_passengers+1)).toFixed(5)} g`;
     }
     fetchTripDetails(trip_id).then((tripDetails) =>
         updateHTML(tripDetails)
