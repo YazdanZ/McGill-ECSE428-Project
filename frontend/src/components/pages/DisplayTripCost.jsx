@@ -17,13 +17,20 @@ export default function DisplayTripCost() {
         document.getElementById("passengers").innerHTML = `Num passengers: ${tripDetails.num_passengers}`;
         document.getElementById("seats").innerHTML = `Available Seats: ${tripDetails.num_seats-tripDetails.num_passengers}`;
         document.getElementById("costpp").innerHTML = `Cost per passenger (CAD): ${tripDetails.cost/(tripDetails.num_passengers+1)}`;
-        document.getElementById("length").innerHTML = `Trip length (km): ${tripDetails.distance}`;
-        document.getElementById("fuel").innerHTML = `Estimated fuel consumption (L/km): ${tripDetails.fuel_consumption}`;
-        document.getElementById("c02").innerHTML = `Estimated C02 emission saved (approx. kg of CO2): ${2.5*tripDetails.distance*tripDetails.fuel_consumption*tripDetails.num_passengers}`;
+        document.getElementById("length").innerHTML = `Trip length (km): ${(parseStringToNumber(tripDetails.distance)/1000).toString()} km`;
+        document.getElementById("fuel").innerHTML = `Estimated fuel consumption (L/km): ${parseStringToNumber(tripDetails.distance)*0.07/1000}`;
+        document.getElementById("c02").innerHTML = `Estimated C02 emission saved (approx. g of CO2): ${2.5*(parseStringToNumber(tripDetails.distance)*0.07)*(tripDetails.num_passengers+1)} g`;
     }
     fetchTripDetails(trip_id).then((tripDetails) =>
         updateHTML(tripDetails)
     )
+
+    function parseStringToNumber(inputString){
+        const numberMatch = inputString.match(/[-+]?[0-9]*\.?[0-9]+/);
+        const number = numberMatch ? parseFloat(numberMatch[0]) : NaN;
+
+        return parseFloat(number.toFixed(4)); 
+    }
     
     return (
         <div className='App-header'>
